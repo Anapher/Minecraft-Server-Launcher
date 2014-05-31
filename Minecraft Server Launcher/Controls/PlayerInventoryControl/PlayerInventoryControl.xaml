@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="PlayerInventoryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+             mc:Ignorable="d" 
+             x:Name="myWindow">
+    <UserControl.Resources>
+        <my:ItemStackToImage x:Key="ItemStackToImageConverter"/>
+        <my:ItemToTextConverter x:Key="ItemToText"/>
+        <my:NumberToFixedNumberConverter x:Key="NumberToFixedNumber"/>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+            <Setter Property="RenderOptions.EdgeMode" Value="Unspecified"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal" Margin="10">
+        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+            <ItemsControl ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="LightGray">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListBoxItem DataContext="{Binding ElementName=myWindow,Path=Inventory}">
+                    <ListBoxItem.Content>
+                        <Border BorderBrush="White" BorderThickness="5,5,0,0" Margin="-6,-2,-6,-2">
+                            <StackPanel Margin="6,2,6,2">
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,4,2" Width="30" Height="30">
+                                    <Image.Source>
+                                        <Binding Path="Armor.Helmet" Converter="{StaticResource ItemStackToImageConverter}" ConverterParameter="ReturnNothing">
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>/Controls/PlayerInventoryControl/resources/NoHelmet.png</ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                            </StackPanel>
+                        </Border>
+                    </ListBoxItem.Content>
+                </ListBoxItem>
+                <ListBoxItem DataContext="{Binding ElementName=myWindow,Path=Inventory}">
+                    <ListBoxItem.Content>
+                        <Border BorderBrush="White" BorderThickness="5,5,0,0" Margin="-6,-2,-6,-2">
+                            <StackPanel Margin="6,2,6,2">
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,4,2" Width="30" Height="30">
+                                    <Image.Source>
+                                        <Binding Path="Armor.Chestplate" Converter="{StaticResource ItemStackToImageConverter}" ConverterParameter="ReturnNothing">
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>/Controls/PlayerInventoryControl/resources/NoChestplate.png</ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                            </StackPanel>
+                        </Border>
+                    </ListBoxItem.Content>
+                </ListBoxItem>
+                <ListBoxItem DataContext="{Binding ElementName=myWindow,Path=Inventory}">
+                    <ListBoxItem.Content>
+                        <Border BorderBrush="White" BorderThickness="5,5,0,0" Margin="-6,-2,-6,-2">
+                            <StackPanel Margin="6,2,6,2">
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,4,2" Width="30" Height="30">
+                                    <Image.Source>
+                                        <Binding Path="Armor.Leggings" Converter="{StaticResource ItemStackToImageConverter}" ConverterParameter="ReturnNothing">
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>/Controls/PlayerInventoryControl/resources/NoLeggings.png</ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                            </StackPanel>
+                        </Border>
+                    </ListBoxItem.Content>
+                </ListBoxItem>
+                <ListBoxItem DataContext="{Binding ElementName=myWindow,Path=Inventory}">
+                    <ListBoxItem.Content>
+                        <Border BorderBrush="White" BorderThickness="5,5,0,0" Margin="-6,-2,-6,-2">
+                            <StackPanel Margin="6,2,6,2">
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,4,2" Width="30" Height="30">
+                                    <Image.Source>
+                                        <Binding Path="Armor.Boots" Converter="{StaticResource ItemStackToImageConverter}" ConverterParameter="ReturnNothing">
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>/Controls/PlayerInventoryControl/resources/NoBoots.png</ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                            </StackPanel>
+                        </Border>
+                    </ListBoxItem.Content>
+                </ListBoxItem>
+            </ItemsControl>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Width="370">
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="LightGray" ItemsSource="{Binding ElementName=myWindow,Path=InnerInventory}" SelectedIndex="{Binding ElementName=myWindow,Path=lstInnerInventorySelectedIndex}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="White" BorderThickness="1,1,0,0" Margin="-6,-2,-6,-2">
+                            <StackPanel Margin="6,2,6,2">
+                                <Grid ToolTip="{Binding Converter={StaticResource ItemToText}}" Width="35" Height="35">
+                                    <Image Source="{Binding Converter={StaticResource ItemStackToImageConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,4,2"/>
+                                    <TextBlock Text="{Binding Amount,Converter={StaticResource NumberToFixedNumber}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="Comic Sans MS" FontWeight="Bold" Margin="0,0,2,1" Foreground="White"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Rectangle HorizontalAlignment="Stretch" Fill="White" Height="7"/>
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="LightGray" ItemsSource="{Binding ElementName=myWindow,Path=BaseInventory}" SelectedIndex="{Binding ElementName=myWindow,Path=lstBaseInventorySelectedIndex}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="White" BorderThickness="1,1,0,0" Margin="-6,-2,-6,-2">
+                            <StackPanel Margin="6,2,6,2">
+                                <Grid ToolTip="{Binding Converter={StaticResource ItemToText}}"  Width="35" Height="35">
+                                    <Image Source="{Binding Converter={StaticResource ItemStackToImageConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,4,0"/>
+                                    <TextBlock Text="{Binding Amount,Converter={StaticResource NumberToFixedNumber}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="Comic Sans MS" FontWeight="Bold" Margin="0,0,1,0" Foreground="White"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

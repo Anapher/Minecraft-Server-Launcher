@@ -1,0 +1,20 @@
+﻿<Controls:MetroWindow x:Class="frmCommands"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout" ResizeMode="NoResize"
+    Title="{DynamicResource Commands}" SizeToContent="WidthAndHeight" GlowBrush="LightBlue" MaxWidth="1000" MaxHeight="500" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <my:ListOfStringToString x:Key="ListConverter"/>
+    </Window.Resources>
+    <ListView ctrl:ListViewLayoutManager.Enabled="true" ItemsSource="{Binding commands,IsAsync=True}">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="{DynamicResource Command}" ctrl:ProportionalColumn.Width="4" DisplayMemberBinding="{Binding command}"/>
+                <GridViewColumn Header="{DynamicResource usage}" ctrl:ProportionalColumn.Width="4" DisplayMemberBinding="{Binding usage}"/>
+                <GridViewColumn Header="{DynamicResource aliases}" ctrl:ProportionalColumn.Width="5" DisplayMemberBinding="{Binding aliases,Converter={StaticResource ListConverter}}"/>
+            </GridView>
+        </ListView.View>
+    </ListView>
+</Controls:MetroWindow>

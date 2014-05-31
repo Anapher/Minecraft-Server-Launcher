@@ -1,0 +1,52 @@
+﻿<Controls:MetroWindow x:Class="frmDownloadCraftbukkit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    DataContext="{x:Static my:DownloadCraftbukkitViewModel.Instance}"
+    xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
+    Title="{DynamicResource frmDownloadCraftbukkitTitle}" SizeToContent="WidthAndHeight" GlowBrush="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="10">
+        <ListView Height="300" ItemsSource="{Binding Downloader.lstBukkitVersions}" IsEnabled="{Binding GUIIsEnabled}" SelectedIndex="{Binding lstIndex}" ctrl:ListViewLayoutManager.Enabled="true">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{DynamicResource OpenInfosInBrowser}" Command="{Binding Command}" CommandParameter="OpenInfos"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridView.ColumnHeaderContextMenu>
+                        <ContextMenu Visibility="Hidden"/>
+                    </GridView.ColumnHeaderContextMenu>
+                    <GridViewColumn Header="{DynamicResource HeaderBuildNumber}" DisplayMemberBinding="{Binding Path=Buildnr}" ctrl:FixedColumn.Width="100"/>
+                    <GridViewColumn Header="{DynamicResource HeaderVersion}" HeaderStringFormat="" DisplayMemberBinding="{Binding Path=version}" Width="130"/>
+                    <GridViewColumn Header="{DynamicResource HeaderType}" DisplayMemberBinding="{Binding Path=Type}" Width="345"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <RadioButton Content="{DynamicResource ChooseSelectedVersion}" Margin="0,10,0,0" IsChecked="{Binding ChooseSelectedVersion}" IsEnabled="{Binding GUIIsEnabled}"/>
+        <RadioButton Margin="0,5,0,0" IsChecked="{Binding ChooseDevelopmentVersion}" IsEnabled="{Binding GUIIsEnabled}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Development Build ("/>
+                <TextBlock Text="{Binding Downloader.DevelopmentBuild.version}"/>
+                <TextBlock Text=")"/>
+            </StackPanel>
+        </RadioButton>
+        <RadioButton Margin="0,5,0,0" IsChecked="{Binding ChooseBetaVersion}" IsEnabled="{Binding GUIIsEnabled}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Beta Build ("/>
+                <TextBlock Text="{Binding Downloader.BetaBuild.version}"/>
+                <TextBlock Text=")"/>
+            </StackPanel>
+        </RadioButton>
+        <RadioButton Margin="0,5,0,0" IsChecked="{Binding ChooseRecommendedVersion}" IsEnabled="{Binding GUIIsEnabled}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Recommended Build ("/>
+                <TextBlock Text="{Binding Downloader.RecommendedBuild.version}"/>
+                <TextBlock Text=")"/>
+            </StackPanel>
+        </RadioButton>
+        <Button Content="{DynamicResource Download}" HorizontalAlignment="Center" Width="200" Height="35" Margin="10" IsEnabled="{Binding ButtonDownloadIsEnabled}" Command="{Binding Command}" CommandParameter="Download"/>
+        <Controls:MetroProgressBar Value="{Binding Downloader.CurrentState}"/>
+    </StackPanel>
+</Controls:MetroWindow>

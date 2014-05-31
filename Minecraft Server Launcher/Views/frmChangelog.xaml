@@ -1,0 +1,12 @@
+﻿<Controls:MetroWindow x:Class="frmChangelog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    DataContext="{x:Static my:DownloadPluginsViewModel.Instance}" GlowBrush="LightBlue" ShowInTaskbar="False"
+    Title="Changelog" WindowStartupLocation="CenterOwner" Height="455" Width="945" ResizeMode="NoResize">
+    <Window.Resources>
+        <my:HtmlToFlowDocumentConverter x:Key="HtmlToDocument"/>
+    </Window.Resources>
+    <FlowDocumentScrollViewer Document="{Binding CurrentPluginVersion.ChangelogString,Converter={StaticResource HtmlToDocument}}"/>
+</Controls:MetroWindow>

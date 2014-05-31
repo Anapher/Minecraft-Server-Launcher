@@ -1,0 +1,1184 @@
+﻿<Controls:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    xmlns:metro="http://schemas.codeplex.com/elysium"
+    xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
+    xmlns:params="http://schemas.codeplex.com/elysium/params" x:Class="MainWindow"
+    DataContext="{x:Static my:MainViewModel.Instance}"
+    GlowBrush="LightBlue"
+    Title="Minecraft Server Launcher" Height="500" Width="864" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" x:Name="MainWindow">
+    <Controls:MetroWindow.Resources>
+        <my:BoolToStringConverter TrueValue="{StaticResource Yes}" FalseValue="{StaticResource No}" x:Key="BooleanToStringConverter" />
+        <my:UnixTimestampToString x:Key="UnixTimestampToStringConverter"/>
+        <my:LocationToStringConverter x:Key="LocationToStringConverter"/>
+        <my:ItemStackToImage x:Key="ItemStackToImageConverter" />
+        <my:NumberToFixedNumberConverter x:Key="NumberToFixedNumber"/>
+        <my:ItemToTextConverter x:Key="ItemToText"/>
+        <BooleanToVisibilityConverter x:Key="BToV"/>
+        <my:ListOfStringToString x:Key="lstOfStringToString"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <my:FalseOnEmptyStringConverter x:Key="FalseOnEmptyString"/>
+        <my:SwitchBooleanConverter x:Key="SwitchBoolean"/>
+        <my:SelectedIndexToBoolean x:Key="SelectedIndexToBool"/>
+        <my:SelectedIndexToVisibility x:Key="SelectedIndexVisibl"/>
+    </Controls:MetroWindow.Resources>
+    <Controls:MetroWindow.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding Command}" CommandParameter="SaveSettings"/>
+    </Controls:MetroWindow.InputBindings>
+    <Grid>
+        <TabControl SelectedIndex="{Binding MainTabControlIndex}" IsEnabled="{Binding IsClosing,Converter={StaticResource SwitchBoolean}}">
+            <TabItem Header="{DynamicResource Console}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBox AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Text="{Binding ConsoleText}" my:TextBoxBehaviour.AlwaysScrollToEnd="True" Grid.Row="0"/>
+                    <my:IntelliTextBox Margin="0,5,0,5" Height="25" Text="{Binding txtCommand, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEingabe" VerticalAlignment="Top" IntelliSenseIsEnabled="{Binding MinecraftServer.LauncherSettings.IntelliSenseIsEnabled}"
+					Players="{Binding MinecraftServer.Server.OnlinePlayers}" Bans="{Binding MinecraftServer.Banlist.AllBans}" Items="{Binding lstMinecraftItem, Source={x:Static my:ItemData.Instance}}" Plugins="{Binding MinecraftServer.lstPlugins}" lstCommands="{Binding MinecraftServer.Commands.lstCommands}" Grid.Row="1"
+					ShowInfoBox="{Binding MinecraftServer.LauncherSettings.EnableIntelliSenseInfoBox}" InfoLanguage="{Binding MinecraftServer.LauncherSettings.ActivLanguage}">
+                        <my:IntelliTextBox.InputBindings>
+                            <KeyBinding Command="{Binding Command}" CommandParameter="ExecuteCommand" Key="Return" />
+                        </my:IntelliTextBox.InputBindings>
+                        <my:IntelliTextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
+                                <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                            </Style>
+                        </my:IntelliTextBox.Style>
+                    </my:IntelliTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{DynamicResource Actions}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox Grid.Column="0" ItemsSource="{Binding MinecraftServer.lstPlayers}" SelectedIndex="{Binding lstPlayerIndex}" x:Name="lstPlayers">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Grid Grid.Column="1" Visibility="{Binding GridPlayerIsVisible}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding SelectedItem.Name, ElementName=lstPlayers}" Grid.Row="0" FontSize="22" FontFamily="Segoe UI Light" Padding="10" FontWeight="Light"/>
+                        <Grid Grid.Row="1">
+                            <TabControl>
+                                <TabItem Header="{DynamicResource Informations}" Style="{StaticResource UnderTab}">
+                                    <Grid>
+                                        <Grid.Resources>
+                                            <ResourceDictionary>
+                                                <ResourceDictionary.MergedDictionaries>
+                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                </ResourceDictionary.MergedDictionaries>
+                                            </ResourceDictionary>
+                                        </Grid.Resources>
+                                        <GroupBox Header="{DynamicResource generalInformations}" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{DynamicResource IP}"/>
+                                                    <TextBlock Text=":" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding SelectedItem.Ip, ElementName=lstPlayers}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{DynamicResource Port}"/>
+                                                    <TextBlock Text=":" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding SelectedItem.Port, ElementName=lstPlayers}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                                <TextBlock Text="{DynamicResource firstPlayed}"/>
+                                                <TextBlock Text=":" Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.FirstPlayed, Converter={StaticResource UnixTimestampToStringConverter}, ElementName=lstPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="{DynamicResource lastPlayed}"/>
+                                                <TextBlock Text=":" Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.LastPlayed, Converter={StaticResource UnixTimestampToStringConverter}, ElementName=lstPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="{DynamicResource exhaustion}" VerticalAlignment="Center"/>
+                                                <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                                <my:ExhaustionVisualizer ExhaustionValue="{Binding SelectedItem.Exhaustion, ElementName=lstPlayers}" Width="50" ToolTip="{Binding SelectedItem.Exhaustion, ElementName=lstPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <Image Width="20" Height="20" Source="/resources/location.png" ToolTip="{DynamicResource location}" Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.Location, Converter={StaticResource LocationToStringConverter}, ElementName=lstPlayers}" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                                <StackPanel.Resources>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+                                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                                        <Setter Property="Margin" Value="10"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter Property="Opacity" Value="0.3"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Resources>
+                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsSleeping.png" IsEnabled="{Binding SelectedItem.IsSleeping, ElementName=lstPlayers}" ToolTip="{DynamicResource isSleeping}" ToolTipService.ShowOnDisabled="True"/>
+                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsInVehicle.png" IsEnabled="{Binding SelectedItem.IsInVehicle, ElementName=lstPlayers}" ToolTip="{DynamicResource isInVehicle}" ToolTipService.ShowOnDisabled="True"/>
+                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsSneaking.png" IsEnabled="{Binding SelectedItem.IsSneaking, ElementName=lstPlayers}" ToolTip="{DynamicResource isSneaking}" ToolTipService.ShowOnDisabled="True"/>
+                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsSprinting.png" IsEnabled="{Binding SelectedItem.IsSprinting, ElementName=lstPlayers}" ToolTip="{DynamicResource isSprinting}" ToolTipService.ShowOnDisabled="True"/>
+                                            </StackPanel>
+                                            <Grid Margin="0,20,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="190"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="190"/>
+                                                </Grid.ColumnDefinitions>
+                                                <my:Minecraftbar Value="{Binding SelectedItem.Health, ElementName=lstPlayers}" BarType="Health" Margin="10,0,0,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.Level, ElementName=lstPlayers}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="1"/>
+                                                <my:Minecraftbar Value="{Binding SelectedItem.FoodLevel, ElementName=lstPlayers}" BarType="Food" DockPanel.Dock="Right" Margin="0,0,10,0" Grid.Column="2"/>
+                                            </Grid>
+                                            <metro:ProgressBar Value="{Binding SelectedItem.LevelProgress, ElementName=lstPlayers}" Maximum="1"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem Header="{DynamicResource Commands}" Style="{StaticResource UnderTab}">
+                                    <Grid>
+                                        <Grid.Resources>
+                                            <ResourceDictionary>
+                                                <ResourceDictionary.MergedDictionaries>
+                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                </ResourceDictionary.MergedDictionaries>
+                                            </ResourceDictionary>
+                                        </Grid.Resources>
+                                        <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="{x:Type Grid}">
+                                                    <Setter Property="Margin" Value="0,10,0,0"/>
+                                                </Style>
+                                            </StackPanel.Resources>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="OP:" VerticalAlignment="Center"/>
+                                                <metro:ToggleSwitch IsChecked="{Binding IsOP}" Grid.Column="1" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{DynamicResource Gamemode}" VerticalAlignment="Center" Grid.Column="0"/>
+                                                <ComboBox Width="150" SelectedIndex="{Binding CBBGamemodeIndex}" Grid.Column="1" HorizontalAlignment="Left">
+                                                    <ComboBoxItem Content="{DynamicResource Survival}"/>
+                                                    <ComboBoxItem Content="{DynamicResource Creative}"/>
+                                                    <ComboBoxItem Content="{DynamicResource Adventure}"/>
+                                                </ComboBox>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{DynamicResource Punish}" VerticalAlignment="Center"/>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                    <Button Content="{DynamicResource kick}" Margin="0,0,10,0" Command="{Binding Command}" CommandParameter="KickPlayer"/>
+                                                    <Button Content="{DynamicResource ban}" Command="{Binding Command}" CommandParameter="BanPlayer" Margin="0,0,10,0"/>
+                                                    <Button Content="{DynamicResource banip}" Command="{Binding Command}" CommandParameter="BanIP"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{DynamicResource TeleportTo}" VerticalAlignment="Center"/>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                    <ComboBox Width="200" ItemsSource="{Binding lstPlayersWithoutSelected}" SelectedIndex="{Binding CBBTpPlayer}" DisplayMemberPath="Name"/>
+                                                    <Button Content="{DynamicResource teleport}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="Teleport" IsEnabled="{Binding TpIsAvailable}"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{DynamicResource SendMessage}" VerticalAlignment="Center"/>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                    <TextBox Width="230" Text="{Binding txtSendMessage, UpdateSourceTrigger=PropertyChanged}" x:Name="txtSendMessage">
+                                                        <TextBox.InputBindings>
+                                                            <KeyBinding Command="{Binding Command}" CommandParameter="SendMessage" Key="Enter"/>
+                                                        </TextBox.InputBindings>
+                                                    </TextBox>
+                                                    <Button Content="{DynamicResource send}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="SendMessage" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtSendMessage}"/>
+                                                </StackPanel>
+
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{DynamicResource effects}" VerticalAlignment="Center"/>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                    <ComboBox Width="230" SelectedIndex="{Binding CBBEffectIndex}">
+                                                        <ComboBoxItem Content="Speed"/>
+                                                        <ComboBoxItem Content="Slowness"/>
+                                                        <ComboBoxItem Content="Haste"/>
+                                                        <ComboBoxItem Content="Mining Fatigue"/>
+                                                        <ComboBoxItem Content="Strength"/>
+                                                        <ComboBoxItem Content="Instant Health"/>
+                                                        <ComboBoxItem Content="Instant Damage"/>
+                                                        <ComboBoxItem Content="Jump Boost"/>
+                                                        <ComboBoxItem Content="Nausea"/>
+                                                        <ComboBoxItem Content="Regeneration"/>
+                                                        <ComboBoxItem Content="Resistance"/>
+                                                        <ComboBoxItem Content="Fire Resistance"/>
+                                                        <ComboBoxItem Content="Water Breathing"/>
+                                                        <ComboBoxItem Content="Invisibility"/>
+                                                        <ComboBoxItem Content="Blindness"/>
+                                                        <ComboBoxItem Content="Night Vision"/>
+                                                        <ComboBoxItem Content="Hunger"/>
+                                                        <ComboBoxItem Content="Weakness"/>
+                                                        <ComboBoxItem Content="Poison"/>
+                                                        <ComboBoxItem Content="Wither"/>
+                                                    </ComboBox>
+                                                    <TextBlock Text="{DynamicResource duration}" VerticalAlignment="Center" Margin="20,0,10,0"/>
+                                                    <Controls:NumericUpDown Minimum="1" Value="{Binding NudDuration}"/>
+                                                    <Button Content="{DynamicResource apply}" Margin="10,0,0,0" Command="{Binding Command}" CommandParameter="ApplyEffect"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="XP:" VerticalAlignment="Center"/>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                    <Controls:NumericUpDown Value="{Binding NUDXpAmount}"/>
+                                                    <ComboBox Width="181" Margin="10,0,0,0" SelectedIndex="{Binding CBBXpTypeIndex}" IsEnabled="{Binding CBBXPIsEnabled}">
+                                                        <ComboBoxItem Content="{DynamicResource experience}"/>
+                                                        <ComboBoxItem Content="{DynamicResource experiencelevel}"/>
+                                                    </ComboBox>
+                                                    <Button Content="{DynamicResource apply}" Width="75" Margin="20,0,0,0" Command="{Binding Command}" CommandParameter="GiveXP"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem Header="{DynamicResource Inventory}" Style="{StaticResource UnderTab}">
+                                    <Grid>
+                                        <Grid.Resources>
+                                            <ResourceDictionary>
+                                                <ResourceDictionary.MergedDictionaries>
+                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                </ResourceDictionary.MergedDictionaries>
+                                            </ResourceDictionary>
+                                        </Grid.Resources>
+                                        <StackPanel Orientation="Vertical">
+                                            <DockPanel>
+                                                <my:PlayerInventoryControl Inventory="{Binding SelectedItem.Inventory, ElementName=lstPlayers}" DockPanel.Dock="Left" SelectedItem="{Binding ItemToChange}" SelectedIndex="{Binding ItemToChangeIndex}"/>
+                                                <StackPanel Orientation="Vertical">
+                                                    <GroupBox Header="{DynamicResource ChangeItem}" DockPanel.Dock="Right">
+                                                        <StackPanel Orientation="Vertical">
+                                                            <DockPanel LastChildFill="False">
+                                                                <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding NewSelectedItem, Converter={StaticResource ItemStackToImageConverter}}" Margin="5,0,0,0"/>
+                                                                <TextBlock Text="{Binding CurrentItemText}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                                <Button Content="..." Command="{Binding Command}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0"/>
+                                                            </DockPanel>
+                                                            <DockPanel Margin="0,5,0,0">
+                                                                <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
+                                                                <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                                                <Controls:NumericUpDown Minimum="1" Maximum="64" Value="{Binding NudItemAmount}" Margin="10,0,10,0" DockPanel.Dock="Right"/>
+                                                            </DockPanel>
+                                                            <Grid Margin="0,5,0,0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition />
+                                                                    <ColumnDefinition />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="{DynamicResource change}" Command="{Binding Command}" CommandParameter="ChangeItem" Margin="10,0,5,0"/>
+                                                                <Button Content="{DynamicResource remove}"  Command="{Binding Command}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0"/>
+                                                            </Grid>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                    <Button Content="{DynamicResource clear}" Command="{Binding Command}" CommandParameter="ClearInventory"/>
+                                                </StackPanel>
+                                            </DockPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <GroupBox Header="{DynamicResource GiveItem}">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{DynamicResource SelectItem}" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=":" VerticalAlignment="Center"/>
+                                                            <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding SelectedItem.Image}" Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding SelectedItem.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                            <Button Content="..." Command="{Binding Command}" CommandParameter="SelectItem" Width="30" Margin="5,0,0,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                            <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                            <Controls:NumericUpDown Maximum="64" Minimum="1" Value="{Binding ItemAmount}"/>
+                                                        </StackPanel>
+                                                        <Button Content="{DynamicResource give}" Command="{Binding Command}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{DynamicResource Server}">
+                <TabControl SelectedIndex="{Binding TabControlSettingsIndex}">
+                    <TabItem Header="{DynamicResource Informations}" Style="{StaticResource UnderTab}">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Margin" Value="0,10,0,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource bukkitversion}" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.BukkitVersion}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource version}"/>
+                                    <TextBlock Text=":" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.Version}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource playeramount}" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.OnlinePlayers.Count}"/>
+                                    <TextBlock Text="/"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.MaxPlayers}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource IP}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBox IsReadOnly="True" Text="{Binding MinecraftServer.FullIP, Mode=OneWay}" Width="206"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource offlineplayers}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.OfflinePlayers.Count}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <Grid Margin="10,40,0,0">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel>
+                                        <GroupBox Header="{DynamicResource Server}" Width="256">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Button Content="{DynamicResource reload}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="reload"/>
+                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="saveall"/>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="{DynamicResource time}" Width="212">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Button Content="{DynamicResource day}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timeday"/>
+                                                <Button Content="{DynamicResource night}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timenight"/>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="{DynamicResource weather}">
+                                            <StackPanel Orientation="Vertical">
+                                                <ComboBox Margin="10" Width="250" SelectedIndex="{Binding CBBWeatherIndex}">
+                                                    <ComboBoxItem Content="{DynamicResource rain}"/>
+                                                    <ComboBoxItem Content="{DynamicResource thunder}"/>
+                                                    <ComboBoxItem Content="{DynamicResource Wclear}"/>
+                                                </ComboBox>
+                                                <Button Content="{DynamicResource ChangeWeather}" Margin="10,0,10,10" Command="{Binding Command}" CommandParameter="chngweather"/>
+                                            </StackPanel>
+                                        </GroupBox>
+                                    </DockPanel>
+
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource announcement}"/>
+                                            <TextBlock Text=":" VerticalAlignment="Center"/>
+                                        </StackPanel>
+
+                                        <TextBox Margin="10,0,10,0" Text="{Binding txtAnnounce, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBroadcast" Grid.Column="1">
+                                            <TextBox.InputBindings>
+                                                <KeyBinding Key="Enter" Command="{Binding Command}" CommandParameter="Announce"/>
+                                                <KeyBinding Key="Return" Command="{Binding Command}" CommandParameter="Announce"/>
+                                            </TextBox.InputBindings>
+                                        </TextBox>
+                                        <Button Content="{DynamicResource send}" Command="{Binding Command}" CommandParameter="Announce" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtBroadcast}" Grid.Column="2"/>
+                                    </Grid>
+                                </StackPanel>
+
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource Serverlog}" Style="{StaticResource UnderTab}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TreeView ItemsSource="{Binding MinecraftServer.Serverlogs}" Grid.Column="0" x:Name="tvServerlogs">
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Serverlogs}">
+                                        <TextBlock Text="{Binding DateToString}" />
+                                        <HierarchicalDataTemplate.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Number}"/>
+                                            </DataTemplate>
+                                        </HierarchicalDataTemplate.ItemTemplate>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                            <TextBox Text="{Binding SelectedItem.Log, ElementName=tvServerlogs, Mode=OneWay}" Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource map}" Style="{StaticResource UnderTab}">
+                        <Grid>
+                            <DockPanel >
+                                <Menu DockPanel.Dock="Top">
+                                    <MenuItem Header="{DynamicResource render}" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="Render"/>
+                                    <MenuItem Header="{DynamicResource refresh}" Click="MenuItem_Click"/>
+                                    <MenuItem Header="{DynamicResource openInBrowser}" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="OpenInBrowser"/>
+                                </Menu>
+                                <WebBrowser Tag="{Binding MinecraftServer.Dynmap.BrowserURL}" x:Name="webDynmap" DockPanel.Dock="Bottom" Visibility="{Binding MinecraftServer.Dynmap.DynmapExists, Converter={StaticResource BToV}}"/>
+                            </DockPanel>
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Visibility="{Binding MinecraftServer.Dynmap.ShowDownloadWindow, Converter={StaticResource BToV}}" Background="White"  Height="100">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Es wird das Plugin 'Dynmap' benötigt" FontSize="20" FontWeight="Thin"/>
+                                    <Controls:MetroProgressBar Margin="0,10,0,10" Value="{Binding MinecraftServer.Dynmap.DownloadValue}"/>
+                                    <Button Content="Download" Width="200" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="Download" IsEnabled="{Binding MinecraftServer.Dynmap.DownloadIsEnabled}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource Banlist}" Style="{StaticResource UnderTab}">
+                        <Grid>
+                            <DockPanel>
+                                <ListBox Width="250" ItemsSource="{Binding MinecraftServer.Banlist.AllBans}" x:Name="lstBannedPlayers">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Text}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Grid>
+                                    <Grid Visibility="{Binding ElementName=lstBannedPlayers,Path=SelectedIndex,Converter={StaticResource SelectedIndexVisibl}}" Background="White">
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Light"/>
+                                            </Style>
+                                        </Grid.Resources>
+                                        <StackPanel Orientation="Vertical" Margin="10">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource playername}"/>
+                                                <TextBlock Text=":" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.Text, ElementName=lstBannedPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="{DynamicResource date}"/>
+                                                <TextBlock Text=":" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.CreatedFormatted, ElementName=lstBannedPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="{DynamicResource bansource}"/>
+                                                <TextBlock Text=":" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.source, ElementName=lstBannedPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="{DynamicResource expires}"/>
+                                                <TextBlock Text=":" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.expires, ElementName=lstBannedPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="{DynamicResource reason}"/>
+                                                <TextBlock Text=":" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.reason, ElementName=lstBannedPlayers}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="UUID:" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding SelectedItem.uuid, ElementName=lstBannedPlayers}"/>
+                                            </StackPanel>
+                                            <Button Content="{DynamicResource unban}" Margin="0,5,0,0" Width="200" HorizontalAlignment="Left" Command="{Binding UnBanPlayer}" CommandParameter="{Binding ElementName=lstBannedPlayers,Path=SelectedItem}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </DockPanel>
+                            <TextBlock Text="{DynamicResource noBannedPlayerFound}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Light" Visibility="{Binding MinecraftServer.Banlist.BannedPlayerNotFound, Converter={StaticResource BoolToVisibility}}"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Whitelist" Style="{StaticResource UnderTab}">
+                        <Grid>
+                            <DockPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="75"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Text="" Controls:TextboxHelper.Watermark="{DynamicResource playername}" Margin="0,0,10,0" x:Name="txtAddWhitelist"/>
+                                        <Button Content="{DynamicResource add}" Grid.Column="1" IsEnabled="{Binding ElementName=txtAddWhitelist,Path=Text,Converter={StaticResource FalseOnEmptyString}}" Command="{Binding AddPlayerToWhitelist}" CommandParameter="{Binding ElementName=txtAddWhitelist}"/>
+                                    </Grid>
+                                    <ListBox ItemsSource="{Binding MinecraftServer.Whitelist.Whitelist}" x:Name="lstWhitelist" Width="250" SelectedItem="{Binding WhitelistPlayer}" Margin="0,10,0,0">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding name}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="10" Visibility="{Binding ElementName=lstWhitelist,Path=SelectedIndex,Converter={StaticResource SelectedIndexVisibl}}">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                                            <Setter Property="FontSize" Value="14"/>
+                                            <Setter Property="FontWeight" Value="Light"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource Name}"/>
+                                        <TextBlock Text=":" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding SelectedItem.name, ElementName=lstWhitelist}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="UUID:" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding SelectedItem.uuid, ElementName=lstWhitelist}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DockPanel>
+                            <TextBlock Text="{DynamicResource noWhitelistedPlayerfound}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Light" Visibility="{Binding MinecraftServer.Whitelist.WhitelistedPlayerNotFound, Converter={StaticResource BoolToVisibility}}"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource Settings}" Style="{StaticResource UnderTab}">
+                        <Grid>
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel.Resources>
+                                        <ResourceDictionary>
+                                            <ResourceDictionary.MergedDictionaries>
+                                                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                            </ResourceDictionary.MergedDictionaries>
+                                            <Style TargetType="{x:Type Controls:NumericUpDown}">
+                                                <Setter Property="Width" Value="100"/>
+                                            </Style>
+                                            <Style TargetType="{x:Type DockPanel}">
+                                                <Setter Property="LastChildFill" Value="False"/>
+                                                <Setter Property="Margin" Value="0,0,0,10"/>
+                                            </Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </StackPanel.Resources>
+                                    <StackPanel Orientation="Vertical">
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource allow-flight}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource allow-flight_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.AllowFlight}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource allow-nether}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource allow-nether_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.AllowNether}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource announce-player-achievements}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource announce-player-archivements_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.AnnouncePlayerAchievements}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource difficulty}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource difficulty_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <ComboBox SelectedIndex="{Binding MinecraftServer.ServerSettings.Difficulty}" DockPanel.Dock="Right">
+                                                <ComboBoxItem Content="{DynamicResource difficultyPeaceful}"/>
+                                                <ComboBoxItem Content="{DynamicResource difficultyEasy}"/>
+                                                <ComboBoxItem Content="{DynamicResource difficultyNormal}"/>
+                                                <ComboBoxItem Content="{DynamicResource difficultyHard}"/>
+                                            </ComboBox>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource enable-query}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource enable-query_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.EnableQuery}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource enable-rcon}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource enable-rcon_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.EnableRcon}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource enable-command-block}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource enable-command-block_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.EnableCommandBlock}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource force-gamemode}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource force-gamemode_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.ForceGamemode}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource Gamemode}" VerticalAlignment="Center">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource gamemode_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <ComboBox SelectedIndex="{Binding MinecraftServer.ServerSettings.GameMode}" DockPanel.Dock="Right">
+                                                <ComboBoxItem Content="{DynamicResource Survival}"/>
+                                                <ComboBoxItem Content="{DynamicResource Creative}"/>
+                                                <ComboBoxItem Content="{DynamicResource Adventure}"/>
+                                                <ComboBoxItem Content="{DynamicResource Spectator}"/>
+                                            </ComboBox>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource generate-structures}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource generate-structures_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.GenerateStructures}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Margin="50,0,0,0">
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock Text="{DynamicResource generator-settings}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource generator-settings_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBox DockPanel.Dock="Right" Text="{Binding MinecraftServer.ServerSettings.GeneratorSettings, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock Text="{DynamicResource level-name}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource level-name_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBox DockPanel.Dock="Right" Text="{Binding MinecraftServer.ServerSettings.LevelName, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock Text="{DynamicResource level-seed}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource level-seed_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBox DockPanel.Dock="Right" Text="{Binding MinecraftServer.ServerSettings.LevelSeed, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource level-type}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource level-type_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <ComboBox SelectedIndex="{Binding MinecraftServer.ServerSettings.LevelType}" DockPanel.Dock="Right" Width="100">
+                                                <ComboBoxItem Content="DEFAULT"/>
+                                                <ComboBoxItem Content="FLAT"/>
+                                                <ComboBoxItem Content="LARGEBIOMES"/>
+                                                <ComboBoxItem Content="AMPLIFIED"/>
+                                                <ComboBoxItem Content="CUSTOMIZED"/>
+                                            </ComboBox>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource max-build-height}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource max-build-height_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.MaxBuildHeight}" Minimum="1" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource max-players}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource max-players_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.MaxPlayers}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock Text="{DynamicResource motd}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource motd_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBox Text="{Binding MinecraftServer.ServerSettings.MODT, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource online-mode}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource online-mode_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.OnlineMode}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource op-permission-level}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource op-permission-level_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.OpPermission}" DockPanel.Dock="Right" Minimum="1" Maximum="4"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource player-idle-timeout}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource player-idle-timeout_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.PlayerIdleTimeout}" DockPanel.Dock="Right" Minimum="0" Maximum="200000000"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Margin="50,0,0,0.053" Width="224">
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource pvp}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource pvp_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.PVP}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock Text="{DynamicResource server-ip}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource server-ip_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBox Text="{Binding MinecraftServer.ServerSettings.ServerIP, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource server-port}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource server-port_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.ServerPort}" DockPanel.Dock="Right" Maximum="65534" Minimum="1"/>
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock Text="{DynamicResource server-name}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource server-name_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <TextBox Text="{Binding MinecraftServer.ServerSettings.ServerName, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource spawn-animals}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource spawn-animals_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.SpawnAnimals}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource spawn-monsters}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource spawn-monsters_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.SpawnMonsters}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource spawn-npcs}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource spawn-npcs_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.SpawnNPCs}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource spawn-protection}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource spawn-protection_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.SpawnProtection}" Minimum="0" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="{DynamicResource view-distance}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource view-distance_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:NumericUpDown Value="{Binding MinecraftServer.ServerSettings.ViewDistance}" Minimum="3" DockPanel.Dock="Right" Maximum="15"/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0">
+                                            <TextBlock Text="{DynamicResource white-list}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock my:TextBlockBehaviour.FormattedText="{DynamicResource white-list_tt}"/>
+                                                </TextBlock.ToolTip>
+										</TextBlock>
+                                            <Controls:ToggleSwitchButton IsChecked="{Binding MinecraftServer.ServerSettings.Whitelist}" DockPanel.Dock="Right"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="{DynamicResource SaveSettings}" FontSize="9" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Bottom"  />
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Plugins" Style="{StaticResource UnderTab}">
+                        <DockPanel>
+                            <ListBox Width="240" x:Name="lstPlugins" ItemsSource="{Binding MinecraftServer.lstPlugins}" SelectedIndex="{Binding lstPluginsIndex}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Grid>
+                                <Button HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Command="{Binding Command}" CommandParameter="DownloadPlugins" Content="{DynamicResource DownloadPlugins}"/>
+                                <StackPanel Orientation="Vertical" Margin="10" Visibility="{Binding GridPluginsIsVisibility}">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Setter Property="Margin" Value="0,10,0,0"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <TextBlock Text="{Binding SelectedItem.Name, ElementName=lstPlugins}" FontSize="20" FontFamily="Segoe UI Light"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource description}"/>
+                                        <TextBlock Text=":" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding SelectedItem.Description, ElementName=lstPlugins}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource version}"/>
+                                        <TextBlock Text=":" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding SelectedItem.Version, ElementName=lstPlugins}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource website}"/>
+                                        <TextBlock Text=":" Margin="0,0,10,0"/>
+                                        <TextBlock><Hyperlink RequestNavigate="Hyperlink_RequestNavigate"><Hyperlink.NavigateUri>
+												<Binding Path="SelectedItem.Website" ElementName="lstPlugins">
+													<Binding.TargetNullValue>www.google.de</Binding.TargetNullValue>
+												</Binding>
+											</Hyperlink.NavigateUri><InlineUIContainer>
+												<TextBlock Text="{Binding SelectedItem.Website, ElementName=lstPlugins}"/>
+											</InlineUIContainer></Hyperlink></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource authors}"/>
+                                        <TextBlock Text=":" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding SelectedItem.Authors, Converter={StaticResource lstOfStringToString}, ElementName=lstPlugins}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource Enabled}"/>
+                                        <TextBlock Text=":" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding SelectedItem.Enabled, Converter={StaticResource BooleanToStringConverter}, ElementName=lstPlugins}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="{DynamicResource Settings}">
+                <TabControl TabStripPlacement="Left">
+                    <TabItem Style="{StaticResource VerticalTabItem}" Header="{DynamicResource General}">
+                        <StackPanel Orientation="Vertical" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Ram:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <ComboBox DisplayMemberPath="Text" Width="100" ItemsSource="{Binding MinecraftServer.LauncherSettings.lstRam}" SelectedItem="{Binding MinecraftServer.LauncherSettings.Ram, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Image VerticalAlignment="Center" Margin="10,0,0,0" Source="resources/info.png" ToolTipService.ShowDuration="10000" ToolTip="{DynamicResource RamToolTip}" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Stretch="Uniform" Width="20" Height="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource Language}" VerticalAlignment="Center"/>
+                                <TextBlock Text=":" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox Width="150" ItemsSource="{Binding MinecraftServer.LauncherSettings.lstLanguages}" SelectedItem="{Binding MinecraftServer.LauncherSettings.ActivLanguage, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="20" Height="20" DockPanel.Dock="Right" Source="{Binding Icon}"/>
+                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                                <CheckBox Content="{DynamicResource AlwaysAskIfSaveChanges}" IsChecked="{Binding MinecraftServer.LauncherSettings.AskSaveSettings}"/>
+                                <CheckBox Content="{DynamicResource SaveServerBeforClose}" Margin="0,5,0,0" IsChecked="{Binding MinecraftServer.LauncherSettings.StopServerOnClose}"/>
+                                <CheckBox Content="{DynamicResource IntelliSenseIsEnabled}" IsChecked="{Binding MinecraftServer.LauncherSettings.IntelliSenseIsEnabled}" Margin="0,5,0,0"/>
+                                <CheckBox Content="{DynamicResource IntelliSenseInfoBoxIsEnabled}" IsChecked="{Binding MinecraftServer.LauncherSettings.EnableIntelliSenseInfoBox}" Margin="0,5,0,0"/>
+                                <StackPanel Orientation="Horizontal"  Margin="0,5,0,0">
+                                    <TextBlock Text="{DynamicResource RefreshInterval}" VerticalAlignment="Center"/>
+                                    <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <Controls:NumericUpDown Maximum="60000" Minimum="1" Value="{Binding MinecraftServer.LauncherSettings.RefreshInterval}"/>
+                                    <TextBlock Text="{DynamicResource millisecounds}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource Timer}" Style="{StaticResource VerticalTabItem}">
+                        <DockPanel>
+                            <ListView Width="400" ItemsSource="{Binding MinecraftServer.LauncherSettings.Timers}" ctrl:ListViewLayoutManager.Enabled="true" SelectedItem="{Binding SelectedTimer,Mode=OneWayToSource}">
+                                <ListView.InputBindings>
+                                    <KeyBinding Key="Delete" Command="{Binding Command}" CommandParameter="RemoveSelectedTimer"/>
+                                </ListView.InputBindings>
+                                <ListView.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="{DynamicResource remove}" Command="{Binding Command}" CommandParameter="RemoveSelectedTimer"/>
+                                    </ContextMenu>
+                                </ListView.ContextMenu>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="{DynamicResource Name}" DisplayMemberBinding="{Binding Name}" ctrl:ProportionalColumn.Width="1"/>
+                                        <GridViewColumn Header="{DynamicResource description}" ctrl:ProportionalColumn.Width="1">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding TaskDescription}" Margin="3"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="{DynamicResource Enabled}" ctrl:FixedColumn.Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <metro:ToggleSwitch IsChecked="{Binding IsEnabled}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="{DynamicResource Edit}" Margin="2" Command="{Binding EditCommand}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <StackPanel Orientation="Vertical">
+                                <GroupBox Header="Befehl ausführen">
+                                    <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Setter Property="Margin" Value="0,0,0,10"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource Name}" VerticalAlignment="Center"/>
+                                                <TextBlock Text=":" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBox Grid.Column="1" Text="{Binding TimerName, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource Command}" VerticalAlignment="Center"/>
+                                                <TextBlock Text=":" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBox Grid.Column="1" Text="{Binding TimerCommand, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource Interval}" VerticalAlignment="Center"/>
+                                                <TextBlock Text=":" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                <Controls:NumericUpDown Width="80" HorizontalAlignment="Left" Minimum="1" Value="{Binding TimerInterval}"/>
+                                                <TextBlock Text="{DynamicResource Secounds}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Button Content="{DynamicResource add}" IsEnabled="{Binding CanAddTimer}" Command="{Binding Command}" CommandParameter="AddTimer"/>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="{DynamicResource BackupTimer}">
+                                    <StackPanel Orientation="Vertical" Margin="10">
+                                        <Button Content="{DynamicResource CreateBackupTimer}" Command="{Binding Command}" CommandParameter="CreateBackupTimer"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource Backups}" Style="{StaticResource VerticalTabItem}">
+                        <Grid Margin="0,5,5,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel LastChildFill="True">
+                                <ListView ItemsSource="{Binding MinecraftServer.BackupManager.BackupList}" ctrl:ListViewLayoutManager.Enabled="true" Width="250" x:Name="lstBackups" SelectedIndex="{Binding BackupSelectedIndex}">
+                                    <ListView.InputBindings>
+                                        <KeyBinding Key="Delete" Command="{Binding Command}" CommandParameter="RemoveSelectedBackup"/>
+                                    </ListView.InputBindings>
+                                    <ListView.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="{DynamicResource remove}" Command="{Binding Command}" CommandParameter="RemoveSelectedBackup"/>
+                                        </ContextMenu>
+                                    </ListView.ContextMenu>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="{DynamicResource date}" DisplayMemberBinding="{Binding CreateDate,StringFormat='dd.MM.yyyy HH:mm:ss'}" ctrl:ProportionalColumn.Width="2"/>
+                                            <GridViewColumn Header="{DynamicResource size}" DisplayMemberBinding="{Binding BackupSizeToString}" ctrl:ProportionalColumn.Width="1"/>
+                                            <GridViewColumn Header="{DynamicResource files}" DisplayMemberBinding="{Binding BackupFilesCount}" ctrl:FixedColumn.Width="70"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Grid Margin="10,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <TreeView ItemsSource="{Binding ElementName=lstBackups,Path=SelectedItem.BackupFiles}" Grid.Row="0" IsEnabled="{Binding BackupIsNotBusy}">
+                                        <TreeView.Resources>
+                                            <my:BackupImageConverter x:Key="BackupToImage"/>
+                                        </TreeView.Resources>
+                                        <TreeView.ItemTemplate>
+                                            <HierarchicalDataTemplate ItemsSource="{Binding BackupFiles}">
+                                                <CheckBox IsChecked="{Binding IsChecked}">
+                                                    <CheckBox.Content>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="{Binding Converter={StaticResource BackupToImage}}" Width="16" Height="16"/>
+                                                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}"/>
+                                                        </StackPanel>
+                                                    </CheckBox.Content>
+                                                </CheckBox>
+                                            </HierarchicalDataTemplate>
+                                        </TreeView.ItemTemplate>
+                                    </TreeView>
+                                    <DockPanel Grid.Row="1" IsEnabled="{Binding BackupIsNotBusy}">
+                                        <StackPanel Orientation="Vertical" IsEnabled="{Binding ElementName=lstBackups,Path=SelectedIndex,Converter={StaticResource SelectedIndexToBool}}">
+                                            <Button Content="{DynamicResource RestoreSelectedFiles}" Margin="5" Command="{Binding Command}" CommandParameter="RestoreBackup">
+                                                <Button.IsEnabled>
+                                                    <Binding ElementName="lstBackups" Path="SelectedItem.SomethingIsChecked" TargetNullValue="False"/>
+                                                </Button.IsEnabled>
+                                            </Button>
+                                            <CheckBox Content="{DynamicResource BackupFilesFirst}" Margin="5,0,0,0" IsChecked="{Binding MinecraftServer.LauncherSettings.BackupFilesFirst}"/>
+                                        </StackPanel>
+
+                                        <Button Content="{DynamicResource CreateNewBackup}" Margin="5" Command="{Binding Command}" CommandParameter="CreateNewBackup"/>
+                                    </DockPanel>
+                                </Grid>
+                            </DockPanel>
+                            <DockPanel Grid.Row="1">
+                                <TextBlock Text="{Binding BackupStatus}" Margin="5,0,5,0" VerticalAlignment="Center"/>
+                                <Controls:MetroProgressBar Value="{Binding MinecraftServer.BackupManager.Progress}" IsIndeterminate="{Binding BackupIsWorking}"/>
+                            </DockPanel>
+
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource About}" Style="{StaticResource VerticalTabItem}">
+                        <StackPanel Orientation="Vertical" Margin="10">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="0,5,0,0"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Text="Minecraft Server Launcher" FontSize="20" FontWeight="Light"/>
+                            <ScrollViewer ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{DynamicResource ProgrammedBy}" Margin="0,10,0,0"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <TextBlock Text="{DynamicResource UsedLibaries}"/>
+                                        <TextBlock Text=":"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://mahapps.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">MahApps.Metro</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://elysium.asvishnyakov.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Elysium</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://james.newtonking.com/json" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Json.Net</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://james.newtonking.com/json" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Exceptionless</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://blogs.msdn.com/b/wpfsdk/archive/2006/05/25/606317.aspx" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">HTMLConverter</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://www.codeproject.com/Articles/25058/ListView-Layout-Manager" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">ListView Layout Manager</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://dev.bukkit.org/bukkit-plugins/swiftapi/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">SwiftAPI</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://icsharpcode.github.io/SharpZipLib/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">SharpZipLib</Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <TextBlock Text="{DynamicResource GraficsFrom}"/>
+                                        <TextBlock Text=":"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://designmodo.com" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Designmodo</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://linhpham.me/miu/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Linhpham</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://www.danilodemarco.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">danilo de marco</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock>
+                                <Hyperlink NavigateUri="http://www.visualpharm.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">visualpharm</Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                            
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="White" Visibility="{Binding IsClosing,Converter={StaticResource BoolToVisibility}}">
+            <Border BorderThickness="1" BorderBrush="Black">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{DynamicResource StoppingServer}" Margin="10"/>
+                    <Controls:MetroProgressBar IsIndeterminate="True" Margin="0,0,0,5"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

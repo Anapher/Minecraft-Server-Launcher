@@ -1,0 +1,42 @@
+﻿<Controls:MetroWindow x:Class="frmSelectItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    DataContext="{x:Static my:ItemSelectionViewModel.Instance}" GlowBrush="LightBlue"
+    Title="{DynamicResource frmSelectItemTitle}" SizeToContent="WidthAndHeight"  ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <TextBox Margin="10" Width="363" Text="{Binding txt,UpdateSourceTrigger=PropertyChanged}" Controls:TextboxHelper.Watermark="Suche..."/>
+            <RadioButton Content="{DynamicResource Name}" Margin="10" IsChecked="{Binding radName,UpdateSourceTrigger=PropertyChanged}"/>
+            <RadioButton Content="{DynamicResource ID}" Margin="10" IsChecked="{Binding radID,UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="{DynamicResource OK}" Margin="10" Width="84" IsEnabled="{Binding OkIsEnabled}" IsDefault="True" my:ButtonHelper.DialogResult="True"/>
+        </StackPanel>
+        <ListView ItemsSource="{Binding Items,IsAsync=True}" Height="255" SelectedIndex="{Binding lstIndex}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="24" Height="24" Source="{Binding Image}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{DynamicResource ID}" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding IDToString}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Hex" DisplayMemberBinding="{Binding Path=Hex}"/>
+                    <GridViewColumn Header="{DynamicResource Name}" DisplayMemberBinding="{Binding Path=Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </StackPanel>
+</Controls:MetroWindow>

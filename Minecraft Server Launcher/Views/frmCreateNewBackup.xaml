@@ -1,0 +1,30 @@
+﻿<Controls:MetroWindow x:Class="frmCreateNewBackup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="window"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    GlowBrush="LightBlue" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+    Title="{DynamicResource CreateNewBackup}" Height="370" Width="633">
+    <DockPanel>
+        <TreeView ItemsSource="{Binding ElementName=window,Path=Backup.BackupFiles}" Grid.Row="0" Width="400">
+            <TreeView.Resources>
+                <my:BackupImageConverter x:Key="BackupToImage"/>
+            </TreeView.Resources>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding BackupFiles}">
+                    <CheckBox IsChecked="{Binding IsChecked}">
+                        <CheckBox.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Converter={StaticResource BackupToImage}}" Width="16" Height="16"/>
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Name}"/>
+                            </StackPanel>
+                        </CheckBox.Content>
+                    </CheckBox>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <StackPanel Margin="10">
+            <Button Content="{DynamicResource CreateBackup}" Command="{Binding ElementName=window,Path=CreateBackupCommand}" IsEnabled="{Binding ElementName=window,Path=Backup.SomethingIsChecked}"/>
+        </StackPanel>
+    </DockPanel>
+</Controls:MetroWindow>

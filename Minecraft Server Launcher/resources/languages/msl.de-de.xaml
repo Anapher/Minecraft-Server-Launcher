@@ -1,0 +1,341 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <!-- Generell -->
+    <System:String x:Key="Yes">Ja</System:String>
+    <System:String x:Key="No">Nein</System:String>
+    <System:String x:Key="apply">Anwenden</System:String>
+    <System:String x:Key="search">Suchen</System:String>
+    
+    <!-- Header -->
+    <System:String x:Key="Console">Konsole</System:String>
+    <System:String x:Key="Actions">Aktionen</System:String>
+    <System:String x:Key="Server">Server</System:String>
+    <System:String x:Key="Settings">Einstellungen</System:String>
+
+    <!-- IntelliTextbox -->
+    <System:String x:Key="CommandsFound">Gefundene Commands: {0}</System:String>
+    
+    <!-- Aktionen -->
+    <System:String x:Key="Informations">Informationen</System:String>
+    <System:String x:Key="Commands">Befehle</System:String>
+    <System:String x:Key="Inventory">Inventar</System:String>
+    
+    <!-- Informationen -->
+    <System:String x:Key="generalInformations">Allgemeine Informationen</System:String>
+    <System:String x:Key="lastPlayed">Letztes mal Online</System:String>
+    <System:String x:Key="firstPlayed">Erstes mal Online</System:String>
+    <System:String x:Key="IP">IP</System:String>
+    <System:String x:Key="Port">Port</System:String>
+
+    <System:String x:Key="Current">Aktuell</System:String>
+    <System:String x:Key="Health">Leben</System:String>
+    <System:String x:Key="FoodLevel">Nahrung</System:String>
+    <System:String x:Key="Level">Level</System:String>
+    <System:String x:Key="levelProgress">Level Fortschritt</System:String>
+    <System:String x:Key="location">Standort</System:String>
+    <System:String x:Key="exhaustion">Erschöpfung</System:String>
+
+    <System:String x:Key="status">Status</System:String>
+    <System:String x:Key="isSleeping">Schläft</System:String>
+    <System:String x:Key="isInVehicle">Ist im Fahrzeug</System:String>
+    <System:String x:Key="isSneaking">Schleicht</System:String>
+    <System:String x:Key="isSprinting">Sprintet</System:String>
+    <System:String x:Key="isOp">Ist Operator</System:String>
+
+    <!-- Commands -->
+    <System:String x:Key="Gamemode">Spielmodus</System:String>
+    <System:String x:Key="Survival">Überlebensmodus</System:String>
+    <System:String x:Key="Creative">Kreativ-Modus</System:String>
+    <System:String x:Key="Adventure">Abenteuermodus</System:String>
+    <System:String x:Key="Spectator">Beobachtermodus</System:String>
+    <System:String x:Key="TeleportTo">Teleportieren zu:</System:String>
+    <System:String x:Key="Punish">Bestrafen:</System:String>
+    <System:String x:Key="kick">Kicken</System:String>
+    <System:String x:Key="ban">Bannen</System:String>
+    <System:String x:Key="teleport">Teleportieren</System:String>
+    <System:String x:Key="SendMessage">Nachricht senden:</System:String>
+    <System:String x:Key="send">Senden</System:String>
+    <System:String x:Key="effects">Effekte</System:String>
+    <System:String x:Key="duration">Dauer</System:String>
+    <System:String x:Key="experience">Erfahrung</System:String>
+    <System:String x:Key="experiencelevel">Erfahrungslevel</System:String>
+    <System:String x:Key="banip">IP bannen</System:String>
+    
+    <!-- Inventar -->
+    <System:String x:Key="ClearInventory">Inventar leeren</System:String>
+    <System:String x:Key="clear">Leeren</System:String>
+    <System:String x:Key="GiveItem">Item geben</System:String>
+    <System:String x:Key="SelectItem">Item auswählen</System:String>
+    <System:String x:Key="amount">Anzahl</System:String>
+    <System:String x:Key="give">Geben</System:String>
+    <System:String x:Key="ChangeItem">Item verändern</System:String>
+    <System:String x:Key="change">Verändern</System:String>
+    <System:String x:Key="remove">Löschen</System:String>
+    
+    <System:String x:Key="UnknownItem">Unbekanntes Item</System:String>
+    <System:String x:Key="Durability">Haltbarkeit</System:String>
+    <System:String x:Key="enchantments">Verzauberungen</System:String>
+    
+    <!-- Server -->
+    <System:String x:Key="Serverlog">Serverlog</System:String>
+    <System:String x:Key="map">Karte</System:String>
+    <System:String x:Key="Banlist">Bann Liste</System:String>
+
+    <!-- Informationen -->
+    <System:String x:Key="bukkitversion">Bukkit Version:</System:String>
+    <System:String x:Key="version">Version</System:String>
+    <System:String x:Key="playeramount">Spieleranzahl:</System:String>
+    <System:String x:Key="offlineplayers">Abwesende Spieleranzahl:</System:String>
+    <System:String x:Key="reload">Reload</System:String>
+    <System:String x:Key="saveworld">Welt speichern</System:String>
+    <System:String x:Key="time">Zeit</System:String>
+    <System:String x:Key="day">Tag</System:String>
+    <System:String x:Key="night">Nacht</System:String>
+    <System:String x:Key="weather">Wetter</System:String>
+    <System:String x:Key="rain">Regen</System:String>
+    <System:String x:Key="thunder">Gewitter</System:String>
+    <System:String x:Key="Wclear">Klar</System:String>
+    <System:String x:Key="ChangeWeather">Wetter ändern</System:String>
+    <System:String x:Key="announcement">Ankündigung</System:String>
+
+    <!-- Karte -->
+    <System:String x:Key="render">Rendern</System:String>
+    <System:String x:Key="refresh">Aktualisieren</System:String>
+    <System:String x:Key="openInBrowser">In Browser öffnen</System:String>
+
+    <!-- Bann Liste -->
+    <System:String x:Key="noBannedPlayerFound">Es wurden keine Spieler gebannt</System:String>
+    <System:String x:Key="playernameip">Spielername/IP</System:String>
+    <System:String x:Key="playername">Spielername</System:String>
+    <System:String x:Key="date">Datum</System:String>
+    <System:String x:Key="bansource">Gebannt von</System:String>
+    <System:String x:Key="expires">Ablauf</System:String>
+    <System:String x:Key="reason">Grund</System:String>
+    <System:String x:Key="unban">Entbannen</System:String>
+
+    <!-- Whitelist -->
+    <System:String x:Key="noWhitelistedPlayerfound">Es wurden keine Spieler gefunden</System:String>
+    
+    <!-- Einstellungen -->
+    <System:String x:Key="allow-flight">Fliegen erlauben:</System:String>
+    <System:String x:Key="allow-flight_tt">Erlaubt es Spielern auch im Überlebensmodus zu fliegen, sofern diese eine Mod zum Fliegen installiert haben. Wenn diese Option aktiviert ist,&lt;LineBreak/&gt;wird kann es mehr Griefing geben, weil dies durch Fliegen vereinfacht wird. Im Kreativ-Modus hat die Option keine Auswirkung.</System:String>
+
+    <System:String x:Key="allow-nether">Nether erlauben:</System:String>
+    <System:String x:Key="allow-nether_tt">Erlaubt es Spielern in den Nether zu reisen.</System:String>
+
+    <System:String x:Key="announce-player-achievements">Öffentliche Erfolgsnachrichten:</System:String>
+    <System:String x:Key="announce-player-archivements_tt">Erzielt ein Spieler einen Erfolg, erhalten die anderen Spieler eine Nachricht.</System:String>
+
+    <System:String x:Key="difficulty">Schwierigkeitsgrad:</System:String>
+    <System:String x:Key="difficulty_tt">Definiert den Schwierigkeitsgrad auf dem Server.</System:String>
+
+    <System:String x:Key="difficultyPeaceful">Friedlich</System:String>
+    <System:String x:Key="difficultyEasy">Einfach</System:String>
+    <System:String x:Key="difficultyNormal">Normal</System:String>
+    <System:String x:Key="difficultyHard">Schwer</System:String>
+
+    <System:String x:Key="enable-query">Query aktivieren:</System:String>
+    <System:String x:Key="enable-query_tt">Wenn diese Option aktiviert ist, können Informationen über den Server von außen abgefragt werden.&lt;LineBreak/&gt;Das Datenformat ist GameSpy4 und wird hier erläutert: http://wiki.vg/Query. Wenn man ein entsprechendes&lt;LineBreak/&gt;PHP-Skript programmiert, kann man z.B. auf einer Webseite anzeigen, welche Spieler auf dem Server aktiv sind.</System:String>
+
+    <System:String x:Key="enable-rcon">Rcon aktivieren:</System:String>
+    <System:String x:Key="enable-rcon_tt">Aktiviert den Fernzugriff für die Server-Konsole&lt;Italic&gt; (rcon = remote control)&lt;/Italic&gt;. Das Protokoll wird hier erläutert: http://wiki.vg/Rcon.</System:String>
+
+    <System:String x:Key="enable-command-block">Befehlsblock aktivieren:</System:String>
+    <System:String x:Key="enable-command-block_tt">Aktiviert/deaktiviert den Befehlsblock.</System:String>
+
+    <System:String x:Key="force-gamemode">Force Gamemode:</System:String>
+    <System:String x:Key="force-gamemode_tt">Legt fest, in welchem Spielmodus die Spieler dem Server beitreten.&lt;LineBreak/&gt;&lt;Italic&gt;&lt;Bold&gt;false&lt;/Bold&gt; - Spieler werden bei Serverbeitritt in dem Spielmodus sein, in dem sie den Server verlassen haben.&lt;/Italic&gt;&lt;LineBreak/&gt;&lt;Bold&gt;true&lt;/Bold&gt;&lt;Italic&gt;- Spieler werden bei Serverbeitritt immer im Standardspielmodus sein, der mit der Option gamemode festgelegt ist.&lt;/Italic&gt;</System:String>
+
+    <System:String x:Key="generate-structures">Strukturen:</System:String>
+    <System:String x:Key="generate-structures_tt">Definiert, ob Gebäude (wie NPC-Dörfer) generiert werden.</System:String>
+
+    <System:String x:Key="generator-settings">Generierungseinsellungen:</System:String>
+    <System:String x:Key="generator-settings_tt">Definiert die Einstellungen zur Generierung von Flachland- und Neu mit Version 1.8: Angepasst-Welten. Beispiele siehe jeweils dort.</System:String>
+
+    <System:String x:Key="level-name">Level-Name:</System:String>
+    <System:String x:Key="level-name_tt">Der Name der Welt und des Ordners, wo sie gespeichert wird. Es ist auch möglich, hier einen Pfad anzugeben,&lt;LineBreak/&gt; z. B. worlds/worldname/worlddataname, hierbei sind "worlds" und "worldname" Unterordner. "worldname" steht&lt;LineBreak/&gt; für den Dateinamen unter dem die Welt gespeichert werden soll. So ist es möglich, mehrere Welten zu speichern&lt;LineBreak/&gt; (oder den Server-Ordner besser zu sortieren). Sonderzeichen wie ' (Apostroph) müssen eventuell durch einen Backslash&lt;LineBreak/&gt; (\) vor ihnen markiert werden.</System:String>
+
+    <System:String x:Key="level-seed">Level-Seed:</System:String>
+    <System:String x:Key="level-seed_tt">Legt den Startwert für die Welt fest.</System:String>
+
+    <System:String x:Key="level-type">Level-Type:</System:String>
+    <System:String x:Key="level-type_tt">Bestimmt den Welttyp. ACHTUNG! Nach einer Änderung dieser Option sollte eine neue Serverwelt gestartet werden.&lt;LineBreak/&gt;Falls die Welt beibehalten wird, kommt es zu unerwünschten Schnitten in der Landschaft, an allen Stellen,&lt;LineBreak/&gt;an denen neue Chunks generiert werden.</System:String>
+
+    <System:String x:Key="max-build-height">Maximale Bauhöhe:</System:String>
+    <System:String x:Key="max-build-height_tt">Die maximale Höhe, in der gebaut werden kann. Der Weltgenerator beachtet diese Höhe nicht.</System:String>
+
+    <System:String x:Key="max-players">Maximale Spieleranzahl:</System:String>
+    <System:String x:Key="max-players_tt">Die maximale Anzahl an Spielern, die gleichzeitig auf diesem Server spielen können. Je mehr Spieler auf einem&lt;LineBreak/&gt;Server sind, desto mehr Leistung benötigt dieser Server.</System:String>
+
+    <System:String x:Key="motd">Motd</System:String>
+    <System:String x:Key="motd_tt">Ein Text, der in der Serverliste unter dem Namen des Servers angezeigt wird (motd = &lt;Italic&gt;Message of the Day&lt;/Italic&gt;).</System:String>
+
+    <System:String x:Key="online-mode">Online-Mode:</System:String>
+    <System:String x:Key="online-mode_tt">Wenn diese Option aktiviert ist, vergleicht der Server jeden Spieler, der sich verbinden will, mit der Datenbank von Mojang.&lt;LineBreak/&gt;Diese Option sollte nur auf &lt;Italic&gt;false&lt;/Italic&gt; gesetzt werden, wenn der Server nicht mit dem Internet verbunden ist und wenn keine &lt;LineBreak/&gt;&lt;Italic&gt;White-List&lt;/Italic&gt; existiert (siehe Option &lt;Italic&gt;white-list&lt;/Italic&gt;). Die Option &lt;Italic&gt;online-mode&lt;/Italic&gt; dient der Sicherheit, denn es wird geprüft, ob der &lt;LineBreak/&gt;Spieler einen gültigen Account hat. Fake-Accounts werden damit aufgedeckt. Server deren &lt;Italic&gt;online-mode&lt;/Italic&gt; auf &lt;Italic&gt;false&lt;/Italic&gt; steht, werden &lt;LineBreak/&gt;"cracked" Server genannt.</System:String>
+
+    <System:String x:Key="op-permission-level">Operatoren Berechtigungslevel:</System:String>
+    <System:String x:Key="op-permission-level_tt">Bestimmt das Berechtigungslevel für alle Operatoren des Servers.&lt;LineBreak/&gt;&lt;Bold&gt;1&lt;/Bold&gt; - Operatoren mit Level 1 können Veränderungen im ansonsten geschützen Spawnbereich vornehmen.&lt;LineBreak/&gt;&lt;Bold&gt;2&lt;/Bold&gt; - Operatoren mit Level 2 können Befehlsblöcke editieren und alle Cheat-Befehle ausführen außer denen von Level 3 und 4.&lt;LineBreak/&gt;&lt;Bold&gt;3&lt;/Bold&gt; - Operatoren mit Level 3 können die Server-Befehle zur Spielersanktion (Befehl /kick, Befehl /ban etc.) und zur Ernennung weiter Operatoren (Befehl /op) ausführen.&lt;LineBreak/&gt;&lt;Bold&gt;4&lt;/Bold&gt; - Operatoren mit Level 4 können mit dem Befehl /stop den Server stoppen.</System:String>
+
+    <System:String x:Key="player-idle-timeout">Inaktivespieler Timeout:</System:String>
+    <System:String x:Key="player-idle-timeout_tt">Wenn der Wert nicht 0 ist, werden inaktive Spieler nach der angegeben Zeit in Minuten vom Server gekickt.&lt;LineBreak/&gt;Die Zeit wird für einen Spieler zurückgesetzt, wenn er eine Aktion im Spiel auslöst, sich bewegt,&lt;LineBreak/&gt;einen Menüpunkt aufruft oder im Chat schreibt.</System:String>
+
+    <System:String x:Key="pvp">PVP:</System:String>
+    <System:String x:Key="pvp_tt">Aktiviert PvP (Player versus Player) auf dem Server. Im PvP-Modus können sich Spieler gegenseitig&lt;LineBreak/&gt;direkten Schaden zufügen. Ohne PvP können sie sich nur indirekt schädigen, z.B. durch Lava, Feuer,&lt;LineBreak/&gt;TNT und im weiteren Sinne mit Wasser, Sand und Kies.</System:String>
+
+    <System:String x:Key="server-ip">Server-IP:</System:String>
+    <System:String x:Key="server-ip_tt">Wenn der Server unter einer bestimmten IP-Adresse laufen soll, muss diese hier&lt;LineBreak/&gt;eingetragen werden. Es ist zu empfehlen, diesen Wert leer zu lassen.</System:String>
+
+    <System:String x:Key="server-name">Server-Name:</System:String>
+    <System:String x:Key="server-name_tt">Legt den Namen des Servers fest.</System:String>
+
+    <System:String x:Key="server-port">Server-Port:</System:String>
+    <System:String x:Key="server-port_tt">Der Port, auf dem der Server läuft. Wenn das Netzwerk, in dem der Server läuft,&lt;LineBreak/&gt;NAT benutzt (z.B. durch einen Router), muss der Port dort weitergeleitet werden.</System:String>
+
+    <System:String x:Key="spawn-animals">Tiere:</System:String>
+    <System:String x:Key="spawn-animals_tt">Bestimmt, ob Tiere spawnen können. Bei Leistungsproblem des Servers sollte diese Option deaktiviert werden.</System:String>
+
+    <System:String x:Key="spawn-monsters">Monster:</System:String>
+    <System:String x:Key="spawn-monsters_tt">Bestimmt, ob Monster außerhalb von Monsterspawnern spawnen können. Bei Leistungsproblem des Servers sollte diese Option deaktiviert werden.</System:String>
+
+    <System:String x:Key="spawn-npcs">NPCs:</System:String>
+    <System:String x:Key="spawn-npcs_tt">Bestimmt, ob Dorfbewohner spawnen können.</System:String>
+
+    <System:String x:Key="spawn-protection">Spawn-Schutz:</System:String>
+    <System:String x:Key="spawn-protection_tt">Legt die Größe des Bereiches um den Spawnpunkt fest, in dem niemand&lt;LineBreak/&gt;etwas verändern kann. Der Wert 0 deaktiviert den Schutzbereich.</System:String>
+
+    <System:String x:Key="view-distance">Sichtweite:</System:String>
+    <System:String x:Key="view-distance_tt">Definiert die Menge an Welt-Daten, die der Server an den Client sendet, gemessen in Chunks. Bestimmt wird&lt;LineBreak/&gt;dadurch die serverseitig festgelegte Sichtweite. Bei der Standard-Einstellung von 10 Chunks werden insgesamt&lt;LineBreak/&gt;441 Chunks gesendet (10 Chunks vor und hinter dem Spielerchunk = 21, dasselbe rechts und links = 21 x 21).&lt;LineBreak/&gt;Die Anzahl an Chunks, die der Server lädt, kann im Debug-Bildschirm eingesehen werden. Bei Leistungsproblem&lt;LineBreak/&gt;des Servers sollte der Wert verkleinert werden.</System:String>
+
+    <System:String x:Key="white-list">Whitelist:</System:String>
+    <System:String x:Key="white-list_tt">Aktiviert eine White-List auf dem Server. Wenn die White-List aktiviert ist, können nur Spieler dem Server beitreten,&lt;LineBreak/&gt;die auf dieser gelistet sind. Diese Option ist für Privat-Server, auf denen nur ausgewählte Freunde spielen sollen&lt;LineBreak/&gt;und für Server, die ihre Mitglieder durch ein Bewerbungsverfahren aussuchen, zu empfehlen. Wenn diese Option aktiviert&lt;LineBreak/&gt;ist, muss die Option &lt;Italic&gt;online-mode&lt;/Italic&gt; aktiviert sein. Das ist auch sinnvoll, denn ansonsten könnte trotz White-List jeder&lt;LineBreak/&gt;beliebige Spieler dem Server beitreten, wenn er einfach einen dort gelisteten Namen verwendet, falls er einen solchen&lt;LineBreak/&gt;kennt. Die White-List wird über die Server-Konsole mit dem Befehl &lt;Italic&gt;/whitelist&lt;/Italic&gt; verwaltet.</System:String>
+
+    <System:String x:Key="gamemode_tt">Definiert den Spielmodus, den Spieler beim ersten Besuch des Servers erhalten.</System:String>
+    <System:String x:Key="SaveSettings">Um die Einstellungen zu speichern drücken sie bitte Strg + S oder wechseln sie die Registerkarte</System:String>
+    
+    <!-- frmDownloadCraftbukkit.xaml -->
+    <System:String x:Key="ChooseSelectedVersion">Ausgewählte Version nehmen</System:String>
+    <System:String x:Key="Download">Herunterladen</System:String>
+    <System:String x:Key="frmDownloadCraftbukkitTitle">Download</System:String>
+    <System:String x:Key="OpenInfosInBrowser">Informationen im Browser öffnen</System:String>
+    <System:String x:Key="HeaderBuildNumber">Build-Nummer</System:String>
+    <System:String x:Key="HeaderVersion">Version</System:String>
+    <System:String x:Key="HeaderType">Type</System:String>
+    
+    <!-- frmSelectItem -->
+    <System:String x:Key="Name">Name</System:String>
+    <System:String x:Key="ID">ID</System:String>
+    <System:String x:Key="OK">OK</System:String>
+    <System:String x:Key="frmSelectItemTitle">Item auswählen</System:String>
+
+    <!-- Reactions -->
+    <!-- MessageBox SwiftAPI not Found -->
+    <System:String x:Key="SAPINFText">Das Plugin 'SwiftAPI' wurde nicht gefunden. Ohne SwiftAPI wird dieses Programm nicht funktionieren. Wollen sie das Plugin Downloaden?</System:String>
+    <System:String x:Key="SAPINFTitle">SwiftAPI nicht gefunden</System:String>
+    <System:String x:Key="SAPINFOK">Download</System:String>
+    <System:String x:Key="SAPINFCancel">Schließen</System:String>
+
+    <!-- MessageBox craftbukkit Download completed -->
+    <System:String x:Key="CBDFText">Der Download wurde erfolgreich abgeschlossen. Die Anwendung kann jetzt neu gestartet werden.</System:String>
+    <System:String x:Key="CBDFTitle">Erfolgreich</System:String>
+    <System:String x:Key="SCBDFOK">Neustarten</System:String>
+    <System:String x:Key="CBDFCancel">Schließen</System:String>
+
+
+    <!-- MessageBox want save settings= -->
+    <System:String x:Key="SSText">Wollen sie die Einstellungen speichern?</System:String>
+    <System:String x:Key="SSTitle">Einstellungen Speichern?</System:String>
+    <System:String x:Key="SSOK">Speichern</System:String>
+    <System:String x:Key="SSCancel">Nicht speichern</System:String>
+
+    <System:String x:Key="RamToolTip">Änderungen werden erst nach einem Neustart der Anwendung wirksam.</System:String>
+
+    
+    <!-- Launcher Settings  -->
+    <System:String x:Key="General">Allgemein</System:String>
+    <System:String x:Key="Backups">Backups</System:String>
+    <System:String x:Key="About">Über</System:String>
+    
+    <System:String x:Key="ProgrammedBy">Programmiert von Vincent</System:String>
+    <System:String x:Key="UsedLibaries">Verwendete Bibilotheken</System:String>
+    <System:String x:Key="GraficsFrom">Grafiken sind von</System:String>
+    
+    <System:String x:Key="Language">Sprache</System:String>
+    <System:String x:Key="AlwaysAskIfSaveChanges">Immer fragen ob Einstellungen gespeichert werden sollen</System:String>
+    <System:String x:Key="SaveServerBeforClose">Server beim schließen des Programms automatisch stoppen</System:String>
+    <System:String x:Key="FileIsToLarge">Die Datei ({0}) ist zu groß</System:String>
+    <System:String x:Key="StoppingServer">Server wird gestoppt...</System:String>
+    
+    <System:String x:Key="add">Hinzufügen</System:String>
+    <System:String x:Key="Secounds">Sekunden</System:String>
+    <System:String x:Key="minutes">Minuten</System:String>
+    <System:String x:Key="Interval">Intervall</System:String>
+    <System:String x:Key="Command">Befehl</System:String>
+    <System:String x:Key="Enabled">Aktiviert</System:String>
+    <System:String x:Key="Timer">Timer</System:String>
+    <System:String x:Key="ExecuteCommand">Befehl ausführen</System:String>
+    <System:String x:Key="CreateBackup">Backup erstellen</System:String>
+    <System:String x:Key="size">Größe</System:String>
+    <System:String x:Key="files">Dateien</System:String>
+    <System:String x:Key="BackupBeforeRestoreTitel">Backup wiederherstellen</System:String>
+    <System:String x:Key="BackupBeforeRestoreText">Bevor sie das Backup wiederherstellen können, sollten sie eine neues Backup erstellen, damit sie die Daten bei einem Fehler auf den derzeitigen Zustand wiederherstellen können.</System:String>
+    <System:String x:Key="ServerHaveToStopTitle">Server stoppen</System:String>
+    <System:String x:Key="ServerHaveToStopText">Um das Backup erfolgreich wiederherstellen zu können, muss der Server gestoppt werden.</System:String>
+    <System:String x:Key="StopServer">Server stoppen</System:String>
+    <System:String x:Key="Cancel">Abbrechen</System:String>
+    
+    <System:String x:Key="description">Beschreibung</System:String>
+    <System:String x:Key="website">Website</System:String>
+    <System:String x:Key="authors">Autoren</System:String>
+    <System:String x:Key="filename">Dateiname</System:String>
+    <System:String x:Key="DownloadPlugins">Plugins herunterladen</System:String>
+    <System:String x:Key="IntelliSenseIsEnabled">IntelliSense ist aktiviert</System:String>
+    <System:String x:Key="IntelliSenseInfoBoxIsEnabled">IntelliSense-Infobox ist aktiviert</System:String>
+    <System:String x:Key="RefreshInterval">Aktualisierungsintervall</System:String>
+    <System:String x:Key="millisecounds">Millisekunden</System:String>
+    
+    <!-- Download Plugins -->
+    <System:String x:Key="popularity">Beliebtheit</System:String>
+    <System:String x:Key="daily">Täglich</System:String>
+    <System:String x:Key="weekly">Wöchentlich</System:String>
+    <System:String x:Key="monthly">Monatlich</System:String>
+    <System:String x:Key="total">Insgesamt</System:String>
+    <System:String x:Key="development_stage">Entwicklungsphase</System:String>
+    <System:String x:Key="back">Zurück</System:String>
+    <System:String x:Key="show">anzeigen</System:String>
+    <System:String x:Key="msgHash">Die Hashwerte stimmen nicht überein. Möglicherweise hat ein Hacker die Dateien ausgetauscht. Soll die Datei gelöscht werden?</System:String>
+    <System:String x:Key="warning">Warnung</System:String>
+    <System:String x:Key="changelog">Veränderungsprotokoll</System:String>
+    <System:String x:Key="usage">Verwendung</System:String>
+    <System:String x:Key="aliases">Kurzformen</System:String>
+    <System:String x:Key="permission">Berechtigung</System:String>
+    <System:String x:Key="categories">Kategorien</System:String>
+    <System:String x:Key="Installed">Installiert</System:String>
+    
+    <!-- Exception -->
+    <System:String x:Key="ExepctionTitle">Minecraft Server Launcher Fehler</System:String>
+    <System:String x:Key="ExceptionTitleWindow">Minecraft Server Launcher hat einen Fehler festgestellt und muss beendet werden. Wir entschuldigen uns für die Unannehmlichkeiten</System:String>
+    <System:String x:Key="ExceptionText">Wir haben einen Fehlerbericht erstellt, welchen sie uns senden können. Wir werden diesen Fehler als vertraulich und anonym behandeln.</System:String>
+    <System:String x:Key="ExceptionNote">Um uns zu helfen, die Ursache des Fehlers zu diagnostizieren und die Anwendung zu verbessern, können sie hier eine Anmerkung hinterlassen (Optional):</System:String>
+    <System:String x:Key="Exception">Fehler</System:String>
+    <System:String x:Key="ExceptionSendErrorAndClose">Fehlerbericht senden und schließen</System:String>
+    <System:String x:Key="ExceptionJustClose">Schließen</System:String>
+    
+    <!-- Create New Backup -->
+    <System:String x:Key="CreateNewBackup">Neues Backup erstellen</System:String>
+    <System:String x:Key="CreateNewBackupTimer">Neuen Backuptimer erstellen</System:String>
+    <System:String x:Key="RestoreSelectedFiles">Ausgewählte Dateien wiederherstellen</System:String>
+    <System:String x:Key="BackupFilesFirst">Dateien zuerst sichern</System:String>
+    <System:String x:Key="BackupException">Ein Fehler ist bei folgender Datei aufgetreten: {1}{0}Soll das Backup fortgesetzt und die Datei übersprungen werden?</System:String>
+    <System:String x:Key="CreateBackupTimer">Backuptimer erstellen</System:String>
+    <System:String x:Key="EditBackupTimer">Backuptimer editieren</System:String>
+    <System:String x:Key="Edit">Editieren</System:String>
+    <System:String x:Key="SaveNewBackupTimer">Backuptimer speichern</System:String>
+    <System:String x:Key="BackupTimer">Backuptimer</System:String>
+    
+    <!-- EditExecuteCommand -->
+    <System:String x:Key="EditExecuteCommand">Befehl editieren</System:String>
+    
+    <!-- Status -->
+    <System:String x:Key="RestoreBackupStatus">Backup wird wiederhergestellt (Datei {0} von {1})</System:String>
+    <System:String x:Key="CreateBackupStatus">Backup wird erstellt (Datei {0} von {1})</System:String>
+</ResourceDictionary>

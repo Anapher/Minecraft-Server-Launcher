@@ -1,0 +1,19 @@
+﻿<Controls:MetroWindow x:Class="frmMessageBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Width="300" Title="{Binding ElementName=window,Path=Titel}"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    GlowBrush="LightBlue"
+    x:Name="window"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls">
+    <StackPanel>
+        <TextBlock Text="{Binding ElementName=window,Path=Text}" TextWrapping="Wrap" Width="250" Margin="10"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="{Binding ElementName=window,Path=ButtonOKText}" Grid.Column="0" Margin="10" IsDefault="True" my:ButtonHelper.DialogResult="True"/>
+            <Button Content="{Binding ElementName=window,Path=ButtonCancelText}" Grid.Column="1" Margin="10" IsCancel="True" my:ButtonHelper.DialogResult="False"/>
+        </Grid>
+    </StackPanel>
+</Controls:MetroWindow>

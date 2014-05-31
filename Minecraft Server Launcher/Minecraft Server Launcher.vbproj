@@ -1,0 +1,1011 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A057BC5E-29E2-408B-80FC-196B007C2908}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Minecraft_Server_Launcher</RootNamespace>
+    <AssemblyName>Minecraft Server Launcher</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>true</IncrementalBuild>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Minecraft Server Launcher.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>false</IncrementalBuild>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Minecraft Server Launcher.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elysium">
+      <HintPath>..\packages\Elysium.Theme.2.0.4\lib\net45\Elysium.dll</HintPath>
+    </Reference>
+    <Reference Include="Exceptionless">
+      <HintPath>..\packages\Exceptionless.1.5.2040\lib\net45\Exceptionless.dll</HintPath>
+    </Reference>
+    <Reference Include="Exceptionless.Models">
+      <HintPath>..\packages\Exceptionless.1.5.2040\lib\net45\Exceptionless.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Exceptionless.Wpf">
+      <HintPath>..\packages\Exceptionless.Wpf.1.5.2040\lib\net45\Exceptionless.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Itenso.Windows.Controls.ListViewLayout">
+      <HintPath>bin\Debug\MSL\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Application.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Backups\Backup.vb" />
+    <Compile Include="Backups\BackupBase.vb" />
+    <Compile Include="Backups\BackupFile.vb" />
+    <Compile Include="Backups\BackupFolder.vb" />
+    <Compile Include="Backups\BackupImageConverter.vb" />
+    <Compile Include="Backups\BackupManager.vb" />
+    <Compile Include="Controls\ExhaustionVisualizer\ExhaustionVisualizer.xaml.vb">
+      <DependentUpon>ExhaustionVisualizer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\IntelliTextBox\IntelliTextBox.vb" />
+    <Compile Include="Controls\IntelliTextBox\LanguageList.vb" />
+    <Compile Include="Controls\IntelliTextBox\TextBoxCommand.vb" />
+    <Compile Include="Controls\Minecraftbar\Minecraftbar.xaml.vb">
+      <DependentUpon>Minecraftbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OutlinedTextBlock.vb" />
+    <Compile Include="EventArgs\StateChangedEventArgs.vb" />
+    <Compile Include="Extensions\BooleanToStringConverter.vb" />
+    <Compile Include="Extensions\ButtonHelper.vb" />
+    <Compile Include="Extensions\FalseOnEmptyStringConverter.vb" />
+    <Compile Include="Extensions\HtmlToFlowDocumentConverter.vb" />
+    <Compile Include="Extensions\ItemStackToImage.vb" />
+    <Compile Include="Extensions\ItemToTextConverter.vb" />
+    <Compile Include="Extensions\ListOfStringToString.vb" />
+    <Compile Include="Extensions\LocationToStringConverter.vb" />
+    <Compile Include="Extensions\NumberToFixedNumberConverter.vb" />
+    <Compile Include="Extensions\SelectedIndexToBoolean.vb" />
+    <Compile Include="Extensions\SelectedIndexToVisibility.vb" />
+    <Compile Include="Extensions\SwitchBooleanConverter.vb" />
+    <Compile Include="Extensions\TextBlockBehaviour.vb" />
+    <Compile Include="Extensions\TextBoxBehaviour.vb" />
+    <Compile Include="Extensions\UnixTimestampToString.vb" />
+    <Compile Include="Minecraft Server\Banlist\BanlistInfo.vb" />
+    <Compile Include="Minecraft Server\Banlist\BannedPlayer.vb" />
+    <Compile Include="Minecraft Server\BukkitVersion.vb" />
+    <Compile Include="Minecraft Server\Commands\CommandList.vb" />
+    <Compile Include="Minecraft Server\Commands\Commands.vb" />
+    <Compile Include="Minecraft Server\CraftbukkitDownloader.vb" />
+    <Compile Include="Minecraft Server\Plugins\BukkitPlugin.vb" />
+    <Compile Include="Minecraft Server\Plugins\categorie.vb" />
+    <Compile Include="Minecraft Server\Plugins\InstalledStateToIcon.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginInfo.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Command.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Permission.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Popularity.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Version.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginManager.vb" />
+    <Compile Include="Minecraft Server\Whitelist\WhitelistedPlayer.vb" />
+    <Compile Include="Minecraft Server\Whitelist\WhitelistInfo.vb" />
+    <Compile Include="Controls\PlayerInventoryControl\PlayerInventoryControl.xaml.vb">
+      <DependentUpon>PlayerInventoryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\TimerCreateBackup.vb" />
+    <Compile Include="Settings\TimerExecuteCommand.vb" />
+    <Compile Include="Minecraft Server\Dynmap.vb" />
+    <Compile Include="Minecraft Server\Items\ItemData.vb" />
+    <Compile Include="Minecraft Server\Helper.vb" />
+    <Compile Include="Minecraft Server\Items\MinecraftItem.vb" />
+    <Compile Include="Minecraft Server\Items\MinecraftItems.vb" />
+    <Compile Include="Minecraft Server\MinecraftHelper.vb" />
+    <Compile Include="Minecraft Server\PluginHelper.vb" />
+    <Compile Include="Minecraft Server\Serverlog.vb" />
+    <Compile Include="Minecraft Server\ServerSettings.vb" />
+    <Compile Include="Settings\TimerBase.vb" />
+    <Compile Include="Settings\Language.vb" />
+    <Compile Include="Settings\Ram.vb" />
+    <Compile Include="Settings\Settings.vb" />
+    <Compile Include="ViewModelBase\PropertyChangedBase.vb" />
+    <Compile Include="ViewModelBase\RelayCommand.vb" />
+    <Compile Include="ViewModels\DownloadCraftbukkitViewModel.vb" />
+    <Compile Include="ViewModels\DownloadPluginsViewModel.vb" />
+    <Compile Include="ViewModels\ItemSelectionViewModel.vb" />
+    <Compile Include="ViewModels\MainViewModel.vb" />
+    <Compile Include="Views\Dialogs\frmInfoBox.xaml.vb">
+      <DependentUpon>frmInfoBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\frmMessageBox.xaml.vb">
+      <DependentUpon>frmMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\frmSelectItem.xaml.vb">
+      <DependentUpon>frmSelectItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmChangelog.xaml.vb">
+      <DependentUpon>frmChangelog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCommands.xaml.vb">
+      <DependentUpon>frmCommands.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCreateBackupTimer.xaml.vb">
+      <DependentUpon>frmCreateBackupTimer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCreateNewBackup.xaml.vb">
+      <DependentUpon>frmCreateNewBackup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmDownloadCraftbukkit.xaml.vb">
+      <DependentUpon>frmDownloadCraftbukkit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmDownloadPlugins.xaml.vb">
+      <DependentUpon>frmDownloadPlugins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmEditExecuteCommand.xaml.vb">
+      <DependentUpon>frmEditExecuteCommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmSubmitException.xaml.vb">
+      <DependentUpon>frmSubmitException.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmTest.xaml.vb">
+      <DependentUpon>frmTest.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\ExhaustionVisualizer\ExhaustionVisualizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Minecraftbar\Minecraftbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Application.xaml.vb">
+      <DependentUpon>Application.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.vb">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Controls\PlayerInventoryControl\PlayerInventoryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="resources\languages\msl.de-de.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="resources\languages\msl.en-us.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\frmInfoBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\frmMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\frmSelectItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\frmChangelog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmCommands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmCreateBackupTimer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmCreateNewBackup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmDownloadCraftbukkit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmDownloadPlugins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmEditExecuteCommand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmSubmitException.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System.Threading.Tasks" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Windows.Data" />
+    <Import Include="System.Windows.Documents" />
+    <Import Include="System.Windows.Input" />
+    <Import Include="System.Windows.Shapes" />
+    <Import Include="System.Windows.Media" />
+    <Import Include="System.Windows.Media.Imaging" />
+    <Import Include="System.Windows.Navigation" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Minecraft Server\MinecraftServer.vb" />
+    <Compile Include="Minecraft Server\ThriftAPI.vb" />
+    <Compile Include="Minecraft Server\ThriftAPIFunctions.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWpfExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.WPF.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <AppDesigner Include="My Project\" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\ClearInventory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\items\0-0.png" />
+    <Resource Include="resources\items\1-0.png" />
+    <Resource Include="resources\items\1-1.png" />
+    <Resource Include="resources\items\1-2.png" />
+    <Resource Include="resources\items\1-3.png" />
+    <Resource Include="resources\items\1-4.png" />
+    <Resource Include="resources\items\1-5.png" />
+    <Resource Include="resources\items\1-6.png" />
+    <Resource Include="resources\items\10-0.png" />
+    <Resource Include="resources\items\100-0.png" />
+    <Resource Include="resources\items\101-0.png" />
+    <Resource Include="resources\items\102-0.png" />
+    <Resource Include="resources\items\103-0.png" />
+    <Resource Include="resources\items\104-0.png" />
+    <Resource Include="resources\items\105-0.png" />
+    <Resource Include="resources\items\106-0.png" />
+    <Resource Include="resources\items\107-0.png" />
+    <Resource Include="resources\items\108-0.png" />
+    <Resource Include="resources\items\109-0.png" />
+    <Resource Include="resources\items\11-0.png" />
+    <Resource Include="resources\items\110-0.png" />
+    <Resource Include="resources\items\111-0.png" />
+    <Resource Include="resources\items\112-0.png" />
+    <Resource Include="resources\items\113-0.png" />
+    <Resource Include="resources\items\114-0.png" />
+    <Resource Include="resources\items\115-0.png" />
+    <Resource Include="resources\items\116-0.png" />
+    <Resource Include="resources\items\117-0.png" />
+    <Resource Include="resources\items\118-0.png" />
+    <Resource Include="resources\items\119-0.png" />
+    <Resource Include="resources\items\12-0.png" />
+    <Resource Include="resources\items\12-1.png" />
+    <Resource Include="resources\items\120-0.png" />
+    <Resource Include="resources\items\121-0.png" />
+    <Resource Include="resources\items\122-0.png" />
+    <Resource Include="resources\items\123-0.png" />
+    <Resource Include="resources\items\124-0.png" />
+    <Resource Include="resources\items\125-0.png" />
+    <Resource Include="resources\items\125-1.png" />
+    <Resource Include="resources\items\125-2.png" />
+    <Resource Include="resources\items\125-3.png" />
+    <Resource Include="resources\items\125-4.png" />
+    <Resource Include="resources\items\125-5.png" />
+    <Resource Include="resources\items\126-0.png" />
+    <Resource Include="resources\items\126-1.png" />
+    <Resource Include="resources\items\126-2.png" />
+    <Resource Include="resources\items\126-3.png" />
+    <Resource Include="resources\items\126-4.png" />
+    <Resource Include="resources\items\126-5.png" />
+    <Resource Include="resources\items\127-0.png" />
+    <Resource Include="resources\items\128-0.png" />
+    <Resource Include="resources\items\129-0.png" />
+    <Resource Include="resources\items\13-0.png" />
+    <Resource Include="resources\items\130-0.png" />
+    <Resource Include="resources\items\131-0.png" />
+    <Resource Include="resources\items\132-0.png" />
+    <Resource Include="resources\items\133-0.png" />
+    <Resource Include="resources\items\134-0.png" />
+    <Resource Include="resources\items\135-0.png" />
+    <Resource Include="resources\items\136-0.png" />
+    <Resource Include="resources\items\137-0.png" />
+    <Resource Include="resources\items\138-0.png" />
+    <Resource Include="resources\items\139-0.png" />
+    <Resource Include="resources\items\139-1.png" />
+    <Resource Include="resources\items\14-0.png" />
+    <Resource Include="resources\items\140-0.png" />
+    <Resource Include="resources\items\141-0.png" />
+    <Resource Include="resources\items\142-0.png" />
+    <Resource Include="resources\items\143-0.png" />
+    <Resource Include="resources\items\144-0.png" />
+    <Resource Include="resources\items\145-0.png" />
+    <Resource Include="resources\items\146-0.png" />
+    <Resource Include="resources\items\147-0.png" />
+    <Resource Include="resources\items\148-0.png" />
+    <Resource Include="resources\items\149-0.png" />
+    <Resource Include="resources\items\15-0.png" />
+    <Resource Include="resources\items\150-0.png" />
+    <Resource Include="resources\items\151-0.png" />
+    <Resource Include="resources\items\152-0.png" />
+    <Resource Include="resources\items\153-0.png" />
+    <Resource Include="resources\items\154-0.png" />
+    <Resource Include="resources\items\155-0.png" />
+    <Resource Include="resources\items\155-1.png" />
+    <Resource Include="resources\items\155-2.png" />
+    <Resource Include="resources\items\156-0.png" />
+    <Resource Include="resources\items\157-0.png" />
+    <Resource Include="resources\items\158-0.png" />
+    <Resource Include="resources\items\159-0.png" />
+    <Resource Include="resources\items\159-1.png" />
+    <Resource Include="resources\items\159-10.png" />
+    <Resource Include="resources\items\159-11.png" />
+    <Resource Include="resources\items\159-12.png" />
+    <Resource Include="resources\items\159-13.png" />
+    <Resource Include="resources\items\159-14.png" />
+    <Resource Include="resources\items\159-15.png" />
+    <Resource Include="resources\items\159-2.png" />
+    <Resource Include="resources\items\159-3.png" />
+    <Resource Include="resources\items\159-4.png" />
+    <Resource Include="resources\items\159-5.png" />
+    <Resource Include="resources\items\159-6.png" />
+    <Resource Include="resources\items\159-7.png" />
+    <Resource Include="resources\items\159-8.png" />
+    <Resource Include="resources\items\159-9.png" />
+    <Resource Include="resources\items\16-0.png" />
+    <Resource Include="resources\items\160-0.png" />
+    <Resource Include="resources\items\160-1.png" />
+    <Resource Include="resources\items\160-10.png" />
+    <Resource Include="resources\items\160-11.png" />
+    <Resource Include="resources\items\160-12.png" />
+    <Resource Include="resources\items\160-13.png" />
+    <Resource Include="resources\items\160-14.png" />
+    <Resource Include="resources\items\160-15.png" />
+    <Resource Include="resources\items\160-2.png" />
+    <Resource Include="resources\items\160-3.png" />
+    <Resource Include="resources\items\160-4.png" />
+    <Resource Include="resources\items\160-5.png" />
+    <Resource Include="resources\items\160-6.png" />
+    <Resource Include="resources\items\160-7.png" />
+    <Resource Include="resources\items\160-8.png" />
+    <Resource Include="resources\items\160-9.png" />
+    <Resource Include="resources\items\161-0.png" />
+    <Resource Include="resources\items\161-1.png" />
+    <Resource Include="resources\items\162-0.png" />
+    <Resource Include="resources\items\162-1.png" />
+    <Resource Include="resources\items\163-0.png" />
+    <Resource Include="resources\items\164-0.png" />
+    <Resource Include="resources\items\165-0.png" />
+    <Resource Include="resources\items\166-0.png" />
+    <Resource Include="resources\items\167-0.png" />
+    <Resource Include="resources\items\17-0.png" />
+    <Resource Include="resources\items\17-1.png" />
+    <Resource Include="resources\items\17-2.png" />
+    <Resource Include="resources\items\17-3.png" />
+    <Resource Include="resources\items\170-0.png" />
+    <Resource Include="resources\items\171-0.png" />
+    <Resource Include="resources\items\171-1.png" />
+    <Resource Include="resources\items\171-10.png" />
+    <Resource Include="resources\items\171-11.png" />
+    <Resource Include="resources\items\171-12.png" />
+    <Resource Include="resources\items\171-13.png" />
+    <Resource Include="resources\items\171-14.png" />
+    <Resource Include="resources\items\171-15.png" />
+    <Resource Include="resources\items\171-2.png" />
+    <Resource Include="resources\items\171-3.png" />
+    <Resource Include="resources\items\171-4.png" />
+    <Resource Include="resources\items\171-5.png" />
+    <Resource Include="resources\items\171-6.png" />
+    <Resource Include="resources\items\171-7.png" />
+    <Resource Include="resources\items\171-8.png" />
+    <Resource Include="resources\items\171-9.png" />
+    <Resource Include="resources\items\172-0.png" />
+    <Resource Include="resources\items\173-0.png" />
+    <Resource Include="resources\items\174-0.png" />
+    <Resource Include="resources\items\175-0.png" />
+    <Resource Include="resources\items\175-1.png" />
+    <Resource Include="resources\items\175-2.png" />
+    <Resource Include="resources\items\175-3.png" />
+    <Resource Include="resources\items\175-4.png" />
+    <Resource Include="resources\items\175-5.png" />
+    <Resource Include="resources\items\18-0.png" />
+    <Resource Include="resources\items\18-1.png" />
+    <Resource Include="resources\items\18-2.png" />
+    <Resource Include="resources\items\18-3.png" />
+    <Resource Include="resources\items\19-0.png" />
+    <Resource Include="resources\items\2-0.png" />
+    <Resource Include="resources\items\20-0.png" />
+    <Resource Include="resources\items\21-0.png" />
+    <Resource Include="resources\items\22-0.png" />
+    <Resource Include="resources\items\2256-0.png" />
+    <Resource Include="resources\items\2257-0.png" />
+    <Resource Include="resources\items\2258-0.png" />
+    <Resource Include="resources\items\2259-0.png" />
+    <Resource Include="resources\items\2260-0.png" />
+    <Resource Include="resources\items\2261-0.png" />
+    <Resource Include="resources\items\2262-0.png" />
+    <Resource Include="resources\items\2263-0.png" />
+    <Resource Include="resources\items\2264-0.png" />
+    <Resource Include="resources\items\2265-0.png" />
+    <Resource Include="resources\items\2266-0.png" />
+    <Resource Include="resources\items\2267-0.png" />
+    <Resource Include="resources\items\23-0.png" />
+    <Resource Include="resources\items\24-0.png" />
+    <Resource Include="resources\items\24-1.png" />
+    <Resource Include="resources\items\24-2.png" />
+    <Resource Include="resources\items\25-0.png" />
+    <Resource Include="resources\items\256-0.png" />
+    <Resource Include="resources\items\257-0.png" />
+    <Resource Include="resources\items\258-0.png" />
+    <Resource Include="resources\items\259-0.png" />
+    <Resource Include="resources\items\26-0.png" />
+    <Resource Include="resources\items\260-0.png" />
+    <Resource Include="resources\items\261-0.png" />
+    <Resource Include="resources\items\262-0.png" />
+    <Resource Include="resources\items\263-0.png" />
+    <Resource Include="resources\items\263-1.png" />
+    <Resource Include="resources\items\264-0.png" />
+    <Resource Include="resources\items\265-0.png" />
+    <Resource Include="resources\items\266-0.png" />
+    <Resource Include="resources\items\267-0.png" />
+    <Resource Include="resources\items\268-0.png" />
+    <Resource Include="resources\items\269-0.png" />
+    <Resource Include="resources\items\27-0.png" />
+    <Resource Include="resources\items\270-0.png" />
+    <Resource Include="resources\items\271-0.png" />
+    <Resource Include="resources\items\272-0.png" />
+    <Resource Include="resources\items\273-0.png" />
+    <Resource Include="resources\items\274-0.png" />
+    <Resource Include="resources\items\275-0.png" />
+    <Resource Include="resources\items\276-0.png" />
+    <Resource Include="resources\items\277-0.png" />
+    <Resource Include="resources\items\278-0.png" />
+    <Resource Include="resources\items\279-0.png" />
+    <Resource Include="resources\items\28-0.png" />
+    <Resource Include="resources\items\280-0.png" />
+    <Resource Include="resources\items\281-0.png" />
+    <Resource Include="resources\items\282-0.png" />
+    <Resource Include="resources\items\283-0.png" />
+    <Resource Include="resources\items\284-0.png" />
+    <Resource Include="resources\items\285-0.png" />
+    <Resource Include="resources\items\286-0.png" />
+    <Resource Include="resources\items\287-0.png" />
+    <Resource Include="resources\items\288-0.png" />
+    <Resource Include="resources\items\289-0.png" />
+    <Resource Include="resources\items\29-0.png" />
+    <Resource Include="resources\items\290-0.png" />
+    <Resource Include="resources\items\291-0.png" />
+    <Resource Include="resources\items\292-0.png" />
+    <Resource Include="resources\items\293-0.png" />
+    <Resource Include="resources\items\294-0.png" />
+    <Resource Include="resources\items\295-0.png" />
+    <Resource Include="resources\items\296-0.png" />
+    <Resource Include="resources\items\297-0.png" />
+    <Resource Include="resources\items\298-0.png" />
+    <Resource Include="resources\items\299-0.png" />
+    <Resource Include="resources\items\3-0.png" />
+    <Resource Include="resources\items\3-1.png" />
+    <Resource Include="resources\items\3-2.png" />
+    <Resource Include="resources\items\30-0.png" />
+    <Resource Include="resources\items\300-0.png" />
+    <Resource Include="resources\items\301-0.png" />
+    <Resource Include="resources\items\302-0.png" />
+    <Resource Include="resources\items\303-0.png" />
+    <Resource Include="resources\items\304-0.png" />
+    <Resource Include="resources\items\305-0.png" />
+    <Resource Include="resources\items\306-0.png" />
+    <Resource Include="resources\items\307-0.png" />
+    <Resource Include="resources\items\308-0.png" />
+    <Resource Include="resources\items\309-0.png" />
+    <Resource Include="resources\items\31-0.png" />
+    <Resource Include="resources\items\31-1.png" />
+    <Resource Include="resources\items\31-2.png" />
+    <Resource Include="resources\items\310-0.png" />
+    <Resource Include="resources\items\311-0.png" />
+    <Resource Include="resources\items\312-0.png" />
+    <Resource Include="resources\items\313-0.png" />
+    <Resource Include="resources\items\314-0.png" />
+    <Resource Include="resources\items\315-0.png" />
+    <Resource Include="resources\items\316-0.png" />
+    <Resource Include="resources\items\317-0.png" />
+    <Resource Include="resources\items\318-0.png" />
+    <Resource Include="resources\items\319-0.png" />
+    <Resource Include="resources\items\32-0.png" />
+    <Resource Include="resources\items\320-0.png" />
+    <Resource Include="resources\items\321-0.png" />
+    <Resource Include="resources\items\322-0.png" />
+    <Resource Include="resources\items\322-1.png" />
+    <Resource Include="resources\items\323-0.png" />
+    <Resource Include="resources\items\324-0.png" />
+    <Resource Include="resources\items\325-0.png" />
+    <Resource Include="resources\items\326-0.png" />
+    <Resource Include="resources\items\327-0.png" />
+    <Resource Include="resources\items\328-0.png" />
+    <Resource Include="resources\items\329-0.png" />
+    <Resource Include="resources\items\33-0.png" />
+    <Resource Include="resources\items\330-0.png" />
+    <Resource Include="resources\items\331-0.png" />
+    <Resource Include="resources\items\332-0.png" />
+    <Resource Include="resources\items\333-0.png" />
+    <Resource Include="resources\items\334-0.png" />
+    <Resource Include="resources\items\335-0.png" />
+    <Resource Include="resources\items\336-0.png" />
+    <Resource Include="resources\items\337-0.png" />
+    <Resource Include="resources\items\338-0.png" />
+    <Resource Include="resources\items\339-0.png" />
+    <Resource Include="resources\items\34-0.png" />
+    <Resource Include="resources\items\340-0.png" />
+    <Resource Include="resources\items\341-0.png" />
+    <Resource Include="resources\items\342-0.png" />
+    <Resource Include="resources\items\343-0.png" />
+    <Resource Include="resources\items\344-0.png" />
+    <Resource Include="resources\items\345-0.png" />
+    <Resource Include="resources\items\346-0.png" />
+    <Resource Include="resources\items\347-0.png" />
+    <Resource Include="resources\items\348-0.png" />
+    <Resource Include="resources\items\349-0.png" />
+    <Resource Include="resources\items\349-1.png" />
+    <Resource Include="resources\items\349-2.png" />
+    <Resource Include="resources\items\349-3.png" />
+    <Resource Include="resources\items\35-0.png" />
+    <Resource Include="resources\items\35-1.png" />
+    <Resource Include="resources\items\35-10.png" />
+    <Resource Include="resources\items\35-11.png" />
+    <Resource Include="resources\items\35-12.png" />
+    <Resource Include="resources\items\35-13.png" />
+    <Resource Include="resources\items\35-14.png" />
+    <Resource Include="resources\items\35-15.png" />
+    <Resource Include="resources\items\35-2.png" />
+    <Resource Include="resources\items\35-3.png" />
+    <Resource Include="resources\items\35-4.png" />
+    <Resource Include="resources\items\35-5.png" />
+    <Resource Include="resources\items\35-6.png" />
+    <Resource Include="resources\items\35-7.png" />
+    <Resource Include="resources\items\35-8.png" />
+    <Resource Include="resources\items\35-9.png" />
+    <Resource Include="resources\items\350-0.png" />
+    <Resource Include="resources\items\350-1.png" />
+    <Resource Include="resources\items\351-0.png" />
+    <Resource Include="resources\items\351-1.png" />
+    <Resource Include="resources\items\351-10.png" />
+    <Resource Include="resources\items\351-11.png" />
+    <Resource Include="resources\items\351-12.png" />
+    <Resource Include="resources\items\351-13.png" />
+    <Resource Include="resources\items\351-14.png" />
+    <Resource Include="resources\items\351-15.png" />
+    <Resource Include="resources\items\351-2.png" />
+    <Resource Include="resources\items\351-3.png" />
+    <Resource Include="resources\items\351-4.png" />
+    <Resource Include="resources\items\351-5.png" />
+    <Resource Include="resources\items\351-6.png" />
+    <Resource Include="resources\items\351-7.png" />
+    <Resource Include="resources\items\351-8.png" />
+    <Resource Include="resources\items\351-9.png" />
+    <Resource Include="resources\items\352-0.png" />
+    <Resource Include="resources\items\353-0.png" />
+    <Resource Include="resources\items\354-0.png" />
+    <Resource Include="resources\items\355-0.png" />
+    <Resource Include="resources\items\356-0.png" />
+    <Resource Include="resources\items\357-0.png" />
+    <Resource Include="resources\items\358-0.png" />
+    <Resource Include="resources\items\359-0.png" />
+    <Resource Include="resources\items\360-0.png" />
+    <Resource Include="resources\items\361-0.png" />
+    <Resource Include="resources\items\362-0.png" />
+    <Resource Include="resources\items\363-0.png" />
+    <Resource Include="resources\items\364-0.png" />
+    <Resource Include="resources\items\365-0.png" />
+    <Resource Include="resources\items\366-0.png" />
+    <Resource Include="resources\items\367-0.png" />
+    <Resource Include="resources\items\368-0.png" />
+    <Resource Include="resources\items\369-0.png" />
+    <Resource Include="resources\items\37-0.png" />
+    <Resource Include="resources\items\370-0.png" />
+    <Resource Include="resources\items\371-0.png" />
+    <Resource Include="resources\items\372-0.png" />
+    <Resource Include="resources\items\373-0.png" />
+    <Resource Include="resources\items\374-0.png" />
+    <Resource Include="resources\items\375-0.png" />
+    <Resource Include="resources\items\376-0.png" />
+    <Resource Include="resources\items\377-0.png" />
+    <Resource Include="resources\items\378-0.png" />
+    <Resource Include="resources\items\379-0.png" />
+    <Resource Include="resources\items\38-0.png" />
+    <Resource Include="resources\items\38-1.png" />
+    <Resource Include="resources\items\38-2.png" />
+    <Resource Include="resources\items\38-3.png" />
+    <Resource Include="resources\items\38-4.png" />
+    <Resource Include="resources\items\38-5.png" />
+    <Resource Include="resources\items\38-6.png" />
+    <Resource Include="resources\items\38-7.png" />
+    <Resource Include="resources\items\38-8.png" />
+    <Resource Include="resources\items\380-0.png" />
+    <Resource Include="resources\items\381-0.png" />
+    <Resource Include="resources\items\382-0.png" />
+    <Resource Include="resources\items\383-100.png" />
+    <Resource Include="resources\items\383-120.png" />
+    <Resource Include="resources\items\383-50.png" />
+    <Resource Include="resources\items\383-51.png" />
+    <Resource Include="resources\items\383-52.png" />
+    <Resource Include="resources\items\383-54.png" />
+    <Resource Include="resources\items\383-55.png" />
+    <Resource Include="resources\items\383-56.png" />
+    <Resource Include="resources\items\383-57.png" />
+    <Resource Include="resources\items\383-58.png" />
+    <Resource Include="resources\items\383-59.png" />
+    <Resource Include="resources\items\383-60.png" />
+    <Resource Include="resources\items\383-61.png" />
+    <Resource Include="resources\items\383-62.png" />
+    <Resource Include="resources\items\383-65.png" />
+    <Resource Include="resources\items\383-66.png" />
+    <Resource Include="resources\items\383-90.png" />
+    <Resource Include="resources\items\383-91.png" />
+    <Resource Include="resources\items\383-92.png" />
+    <Resource Include="resources\items\383-93.png" />
+    <Resource Include="resources\items\383-94.png" />
+    <Resource Include="resources\items\383-95.png" />
+    <Resource Include="resources\items\383-96.png" />
+    <Resource Include="resources\items\383-98.png" />
+    <Resource Include="resources\items\384-0.png" />
+    <Resource Include="resources\items\385-0.png" />
+    <Resource Include="resources\items\386-0.png" />
+    <Resource Include="resources\items\387-0.png" />
+    <Resource Include="resources\items\388-0.png" />
+    <Resource Include="resources\items\389-0.png" />
+    <Resource Include="resources\items\39-0.png" />
+    <Resource Include="resources\items\390-0.png" />
+    <Resource Include="resources\items\391-0.png" />
+    <Resource Include="resources\items\392-0.png" />
+    <Resource Include="resources\items\393-0.png" />
+    <Resource Include="resources\items\394-0.png" />
+    <Resource Include="resources\items\395-0.png" />
+    <Resource Include="resources\items\396-0.png" />
+    <Resource Include="resources\items\397-0.png" />
+    <Resource Include="resources\items\397-1.png" />
+    <Resource Include="resources\items\397-2.png" />
+    <Resource Include="resources\items\397-3.png" />
+    <Resource Include="resources\items\397-4.png" />
+    <Resource Include="resources\items\398-0.png" />
+    <Resource Include="resources\items\399-0.png" />
+    <Resource Include="resources\items\4-0.png" />
+    <Resource Include="resources\items\40-0.png" />
+    <Resource Include="resources\items\400-0.png" />
+    <Resource Include="resources\items\401-0.png" />
+    <Resource Include="resources\items\402-0.png" />
+    <Resource Include="resources\items\403-0.png" />
+    <Resource Include="resources\items\404-0.png" />
+    <Resource Include="resources\items\404.png" />
+    <Resource Include="resources\items\405-0.png" />
+    <Resource Include="resources\items\406-0.png" />
+    <Resource Include="resources\items\407-0.png" />
+    <Resource Include="resources\items\408-0.png" />
+    <Resource Include="resources\items\41-0.png" />
+    <Resource Include="resources\items\417-0.png" />
+    <Resource Include="resources\items\418-0.png" />
+    <Resource Include="resources\items\419-0.png" />
+    <Resource Include="resources\items\42-0.png" />
+    <Resource Include="resources\items\420-0.png" />
+    <Resource Include="resources\items\421-0.png" />
+    <Resource Include="resources\items\422-0.png" />
+    <Resource Include="resources\items\43-0.png" />
+    <Resource Include="resources\items\43-1.png" />
+    <Resource Include="resources\items\43-2.png" />
+    <Resource Include="resources\items\43-3.png" />
+    <Resource Include="resources\items\43-4.png" />
+    <Resource Include="resources\items\43-5.png" />
+    <Resource Include="resources\items\43-6.png" />
+    <Resource Include="resources\items\43-7.png" />
+    <Resource Include="resources\items\44-0.png" />
+    <Resource Include="resources\items\44-1.png" />
+    <Resource Include="resources\items\44-2.png" />
+    <Resource Include="resources\items\44-3.png" />
+    <Resource Include="resources\items\44-4.png" />
+    <Resource Include="resources\items\44-5.png" />
+    <Resource Include="resources\items\44-6.png" />
+    <Resource Include="resources\items\44-7.png" />
+    <Resource Include="resources\items\45-0.png" />
+    <Resource Include="resources\items\46-0.png" />
+    <Resource Include="resources\items\47-0.png" />
+    <Resource Include="resources\items\48-0.png" />
+    <Resource Include="resources\items\49-0.png" />
+    <Resource Include="resources\items\5-0.png" />
+    <Resource Include="resources\items\5-1.png" />
+    <Resource Include="resources\items\5-2.png" />
+    <Resource Include="resources\items\5-3.png" />
+    <Resource Include="resources\items\5-4.png" />
+    <Resource Include="resources\items\5-5.png" />
+    <Resource Include="resources\items\50-0.png" />
+    <Resource Include="resources\items\51-0.png" />
+    <Resource Include="resources\items\52-0.png" />
+    <Resource Include="resources\items\53-0.png" />
+    <Resource Include="resources\items\54-0.png" />
+    <Resource Include="resources\items\55-0.png" />
+    <Resource Include="resources\items\56-0.png" />
+    <Resource Include="resources\items\57-0.png" />
+    <Resource Include="resources\items\58-0.png" />
+    <Resource Include="resources\items\59-0.png" />
+    <Resource Include="resources\items\6-0.png" />
+    <Resource Include="resources\items\6-1.png" />
+    <Resource Include="resources\items\6-2.png" />
+    <Resource Include="resources\items\6-3.png" />
+    <Resource Include="resources\items\6-4.png" />
+    <Resource Include="resources\items\6-5.png" />
+    <Resource Include="resources\items\60-0.png" />
+    <Resource Include="resources\items\61-0.png" />
+    <Resource Include="resources\items\62-0.png" />
+    <Resource Include="resources\items\63-0.png" />
+    <Resource Include="resources\items\64-0.png" />
+    <Resource Include="resources\items\65-0.png" />
+    <Resource Include="resources\items\66-0.png" />
+    <Resource Include="resources\items\67-0.png" />
+    <Resource Include="resources\items\68-0.png" />
+    <Resource Include="resources\items\69-0.png" />
+    <Resource Include="resources\items\7-0.png" />
+    <Resource Include="resources\items\70-0.png" />
+    <Resource Include="resources\items\71-0.png" />
+    <Resource Include="resources\items\72-0.png" />
+    <Resource Include="resources\items\73-0.png" />
+    <Resource Include="resources\items\74-0.png" />
+    <Resource Include="resources\items\75-0.png" />
+    <Resource Include="resources\items\76-0.png" />
+    <Resource Include="resources\items\77-0.png" />
+    <Resource Include="resources\items\78-0.png" />
+    <Resource Include="resources\items\79-0.png" />
+    <Resource Include="resources\items\8-0.png" />
+    <Resource Include="resources\items\80-0.png" />
+    <Resource Include="resources\items\81-0.png" />
+    <Resource Include="resources\items\82-0.png" />
+    <Resource Include="resources\items\83-0.png" />
+    <Resource Include="resources\items\84-0.png" />
+    <Resource Include="resources\items\85-0.png" />
+    <Resource Include="resources\items\86-0.png" />
+    <Resource Include="resources\items\87-0.png" />
+    <Resource Include="resources\items\88-0.png" />
+    <Resource Include="resources\items\89-0.png" />
+    <Resource Include="resources\items\9-0.png" />
+    <Resource Include="resources\items\90-0.png" />
+    <Resource Include="resources\items\91-0.png" />
+    <Resource Include="resources\items\92-0.png" />
+    <Resource Include="resources\items\93-0.png" />
+    <Resource Include="resources\items\94-0.png" />
+    <Resource Include="resources\items\95-0.png" />
+    <Resource Include="resources\items\95-1.png" />
+    <Resource Include="resources\items\95-10.png" />
+    <Resource Include="resources\items\95-11.png" />
+    <Resource Include="resources\items\95-12.png" />
+    <Resource Include="resources\items\95-13.png" />
+    <Resource Include="resources\items\95-14.png" />
+    <Resource Include="resources\items\95-15.png" />
+    <Resource Include="resources\items\95-2.png" />
+    <Resource Include="resources\items\95-3.png" />
+    <Resource Include="resources\items\95-4.png" />
+    <Resource Include="resources\items\95-5.png" />
+    <Resource Include="resources\items\95-6.png" />
+    <Resource Include="resources\items\95-7.png" />
+    <Resource Include="resources\items\95-8.png" />
+    <Resource Include="resources\items\95-9.png" />
+    <Resource Include="resources\items\96-0.png" />
+    <Resource Include="resources\items\97-0.png" />
+    <Resource Include="resources\items\97-1.png" />
+    <Resource Include="resources\items\97-2.png" />
+    <Resource Include="resources\items\97-3.png" />
+    <Resource Include="resources\items\97-4.png" />
+    <Resource Include="resources\items\97-5.png" />
+    <Resource Include="resources\items\98-0.png" />
+    <Resource Include="resources\items\98-1.png" />
+    <Resource Include="resources\items\98-2.png" />
+    <Resource Include="resources\items\98-3.png" />
+    <Resource Include="resources\items\99-0.png" />
+    <Resource Include="resources\items\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\languages\icons\de.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\languages\icons\en.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\bukkitlogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\CategorieIcons\AdminTools.png" />
+    <Resource Include="resources\CategorieIcons\AntiGrief.png" />
+    <Resource Include="resources\CategorieIcons\Chat.png" />
+    <Resource Include="resources\CategorieIcons\DevTools.png" />
+    <Resource Include="resources\CategorieIcons\Economy.png" />
+    <Resource Include="resources\CategorieIcons\Fixes.png" />
+    <Resource Include="resources\CategorieIcons\Fun.png" />
+    <Resource Include="resources\CategorieIcons\General.png" />
+    <Resource Include="resources\CategorieIcons\Informational.png" />
+    <Resource Include="resources\CategorieIcons\Mechanics.png" />
+    <Resource Include="resources\CategorieIcons\Miscellaneous.png" />
+    <Resource Include="resources\CategorieIcons\RolePlaying.png" />
+    <Resource Include="resources\CategorieIcons\Teleportation.png" />
+    <Resource Include="resources\CategorieIcons\WebsiteAdministration.png" />
+    <Resource Include="resources\CategorieIcons\worldgenerators.png" />
+    <Resource Include="resources\CategorieIcons\worldmanagement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\PlayerInventoryControl\resources\NoBoots.png" />
+    <Resource Include="Controls\PlayerInventoryControl\resources\NoHelmet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\PlayerInventoryControl\resources\NoChestplate.png" />
+    <Resource Include="Controls\PlayerInventoryControl\resources\NoLeggings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Minecraftbar\resources\FoodEmpty.png" />
+    <Resource Include="Controls\Minecraftbar\resources\FoodFull.png" />
+    <Resource Include="Controls\Minecraftbar\resources\FoodHalf.png" />
+    <Resource Include="Controls\Minecraftbar\resources\HeartEmpty.png" />
+    <Resource Include="Controls\Minecraftbar\resources\HeartFull.png" />
+    <Resource Include="Controls\Minecraftbar\resources\HeartHalf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Minecraftbar\resources\MetroFoodFull.png" />
+    <Resource Include="Controls\Minecraftbar\resources\MetroFoodHalf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Minecraftbar\resources\MetroFoodEmpty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Minecraftbar\resources\MetroHeartEmpty.png" />
+    <Resource Include="Controls\Minecraftbar\resources\MetroHeartFull.png" />
+    <Resource Include="Controls\Minecraftbar\resources\MetroHeartHalf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\ExhaustionVisualizer\resources\High.png" />
+    <Resource Include="Controls\ExhaustionVisualizer\resources\Low.png" />
+    <Resource Include="Controls\ExhaustionVisualizer\resources\Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\location.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\PlayerState\IsSleeping.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\PlayerState\IsInVehicle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\PlayerState\IsSneaking.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\PlayerState\IsSprinting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\errorlarge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\file.png" />
+    <Resource Include="resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\state\check.png" />
+    <Resource Include="resources\state\uncheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\state\none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HTMLConverter\HTMLConverter.csproj">
+      <Project>{1b06ae7b-3e4f-4e2c-96a3-550a478539fa}</Project>
+      <Name>HTMLConverter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SwiftAPI\SwiftAPI.csproj">
+      <Project>{36de87b0-4ab6-433a-ae40-8c7fa8443086}</Project>
+      <Name>SwiftAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thrift\Thrift.csproj">
+      <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
+      <Name>Thrift</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

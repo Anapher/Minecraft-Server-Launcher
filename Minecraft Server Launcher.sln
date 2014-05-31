@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Minecraft Server Launcher", "Minecraft Server Launcher\Minecraft Server Launcher.vbproj", "{A057BC5E-29E2-408B-80FC-196B007C2908}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTMLConverter", "HTMLConverter\HTMLConverter.csproj", "{1B06AE7B-3E4F-4E2C-96A3-550A478539FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwiftAPI", "SwiftAPI\SwiftAPI.csproj", "{36DE87B0-4AB6-433A-AE40-8C7FA8443086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thrift", "Thrift\Thrift.csproj", "{499EB63C-D74C-47E8-AE48-A2FC94538E9D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A057BC5E-29E2-408B-80FC-196B007C2908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A057BC5E-29E2-408B-80FC-196B007C2908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A057BC5E-29E2-408B-80FC-196B007C2908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A057BC5E-29E2-408B-80FC-196B007C2908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B06AE7B-3E4F-4E2C-96A3-550A478539FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B06AE7B-3E4F-4E2C-96A3-550A478539FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B06AE7B-3E4F-4E2C-96A3-550A478539FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B06AE7B-3E4F-4E2C-96A3-550A478539FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DE87B0-4AB6-433A-AE40-8C7FA8443086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DE87B0-4AB6-433A-AE40-8C7FA8443086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DE87B0-4AB6-433A-AE40-8C7FA8443086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DE87B0-4AB6-433A-AE40-8C7FA8443086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499EB63C-D74C-47E8-AE48-A2FC94538E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499EB63C-D74C-47E8-AE48-A2FC94538E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499EB63C-D74C-47E8-AE48-A2FC94538E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499EB63C-D74C-47E8-AE48-A2FC94538E9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

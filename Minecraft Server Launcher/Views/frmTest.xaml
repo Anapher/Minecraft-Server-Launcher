@@ -1,0 +1,16 @@
+﻿<Window x:Class="frmTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    Title="frmTest" SizeToContent="WidthAndHeight" x:Name="myWindow" Height="198.3" Width="419.99">
+    <StackPanel Orientation="Vertical">
+        <my:PlayerInventoryControl Inventory="{Binding ElementName=myWindow,Path=List}" x:Name="pic" SelectedIndex="{Binding ElementName=myWindow,Path=Test,Mode=TwoWay}"/>
+        <Button Content="Do it" Click="Button_Click"/>
+        <TextBlock Text="{Binding ElementName=myWindow,Path=Test}"/>
+        <my:Minecraftbar Value="5" BarType="Health"/>
+        <Button Content="Do a Backup" Click="Button_Click_1"/>
+        <ProgressBar x:Name="test"/>
+        <Button Content="Restore" Click="Button_Click_2"/>
+    </StackPanel>
+
+</Window>
