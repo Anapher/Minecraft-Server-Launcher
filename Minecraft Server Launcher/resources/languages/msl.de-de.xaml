@@ -19,6 +19,7 @@
     <System:String x:Key="Informations">Informationen</System:String>
     <System:String x:Key="Commands">Befehle</System:String>
     <System:String x:Key="Inventory">Inventar</System:String>
+    <System:String x:Key="NoPlayersOnline">Derzeit sind keine Spieler online</System:String>
     
     <!-- Informationen -->
     <System:String x:Key="generalInformations">Allgemeine Informationen</System:String>
@@ -75,6 +76,7 @@
     <System:String x:Key="UnknownItem">Unbekanntes Item</System:String>
     <System:String x:Key="Durability">Haltbarkeit</System:String>
     <System:String x:Key="enchantments">Verzauberungen</System:String>
+    <System:String x:Key="NothingSelected">(Nichts ausgewählt)</System:String>
     
     <!-- Server -->
     <System:String x:Key="Serverlog">Serverlog</System:String>

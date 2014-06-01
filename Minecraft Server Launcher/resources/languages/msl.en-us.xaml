@@ -19,7 +19,8 @@
     <System:String x:Key="Informations">Informations</System:String>
     <System:String x:Key="Commands">Commands</System:String>
     <System:String x:Key="Inventory">Inventory</System:String>
-
+    <System:String x:Key="NoPlayersOnline">No players are online</System:String>
+    
     <!-- Informationen -->
     <System:String x:Key="generalInformations">General Information</System:String>
     <System:String x:Key="lastPlayed">Last played</System:String>
@@ -75,6 +76,7 @@
     <System:String x:Key="UnknownItem">Unkown item</System:String>
     <System:String x:Key="Durability">Durability</System:String>
     <System:String x:Key="enchantments">Enchantments</System:String>
+    <System:String x:Key="NothingSelected">(Nothing selected)</System:String>
     
     <!-- Server -->
     <System:String x:Key="Serverlog">Serverlog</System:String>

@@ -52,288 +52,291 @@
             </TabItem>
             <TabItem Header="{DynamicResource Actions}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <ListBox Grid.Column="0" ItemsSource="{Binding MinecraftServer.lstPlayers}" SelectedIndex="{Binding lstPlayerIndex}" x:Name="lstPlayers">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Grid Grid.Column="1" Visibility="{Binding GridPlayerIsVisible}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding SelectedItem.Name, ElementName=lstPlayers}" Grid.Row="0" FontSize="22" FontFamily="Segoe UI Light" Padding="10" FontWeight="Light"/>
-                        <Grid Grid.Row="1">
-                            <TabControl>
-                                <TabItem Header="{DynamicResource Informations}" Style="{StaticResource UnderTab}">
-                                    <Grid>
-                                        <Grid.Resources>
-                                            <ResourceDictionary>
-                                                <ResourceDictionary.MergedDictionaries>
-                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                                                </ResourceDictionary.MergedDictionaries>
-                                            </ResourceDictionary>
-                                        </Grid.Resources>
-                                        <GroupBox Header="{DynamicResource generalInformations}" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <TextBlock Text="{DynamicResource NoPlayersOnline}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Light" Visibility="{Binding NoPlayersFound,Converter={StaticResource BoolToVisibility}}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox Grid.Column="0" ItemsSource="{Binding MinecraftServer.lstPlayers}" SelectedIndex="{Binding lstPlayerIndex}" x:Name="lstPlayers">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid Grid.Column="1" Visibility="{Binding GridPlayerIsVisible}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding SelectedItem.Name, ElementName=lstPlayers}" Grid.Row="0" FontSize="22" FontFamily="Segoe UI Light" Padding="10" FontWeight="Light"/>
+                            <Grid Grid.Row="1">
+                                <TabControl>
+                                    <TabItem Header="{DynamicResource Informations}" Style="{StaticResource UnderTab}">
+                                        <Grid>
+                                            <Grid.Resources>
+                                                <ResourceDictionary>
+                                                    <ResourceDictionary.MergedDictionaries>
+                                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                    </ResourceDictionary.MergedDictionaries>
+                                                </ResourceDictionary>
+                                            </Grid.Resources>
+                                            <GroupBox Header="{DynamicResource generalInformations}" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{DynamicResource IP}"/>
+                                                        <TextBlock Text=":" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="{Binding SelectedItem.Ip, ElementName=lstPlayers}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{DynamicResource Port}"/>
+                                                        <TextBlock Text=":" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="{Binding SelectedItem.Port, ElementName=lstPlayers}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </GroupBox>
                                             <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{DynamicResource IP}"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                                    <TextBlock Text="{DynamicResource firstPlayed}"/>
                                                     <TextBlock Text=":" Margin="0,0,5,0"/>
-                                                    <TextBlock Text="{Binding SelectedItem.Ip, ElementName=lstPlayers}"/>
+                                                    <TextBlock Text="{Binding SelectedItem.FirstPlayed, Converter={StaticResource UnixTimestampToStringConverter}, ElementName=lstPlayers}"/>
                                                 </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{DynamicResource Port}"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                    <TextBlock Text="{DynamicResource lastPlayed}"/>
                                                     <TextBlock Text=":" Margin="0,0,5,0"/>
-                                                    <TextBlock Text="{Binding SelectedItem.Port, ElementName=lstPlayers}"/>
+                                                    <TextBlock Text="{Binding SelectedItem.LastPlayed, Converter={StaticResource UnixTimestampToStringConverter}, ElementName=lstPlayers}"/>
                                                 </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                    <TextBlock Text="{DynamicResource exhaustion}" VerticalAlignment="Center"/>
+                                                    <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                                    <my:ExhaustionVisualizer ExhaustionValue="{Binding SelectedItem.Exhaustion, ElementName=lstPlayers}" Width="50" ToolTip="{Binding SelectedItem.Exhaustion, ElementName=lstPlayers}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                    <Image Width="20" Height="20" Source="/resources/location.png" ToolTip="{DynamicResource location}" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding SelectedItem.Location, Converter={StaticResource LocationToStringConverter}, ElementName=lstPlayers}" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                                    <StackPanel.Resources>
+                                                        <Style TargetType="{x:Type Image}">
+                                                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+                                                            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                                            <Setter Property="Margin" Value="10"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="Opacity" Value="0.3"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </StackPanel.Resources>
+                                                    <Image Width="20" Height="20" Source="resources/PlayerState/IsSleeping.png" IsEnabled="{Binding SelectedItem.IsSleeping, ElementName=lstPlayers}" ToolTip="{DynamicResource isSleeping}" ToolTipService.ShowOnDisabled="True"/>
+                                                    <Image Width="20" Height="20" Source="resources/PlayerState/IsInVehicle.png" IsEnabled="{Binding SelectedItem.IsInVehicle, ElementName=lstPlayers}" ToolTip="{DynamicResource isInVehicle}" ToolTipService.ShowOnDisabled="True"/>
+                                                    <Image Width="20" Height="20" Source="resources/PlayerState/IsSneaking.png" IsEnabled="{Binding SelectedItem.IsSneaking, ElementName=lstPlayers}" ToolTip="{DynamicResource isSneaking}" ToolTipService.ShowOnDisabled="True"/>
+                                                    <Image Width="20" Height="20" Source="resources/PlayerState/IsSprinting.png" IsEnabled="{Binding SelectedItem.IsSprinting, ElementName=lstPlayers}" ToolTip="{DynamicResource isSprinting}" ToolTipService.ShowOnDisabled="True"/>
+                                                </StackPanel>
+                                                <Grid Margin="0,20,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="190"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="190"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <my:Minecraftbar Value="{Binding SelectedItem.Health, ElementName=lstPlayers}" BarType="Health" Margin="10,0,0,0"/>
+                                                    <TextBlock Text="{Binding SelectedItem.Level, ElementName=lstPlayers}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="1"/>
+                                                    <my:Minecraftbar Value="{Binding SelectedItem.FoodLevel, ElementName=lstPlayers}" BarType="Food" DockPanel.Dock="Right" Margin="0,0,10,0" Grid.Column="2"/>
+                                                </Grid>
+                                                <metro:ProgressBar Value="{Binding SelectedItem.LevelProgress, ElementName=lstPlayers}" Maximum="1"/>
                                             </StackPanel>
-                                        </GroupBox>
-                                        <StackPanel Orientation="Vertical">
-                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                                <TextBlock Text="{DynamicResource firstPlayed}"/>
-                                                <TextBlock Text=":" Margin="0,0,5,0"/>
-                                                <TextBlock Text="{Binding SelectedItem.FirstPlayed, Converter={StaticResource UnixTimestampToStringConverter}, ElementName=lstPlayers}"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                <TextBlock Text="{DynamicResource lastPlayed}"/>
-                                                <TextBlock Text=":" Margin="0,0,5,0"/>
-                                                <TextBlock Text="{Binding SelectedItem.LastPlayed, Converter={StaticResource UnixTimestampToStringConverter}, ElementName=lstPlayers}"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                <TextBlock Text="{DynamicResource exhaustion}" VerticalAlignment="Center"/>
-                                                <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                                                <my:ExhaustionVisualizer ExhaustionValue="{Binding SelectedItem.Exhaustion, ElementName=lstPlayers}" Width="50" ToolTip="{Binding SelectedItem.Exhaustion, ElementName=lstPlayers}"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                <Image Width="20" Height="20" Source="/resources/location.png" ToolTip="{DynamicResource location}" Margin="0,0,5,0"/>
-                                                <TextBlock Text="{Binding SelectedItem.Location, Converter={StaticResource LocationToStringConverter}, ElementName=lstPlayers}" VerticalAlignment="Center"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        </Grid>
+                                    </TabItem>
+                                    <TabItem Header="{DynamicResource Commands}" Style="{StaticResource UnderTab}">
+                                        <Grid>
+                                            <Grid.Resources>
+                                                <ResourceDictionary>
+                                                    <ResourceDictionary.MergedDictionaries>
+                                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                    </ResourceDictionary.MergedDictionaries>
+                                                </ResourceDictionary>
+                                            </Grid.Resources>
+                                            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
                                                 <StackPanel.Resources>
-                                                    <Style TargetType="{x:Type Image}">
-                                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
-                                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-                                                        <Setter Property="Margin" Value="10"/>
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsEnabled" Value="False">
-                                                                <Setter Property="Opacity" Value="0.3"/>
-                                                            </Trigger>
-                                                        </Style.Triggers>
+                                                    <Style TargetType="{x:Type Grid}">
+                                                        <Setter Property="Margin" Value="0,10,0,0"/>
                                                     </Style>
                                                 </StackPanel.Resources>
-                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsSleeping.png" IsEnabled="{Binding SelectedItem.IsSleeping, ElementName=lstPlayers}" ToolTip="{DynamicResource isSleeping}" ToolTipService.ShowOnDisabled="True"/>
-                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsInVehicle.png" IsEnabled="{Binding SelectedItem.IsInVehicle, ElementName=lstPlayers}" ToolTip="{DynamicResource isInVehicle}" ToolTipService.ShowOnDisabled="True"/>
-                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsSneaking.png" IsEnabled="{Binding SelectedItem.IsSneaking, ElementName=lstPlayers}" ToolTip="{DynamicResource isSneaking}" ToolTipService.ShowOnDisabled="True"/>
-                                                <Image Width="20" Height="20" Source="resources/PlayerState/IsSprinting.png" IsEnabled="{Binding SelectedItem.IsSprinting, ElementName=lstPlayers}" ToolTip="{DynamicResource isSprinting}" ToolTipService.ShowOnDisabled="True"/>
-                                            </StackPanel>
-                                            <Grid Margin="0,20,0,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="190"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="190"/>
-                                                </Grid.ColumnDefinitions>
-                                                <my:Minecraftbar Value="{Binding SelectedItem.Health, ElementName=lstPlayers}" BarType="Health" Margin="10,0,0,0"/>
-                                                <TextBlock Text="{Binding SelectedItem.Level, ElementName=lstPlayers}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="1"/>
-                                                <my:Minecraftbar Value="{Binding SelectedItem.FoodLevel, ElementName=lstPlayers}" BarType="Food" DockPanel.Dock="Right" Margin="0,0,10,0" Grid.Column="2"/>
-                                            </Grid>
-                                            <metro:ProgressBar Value="{Binding SelectedItem.LevelProgress, ElementName=lstPlayers}" Maximum="1"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </TabItem>
-                                <TabItem Header="{DynamicResource Commands}" Style="{StaticResource UnderTab}">
-                                    <Grid>
-                                        <Grid.Resources>
-                                            <ResourceDictionary>
-                                                <ResourceDictionary.MergedDictionaries>
-                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                                                </ResourceDictionary.MergedDictionaries>
-                                            </ResourceDictionary>
-                                        </Grid.Resources>
-                                        <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                                            <StackPanel.Resources>
-                                                <Style TargetType="{x:Type Grid}">
-                                                    <Setter Property="Margin" Value="0,10,0,0"/>
-                                                </Style>
-                                            </StackPanel.Resources>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="OP:" VerticalAlignment="Center"/>
-                                                <metro:ToggleSwitch IsChecked="{Binding IsOP}" Grid.Column="1" HorizontalAlignment="Left"/>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{DynamicResource Gamemode}" VerticalAlignment="Center" Grid.Column="0"/>
-                                                <ComboBox Width="150" SelectedIndex="{Binding CBBGamemodeIndex}" Grid.Column="1" HorizontalAlignment="Left">
-                                                    <ComboBoxItem Content="{DynamicResource Survival}"/>
-                                                    <ComboBoxItem Content="{DynamicResource Creative}"/>
-                                                    <ComboBoxItem Content="{DynamicResource Adventure}"/>
-                                                </ComboBox>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{DynamicResource Punish}" VerticalAlignment="Center"/>
-                                                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                    <Button Content="{DynamicResource kick}" Margin="0,0,10,0" Command="{Binding Command}" CommandParameter="KickPlayer"/>
-                                                    <Button Content="{DynamicResource ban}" Command="{Binding Command}" CommandParameter="BanPlayer" Margin="0,0,10,0"/>
-                                                    <Button Content="{DynamicResource banip}" Command="{Binding Command}" CommandParameter="BanIP"/>
-                                                </StackPanel>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{DynamicResource TeleportTo}" VerticalAlignment="Center"/>
-                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                                    <ComboBox Width="200" ItemsSource="{Binding lstPlayersWithoutSelected}" SelectedIndex="{Binding CBBTpPlayer}" DisplayMemberPath="Name"/>
-                                                    <Button Content="{DynamicResource teleport}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="Teleport" IsEnabled="{Binding TpIsAvailable}"/>
-                                                </StackPanel>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{DynamicResource SendMessage}" VerticalAlignment="Center"/>
-                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                                    <TextBox Width="230" Text="{Binding txtSendMessage, UpdateSourceTrigger=PropertyChanged}" x:Name="txtSendMessage">
-                                                        <TextBox.InputBindings>
-                                                            <KeyBinding Command="{Binding Command}" CommandParameter="SendMessage" Key="Enter"/>
-                                                        </TextBox.InputBindings>
-                                                    </TextBox>
-                                                    <Button Content="{DynamicResource send}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="SendMessage" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtSendMessage}"/>
-                                                </StackPanel>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="OP:" VerticalAlignment="Center"/>
+                                                    <metro:ToggleSwitch IsChecked="{Binding IsOP}" Grid.Column="1" HorizontalAlignment="Left"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{DynamicResource Gamemode}" VerticalAlignment="Center" Grid.Column="0"/>
+                                                    <ComboBox Width="150" SelectedIndex="{Binding CBBGamemodeIndex}" Grid.Column="1" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="{DynamicResource Survival}"/>
+                                                        <ComboBoxItem Content="{DynamicResource Creative}"/>
+                                                        <ComboBoxItem Content="{DynamicResource Adventure}"/>
+                                                    </ComboBox>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{DynamicResource Punish}" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <Button Content="{DynamicResource kick}" Margin="0,0,10,0" Command="{Binding Command}" CommandParameter="KickPlayer"/>
+                                                        <Button Content="{DynamicResource ban}" Command="{Binding Command}" CommandParameter="BanPlayer" Margin="0,0,10,0"/>
+                                                        <Button Content="{DynamicResource banip}" Command="{Binding Command}" CommandParameter="BanIP"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{DynamicResource TeleportTo}" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                        <ComboBox Width="200" ItemsSource="{Binding lstPlayersWithoutSelected}" SelectedIndex="{Binding CBBTpPlayer}" DisplayMemberPath="Name"/>
+                                                        <Button Content="{DynamicResource teleport}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="Teleport" IsEnabled="{Binding TpIsAvailable}"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{DynamicResource SendMessage}" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                        <TextBox Width="230" Text="{Binding txtSendMessage, UpdateSourceTrigger=PropertyChanged}" x:Name="txtSendMessage">
+                                                            <TextBox.InputBindings>
+                                                                <KeyBinding Command="{Binding Command}" CommandParameter="SendMessage" Key="Enter"/>
+                                                            </TextBox.InputBindings>
+                                                        </TextBox>
+                                                        <Button Content="{DynamicResource send}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="SendMessage" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtSendMessage}"/>
+                                                    </StackPanel>
 
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{DynamicResource effects}" VerticalAlignment="Center"/>
-                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                                    <ComboBox Width="230" SelectedIndex="{Binding CBBEffectIndex}">
-                                                        <ComboBoxItem Content="Speed"/>
-                                                        <ComboBoxItem Content="Slowness"/>
-                                                        <ComboBoxItem Content="Haste"/>
-                                                        <ComboBoxItem Content="Mining Fatigue"/>
-                                                        <ComboBoxItem Content="Strength"/>
-                                                        <ComboBoxItem Content="Instant Health"/>
-                                                        <ComboBoxItem Content="Instant Damage"/>
-                                                        <ComboBoxItem Content="Jump Boost"/>
-                                                        <ComboBoxItem Content="Nausea"/>
-                                                        <ComboBoxItem Content="Regeneration"/>
-                                                        <ComboBoxItem Content="Resistance"/>
-                                                        <ComboBoxItem Content="Fire Resistance"/>
-                                                        <ComboBoxItem Content="Water Breathing"/>
-                                                        <ComboBoxItem Content="Invisibility"/>
-                                                        <ComboBoxItem Content="Blindness"/>
-                                                        <ComboBoxItem Content="Night Vision"/>
-                                                        <ComboBoxItem Content="Hunger"/>
-                                                        <ComboBoxItem Content="Weakness"/>
-                                                        <ComboBoxItem Content="Poison"/>
-                                                        <ComboBoxItem Content="Wither"/>
-                                                    </ComboBox>
-                                                    <TextBlock Text="{DynamicResource duration}" VerticalAlignment="Center" Margin="20,0,10,0"/>
-                                                    <Controls:NumericUpDown Minimum="1" Value="{Binding NudDuration}"/>
-                                                    <Button Content="{DynamicResource apply}" Margin="10,0,0,0" Command="{Binding Command}" CommandParameter="ApplyEffect"/>
-                                                </StackPanel>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="120"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="XP:" VerticalAlignment="Center"/>
-                                                <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                                    <Controls:NumericUpDown Value="{Binding NUDXpAmount}"/>
-                                                    <ComboBox Width="181" Margin="10,0,0,0" SelectedIndex="{Binding CBBXpTypeIndex}" IsEnabled="{Binding CBBXPIsEnabled}">
-                                                        <ComboBoxItem Content="{DynamicResource experience}"/>
-                                                        <ComboBoxItem Content="{DynamicResource experiencelevel}"/>
-                                                    </ComboBox>
-                                                    <Button Content="{DynamicResource apply}" Width="75" Margin="20,0,0,0" Command="{Binding Command}" CommandParameter="GiveXP"/>
-                                                </StackPanel>
-                                            </Grid>
-                                        </StackPanel>
-                                    </Grid>
-                                </TabItem>
-                                <TabItem Header="{DynamicResource Inventory}" Style="{StaticResource UnderTab}">
-                                    <Grid>
-                                        <Grid.Resources>
-                                            <ResourceDictionary>
-                                                <ResourceDictionary.MergedDictionaries>
-                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                                                </ResourceDictionary.MergedDictionaries>
-                                            </ResourceDictionary>
-                                        </Grid.Resources>
-                                        <StackPanel Orientation="Vertical">
-                                            <DockPanel>
-                                                <my:PlayerInventoryControl Inventory="{Binding SelectedItem.Inventory, ElementName=lstPlayers}" DockPanel.Dock="Left" SelectedItem="{Binding ItemToChange}" SelectedIndex="{Binding ItemToChangeIndex}"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{DynamicResource effects}" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                        <ComboBox Width="230" SelectedIndex="{Binding CBBEffectIndex}">
+                                                            <ComboBoxItem Content="Speed"/>
+                                                            <ComboBoxItem Content="Slowness"/>
+                                                            <ComboBoxItem Content="Haste"/>
+                                                            <ComboBoxItem Content="Mining Fatigue"/>
+                                                            <ComboBoxItem Content="Strength"/>
+                                                            <ComboBoxItem Content="Instant Health"/>
+                                                            <ComboBoxItem Content="Instant Damage"/>
+                                                            <ComboBoxItem Content="Jump Boost"/>
+                                                            <ComboBoxItem Content="Nausea"/>
+                                                            <ComboBoxItem Content="Regeneration"/>
+                                                            <ComboBoxItem Content="Resistance"/>
+                                                            <ComboBoxItem Content="Fire Resistance"/>
+                                                            <ComboBoxItem Content="Water Breathing"/>
+                                                            <ComboBoxItem Content="Invisibility"/>
+                                                            <ComboBoxItem Content="Blindness"/>
+                                                            <ComboBoxItem Content="Night Vision"/>
+                                                            <ComboBoxItem Content="Hunger"/>
+                                                            <ComboBoxItem Content="Weakness"/>
+                                                            <ComboBoxItem Content="Poison"/>
+                                                            <ComboBoxItem Content="Wither"/>
+                                                        </ComboBox>
+                                                        <TextBlock Text="{DynamicResource duration}" VerticalAlignment="Center" Margin="20,0,10,0"/>
+                                                        <Controls:NumericUpDown Minimum="1" Value="{Binding NudDuration}"/>
+                                                        <Button Content="{DynamicResource apply}" Margin="10,0,0,0" Command="{Binding Command}" CommandParameter="ApplyEffect"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="XP:" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                        <Controls:NumericUpDown Value="{Binding NUDXpAmount}"/>
+                                                        <ComboBox Width="181" Margin="10,0,0,0" SelectedIndex="{Binding CBBXpTypeIndex}" IsEnabled="{Binding CBBXPIsEnabled}">
+                                                            <ComboBoxItem Content="{DynamicResource experience}"/>
+                                                            <ComboBoxItem Content="{DynamicResource experiencelevel}"/>
+                                                        </ComboBox>
+                                                        <Button Content="{DynamicResource apply}" Width="75" Margin="20,0,0,0" Command="{Binding Command}" CommandParameter="GiveXP"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </TabItem>
+                                    <TabItem Header="{DynamicResource Inventory}" Style="{StaticResource UnderTab}">
+                                        <Grid>
+                                            <Grid.Resources>
+                                                <ResourceDictionary>
+                                                    <ResourceDictionary.MergedDictionaries>
+                                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                    </ResourceDictionary.MergedDictionaries>
+                                                </ResourceDictionary>
+                                            </Grid.Resources>
+                                            <StackPanel Orientation="Vertical">
+                                                <DockPanel>
+                                                    <my:PlayerInventoryControl Inventory="{Binding SelectedItem.Inventory, ElementName=lstPlayers}" DockPanel.Dock="Left" SelectedItem="{Binding ItemToChange}" SelectedIndex="{Binding ItemToChangeIndex}"/>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <GroupBox Header="{DynamicResource ChangeItem}" DockPanel.Dock="Right">
+                                                            <StackPanel Orientation="Vertical">
+                                                                <DockPanel LastChildFill="False">
+                                                                    <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding NewSelectedItem, Converter={StaticResource ItemStackToImageConverter}}" Margin="5,0,0,0"/>
+                                                                    <TextBlock Text="{Binding CurrentItemText}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                                    <Button Content="..." Command="{Binding Command}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0"/>
+                                                                </DockPanel>
+                                                                <DockPanel Margin="0,5,0,0">
+                                                                    <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                                                    <Controls:NumericUpDown Minimum="1" Maximum="64" Value="{Binding NudItemAmount}" Margin="10,0,10,0" DockPanel.Dock="Right"/>
+                                                                </DockPanel>
+                                                                <Grid Margin="0,5,0,0">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition />
+                                                                        <ColumnDefinition />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Button Content="{DynamicResource change}" Command="{Binding Command}" CommandParameter="ChangeItem" Margin="10,0,5,0"/>
+                                                                    <Button Content="{DynamicResource remove}"  Command="{Binding Command}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0"/>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                        </GroupBox>
+                                                        <Button Content="{DynamicResource clear}" Command="{Binding Command}" CommandParameter="ClearInventory" Margin="10,0,10,0"/>
+                                                    </StackPanel>
+                                                </DockPanel>
                                                 <StackPanel Orientation="Vertical">
-                                                    <GroupBox Header="{DynamicResource ChangeItem}" DockPanel.Dock="Right">
+                                                    <GroupBox Header="{DynamicResource GiveItem}">
                                                         <StackPanel Orientation="Vertical">
-                                                            <DockPanel LastChildFill="False">
-                                                                <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding NewSelectedItem, Converter={StaticResource ItemStackToImageConverter}}" Margin="5,0,0,0"/>
-                                                                <TextBlock Text="{Binding CurrentItemText}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                                                <Button Content="..." Command="{Binding Command}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0"/>
-                                                            </DockPanel>
-                                                            <DockPanel Margin="0,5,0,0">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{DynamicResource SelectItem}" VerticalAlignment="Center"/>
+                                                                <TextBlock Text=":" VerticalAlignment="Center"/>
+                                                                <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding SelectedItem.Image}" Margin="5,0,0,0"/>
+                                                                <TextBlock Text="{Binding SelectedItem.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                                <Button Content="..." Command="{Binding Command}" CommandParameter="SelectItem" Width="30" Margin="5,0,0,0"/>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                                                 <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
-                                                                <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                                                                <Controls:NumericUpDown Minimum="1" Maximum="64" Value="{Binding NudItemAmount}" Margin="10,0,10,0" DockPanel.Dock="Right"/>
-                                                            </DockPanel>
-                                                            <Grid Margin="0,5,0,0">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition />
-                                                                    <ColumnDefinition />
-                                                                </Grid.ColumnDefinitions>
-                                                                <Button Content="{DynamicResource change}" Command="{Binding Command}" CommandParameter="ChangeItem" Margin="10,0,5,0"/>
-                                                                <Button Content="{DynamicResource remove}"  Command="{Binding Command}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0"/>
-                                                            </Grid>
+                                                                <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                                <Controls:NumericUpDown Maximum="64" Minimum="1" Value="{Binding ItemAmount}"/>
+                                                            </StackPanel>
+                                                            <Button Content="{DynamicResource give}" Command="{Binding Command}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
                                                         </StackPanel>
                                                     </GroupBox>
-                                                    <Button Content="{DynamicResource clear}" Command="{Binding Command}" CommandParameter="ClearInventory"/>
                                                 </StackPanel>
-                                            </DockPanel>
-                                            <StackPanel Orientation="Vertical">
-                                                <GroupBox Header="{DynamicResource GiveItem}">
-                                                    <StackPanel Orientation="Vertical">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{DynamicResource SelectItem}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text=":" VerticalAlignment="Center"/>
-                                                            <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding SelectedItem.Image}" Margin="5,0,0,0"/>
-                                                            <TextBlock Text="{Binding SelectedItem.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                                            <Button Content="..." Command="{Binding Command}" CommandParameter="SelectItem" Width="30" Margin="5,0,0,0"/>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                            <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                            <Controls:NumericUpDown Maximum="64" Minimum="1" Value="{Binding ItemAmount}"/>
-                                                        </StackPanel>
-                                                        <Button Content="{DynamicResource give}" Command="{Binding Command}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
-                                                    </StackPanel>
-                                                </GroupBox>
                                             </StackPanel>
-                                        </StackPanel>
 
-                                    </Grid>
-                                </TabItem>
-                            </TabControl>
+                                        </Grid>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -377,14 +380,14 @@
                                     <DockPanel>
                                         <GroupBox Header="{DynamicResource Server}" Width="256">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Button Content="{DynamicResource reload}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="reload"/>
-                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="saveall"/>
+                                                <Button Content="{DynamicResource reload}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="reload" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
+                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="saveall" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="{DynamicResource time}" Width="212">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Button Content="{DynamicResource day}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timeday"/>
-                                                <Button Content="{DynamicResource night}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timenight"/>
+                                                <Button Content="{DynamicResource day}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timeday" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
+                                                <Button Content="{DynamicResource night}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timenight" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="{DynamicResource weather}">
@@ -394,12 +397,12 @@
                                                     <ComboBoxItem Content="{DynamicResource thunder}"/>
                                                     <ComboBoxItem Content="{DynamicResource Wclear}"/>
                                                 </ComboBox>
-                                                <Button Content="{DynamicResource ChangeWeather}" Margin="10,0,10,10" Command="{Binding Command}" CommandParameter="chngweather"/>
+                                                <Button Content="{DynamicResource ChangeWeather}" Margin="10,0,10,10" Command="{Binding Command}" CommandParameter="chngweather" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
                                             </StackPanel>
                                         </GroupBox>
                                     </DockPanel>
 
-                                    <Grid Margin="10">
+                                    <Grid Margin="10" IsEnabled="{Binding MinecraftServer.IsRunning}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
                                             <ColumnDefinition Width="*"/>
@@ -525,7 +528,7 @@
                         <Grid>
                             <DockPanel>
                                 <StackPanel Orientation="Vertical">
-                                    <Grid>
+                                    <Grid IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="75"/>
@@ -533,7 +536,7 @@
                                         <TextBox Text="" Controls:TextboxHelper.Watermark="{DynamicResource playername}" Margin="0,0,10,0" x:Name="txtAddWhitelist"/>
                                         <Button Content="{DynamicResource add}" Grid.Column="1" IsEnabled="{Binding ElementName=txtAddWhitelist,Path=Text,Converter={StaticResource FalseOnEmptyString}}" Command="{Binding AddPlayerToWhitelist}" CommandParameter="{Binding ElementName=txtAddWhitelist}"/>
                                     </Grid>
-                                    <ListBox ItemsSource="{Binding MinecraftServer.Whitelist.Whitelist}" x:Name="lstWhitelist" Width="250" SelectedItem="{Binding WhitelistPlayer}" Margin="0,10,0,0">
+                                    <ListBox ItemsSource="{Binding MinecraftServer.Whitelist.Whitelist}" x:Name="lstWhitelist" Width="250" Margin="0,10,0,0">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding name}"/>

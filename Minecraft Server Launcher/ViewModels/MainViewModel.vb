@@ -14,7 +14,11 @@
         Try
             MinecraftServer = New MinecraftServer
             Dim t As New System.Threading.Thread(Sub()
-                                                     MinecraftServer.StartServer()
+                                                     If Not MinecraftServer.StartServer() Then
+#If Not Debug Then
+                                                         Application.Current.Dispatcher.Invoke(Sub() Application.Current.Shutdown())
+#End If
+                                                     End If
                                                  End Sub)
             t.IsBackground = True
             t.Start()
@@ -40,6 +44,7 @@
 #End Region
 
 #Region "Events"
+
     Private _IsClosing As Boolean = False
     Public Property IsClosing() As Boolean
         Get
@@ -78,6 +83,10 @@
 
     Private Sub _MinecraftServer_BannedListChanged(sender As Object, e As EventArgs) Handles _MinecraftServer.BannedListChanged
         OnPropertyChanged("NoBansTextVisibility")
+    End Sub
+
+    Private Sub _MinecraftServer_PlayerChanged(sender As Object, e As EventArgs) Handles _MinecraftServer.PlayerChanged
+        OnPropertyChanged("NoPlayersFound")
     End Sub
 
     Private Sub _MinecraftServer_ServerChanged(sender As Object, e As EventArgs) Handles _MinecraftServer.ServerChanged
@@ -160,6 +169,12 @@
     Public ReadOnly Property GridPlayerIsVisible As Visibility
         Get
             If lstPlayerIndex > -1 Then Return Visibility.Visible Else Return Visibility.Hidden
+        End Get
+    End Property
+
+    Public ReadOnly Property NoPlayersFound As Boolean
+        Get
+            Return MinecraftServer.lstPlayers.Count = 0
         End Get
     End Property
 
@@ -700,7 +715,9 @@
                     Me.SelectedItem = ItemSelectionViewModel.Instance.SelectedItem
                 End If
             Case "GiveItem"
-                MinecraftServer.ExecuteCommand(String.Format("give {0} {1} {2}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, SelectedItem.IDToString, ItemAmount))
+                If SelectedItem IsNot Nothing Then
+                    MinecraftServer.ExecuteCommand(String.Format("give {0} {1} {2}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, SelectedItem.IDToString, ItemAmount))
+                End If
             Case "KickPlayer"
                 MinecraftServer.ExecuteCommand("kick " & MinecraftServer.lstPlayers(lstPlayerIndex).Name)
             Case "BanPlayer"
@@ -750,12 +767,16 @@
                     Me.NewSelectedItem = New org.phybros.thrift.ItemStack() With {.TypeId = ItemSelectionViewModel.Instance.SelectedItem.ID, .Data = ItemSelectionViewModel.Instance.SelectedItem.Meta}
                 End If
             Case "ChangeItem"
-                ItemToChange.Amount = NudItemAmount
-                ItemToChange.Data = NewSelectedItem.Data
-                ItemToChange.TypeId = NewSelectedItem.TypeId
-                MinecraftServer.ThriftAPI.Functions.UpdateInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChange, ItemToChangeIndex)
+                If ItemToChange IsNot Nothing Then
+                    ItemToChange.Amount = NudItemAmount
+                    ItemToChange.Data = NewSelectedItem.Data
+                    ItemToChange.TypeId = NewSelectedItem.TypeId
+                    MinecraftServer.ThriftAPI.Functions.UpdateInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChange, ItemToChangeIndex)
+                End If
             Case "DeleteItem"
-                MinecraftServer.ThriftAPI.Functions.RemoveInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChangeIndex)
+                If ItemToChangeIndex > -1 Then
+                    MinecraftServer.ThriftAPI.Functions.RemoveInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChangeIndex)
+                End If
             Case "SaveSettings"
                 CheckIfSettingsSave()
                 MinecraftServer.ServerSettings.HasChanged = False

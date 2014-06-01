@@ -160,7 +160,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style> <!-- It works -->
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

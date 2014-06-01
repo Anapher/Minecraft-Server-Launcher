@@ -16,6 +16,7 @@ Public Class MinecraftServer
     Public Event StartFileNotFound(sender As Object, e As EventArgs)
     Public Event BannedListChanged(sender As Object, e As EventArgs)
     Public Event DynmapEnabled(sender As Object, e As EventArgs)
+    Public Event PlayerChanged(sender As Object, e As EventArgs)
 #End Region
 
 #Region "Properties"
@@ -64,6 +65,16 @@ Public Class MinecraftServer
         End Set
     End Property
 
+    Private _ThriftAPIIsAvailable As Boolean
+    Public Property ThriftAPIIsAvailable() As Boolean
+        Get
+            Return _ThriftAPIIsAvailable
+        End Get
+        Set(ByVal value As Boolean)
+            SetProperty(value, _ThriftAPIIsAvailable)
+        End Set
+    End Property
+
     Private _IsRunning As Boolean
     Public Property IsRunning() As Boolean
         Get
@@ -81,7 +92,7 @@ Public Class MinecraftServer
         End Get
         Set(ByVal value As Server)
             SetProperty(value, _server)
-            OnPropertyChanged("FullIP")
+            OnPropertyChanged("PlayersFound")
         End Set
     End Property
 
@@ -174,7 +185,6 @@ Public Class MinecraftServer
             SetProperty(value, _BackupManager)
         End Set
     End Property
-
 #End Region
 
     Public Sub RefreshServerlogs()
@@ -285,59 +295,65 @@ Public Class MinecraftServer
             If ThriftAPI.Functions IsNot Nothing Then
                 Dim oldServer = Server
                 Server = ThriftAPI.Functions.GetServer()
-                    If Server Is Nothing Then Continue While
-                    RaiseEvent ServerChanged(Me, EventArgs.Empty)
-                    Dim compare1to2 = From a In Server.OnlinePlayers From b In lstPlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
-                    Dim compare2to1 = From a In lstPlayers From b In Server.OnlinePlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
+                If Server Is Nothing Then Continue While
+                RaiseEvent ServerChanged(Me, EventArgs.Empty)
+                Dim compare1to2 = From a In Server.OnlinePlayers From b In lstPlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
+                Dim compare2to1 = From a In lstPlayers From b In Server.OnlinePlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
 
-                    For Each s In compare1to2
-                        If s(1) Is Nothing Then
-                            Application.Current.Dispatcher.BeginInvoke(Sub() lstPlayers.Add(s(0)))
-                        Else
-                            Dim a = s(0)
-                            With s(1)
-                                .Exhaustion = a.Exhaustion
-                                .Health = a.Health
-                                .FirstPlayed = a.FirstPlayed
-                                .FoodLevel = a.FoodLevel
-                                .Gamemode = a.Gamemode
-                                .HealthDouble = a.HealthDouble
-                                .Inventory = a.Inventory
-                                .Ip = a.Ip
-                                .IsBanned = a.IsBanned
-                                .IsInVehicle = a.IsInVehicle
-                                .IsOp = a.IsOp
-                                .IsSleeping = a.IsSleeping
-                                .IsSneaking = a.IsSneaking
-                                .IsSprinting = a.IsSprinting
-                                .IsWhitelisted = a.IsWhitelisted
-                                .LastPlayed = a.LastPlayed
-                                .Level = a.Level
-                                .LevelProgress = a.LevelProgress
-                                .Location = a.Location
-                                .Name = a.Name
-                                .Port = a.Port
-                                .XpToNextLevel = a.XpToNextLevel
-                            End With
-                        End If
-                    Next
+                For Each s In compare1to2
+                    If s(1) Is Nothing Then
+                        Application.Current.Dispatcher.BeginInvoke(Sub()
+                                                                       lstPlayers.Add(s(0))
+                                                                       RaiseEvent PlayerChanged(Me, EventArgs.Empty)
+                                                                   End Sub)
+                    Else
+                        Dim a = s(0)
+                        With s(1)
+                            .Exhaustion = a.Exhaustion
+                            .Health = a.Health
+                            .FirstPlayed = a.FirstPlayed
+                            .FoodLevel = a.FoodLevel
+                            .Gamemode = a.Gamemode
+                            .HealthDouble = a.HealthDouble
+                            .Inventory = a.Inventory
+                            .Ip = a.Ip
+                            .IsBanned = a.IsBanned
+                            .IsInVehicle = a.IsInVehicle
+                            .IsOp = a.IsOp
+                            .IsSleeping = a.IsSleeping
+                            .IsSneaking = a.IsSneaking
+                            .IsSprinting = a.IsSprinting
+                            .IsWhitelisted = a.IsWhitelisted
+                            .LastPlayed = a.LastPlayed
+                            .Level = a.Level
+                            .LevelProgress = a.LevelProgress
+                            .Location = a.Location
+                            .Name = a.Name
+                            .Port = a.Port
+                            .XpToNextLevel = a.XpToNextLevel
+                        End With
+                    End If
+                Next
 
-                    For i = 0 To compare2to1.Count - 1
-                        Dim s = compare2to1(i)
-                        If s IsNot Nothing AndAlso s(1) Is Nothing Then
-                            Application.Current.Dispatcher.BeginInvoke(Sub() lstPlayers.Remove(s(0)))
-                        End If
-                    Next
-                    OnPropertyChanged("lstPlayers")
-                End If
-                Banlist.Load()
-                Whitelist.Load()
-                RefreshPlugins()
+                For i = 0 To compare2to1.Count - 1
+                    Dim s = compare2to1(i)
+                    If s IsNot Nothing AndAlso s(1) Is Nothing Then
+                        Application.Current.Dispatcher.BeginInvoke(Sub()
+                                                                       lstPlayers.Remove(s(0))
+                                                                       RaiseEvent PlayerChanged(Me, EventArgs.Empty)
+                                                                   End Sub)
+                    End If
+                Next
+                OnPropertyChanged("lstPlayers")
+            End If
+            Banlist.Load()
+            Whitelist.Load()
+            RefreshPlugins()
         End While
     End Sub
 
     Public Sub StopServer()
-        If ThriftAPI IsNot Nothing Then ThriftAPI.Stop()
+        If ThriftAPI IsNot Nothing Then ThriftAPI.Stop() : ThriftAPIIsAvailable = False
         If p IsNot Nothing AndAlso Not p.HasExited Then p.Kill()
         IsRunning = False
         LauncherSettings.Save()
@@ -354,6 +370,7 @@ Public Class MinecraftServer
         IsRunning = False
         Using ThriftAPI
             ThriftAPI.Stop()
+            ThriftAPIIsAvailable = False
         End Using
         p.Dispose()
         p = Nothing
@@ -370,8 +387,9 @@ Public Class MinecraftServer
                 Me.IsRunning = False
             Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: \[SwiftApi\] Started up and listening on port [1-9]{1,5}$")
                 ThriftAPI.Start()
+                ThriftAPIIsAvailable = True
             Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: \[dynmap\] Enabled$")
-RaiseEvent DynmapEnabled(Me, EventArgs.Empty)
+                RaiseEvent DynmapEnabled(Me, EventArgs.Empty)
         End Select
         RaiseEvent StateChanged(Me, New StateChangedEventArgs(Line))
     End Sub
