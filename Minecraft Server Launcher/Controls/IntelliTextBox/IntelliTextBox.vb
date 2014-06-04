@@ -109,9 +109,12 @@ Public Class IntelliTextBox
         AddHandler Application.Current.Activated, Sub()
                                                       FilterAssistBoxItemsSource()
                                                   End Sub
+        AddHandler AssistListBox.SelectionChanged, Sub()
+                                                       ResetAssistListBoxLocation()
+                                                   End Sub
     End Sub
 
-    Dim IsAdded As Boolean = False
+    Private IsAdded As Boolean = False
 
     Private Sub TextBox_Loaded(sender As Object, e As RoutedEventArgs)
         If Me.Parent.GetType <> GetType(Grid) Then
@@ -388,12 +391,7 @@ Public Class IntelliTextBox
     End Sub
 
     Private Sub RefreshInfoBox(command As IntelliTextBoxCommand, index As Integer)
-        Select Case Me.InfoLanguage.Code
-            Case "de-de"
-                InfoTextBlock.Text = command.Description.Deutsch
-            Case Else
-                InfoTextBlock.Text = command.Description.English
-        End Select
+        InfoTextBlock.Text = command.Description.GetText(InfoLanguage.Code)
         Dim inlines = CommandTextBlock.Inlines
         inlines.Clear()
 
@@ -401,38 +399,21 @@ Public Class IntelliTextBox
             inlines.Add(GetInline(command.Command, True))
             For Each t In command.Token
                 If t.CommandText IsNot Nothing Then
-                    Select Case Me.InfoLanguage.Code
-                        Case "de-de"
-                            inlines.Add(" " & t.CommandText.Deutsch)
-                        Case Else
-                            inlines.Add(" " & t.CommandText.English)
-                    End Select
+                    inlines.Add(" " & t.CommandText.GetText(InfoLanguage.Code))
                 End If
             Next
         ElseIf index = -1 Then
             Dim s = command.Command
             For Each t In command.Token
                 If t.CommandText IsNot Nothing Then
-                    Select Case Me.InfoLanguage.Code
-                        Case "de-de"
-                            s &= " " & t.CommandText.Deutsch
-                        Case Else
-                            s &= " " & t.CommandText.English
-                    End Select
+                    s &= " " & t.CommandText.GetText(InfoLanguage.Code)
                 End If
             Next
             inlines.Add(s)
         Else
             inlines.Add(command.Command)
             For Each t In command.Token
-                Dim txt = ""
-                Select Case Me.InfoLanguage.Code
-                    Case "de-de"
-                        txt = t.CommandText.Deutsch
-                    Case Else
-                        txt = t.CommandText.English
-                End Select
-                txt = " " & txt
+                Dim txt = " " & t.CommandText.GetText(InfoLanguage.Code)
                 If command.Token.IndexOf(t) = index - 1 Then
                     inlines.Add(GetInline(txt, True))
                 Else
@@ -457,7 +438,7 @@ Public Class IntelliTextBox
     Private Sub FilterAssistBoxItemsSource(Optional s As String = Nothing)
         If s Is Nothing Then s = Me.Text
         If _didUseTab Then _didUseTab = False : Return
-
+        If lstCommands Is Nothing Then Return
         If Not HaveFocus Then
             AssistPopup.IsOpen = False
             InfoPopup.IsOpen = False
@@ -519,7 +500,13 @@ Public Class IntelliTextBox
                             If s.EndsWith(" ") Then index += 1 'Wenn der Text mit einem Leerzeichen endet, sollen die verfügbaren Commands angezeigt werden
                             RefreshInfoBox(c, index) 'Erstmal die InfoBox aktualisieren
                             Dim commandtokens = c.Token 'Erstmal die Tokens in ne neue Variable hauen
-                            If commandtokens.Count >= tokens.Length - 2 Then 'Wenn der Command genug Tokens hat...
+                            Dim bool = False
+                            If IsAPlugin Then
+                                bool = commandtokens.Count > tokens.Length - 2
+                            Else
+                                bool = commandtokens.Count >= tokens.Length - 2
+                            End If
+                            If bool Then 'Wenn der Command genug Tokens hat...
                                 Dim currentToken As Token 'deklarieren wir erstmal eine Variable, die diesen Token dann beinhalten wird
                                 If commandtokens.Count = 1 Then
                                     currentToken = commandtokens(0)

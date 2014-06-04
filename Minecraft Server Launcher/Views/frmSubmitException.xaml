@@ -20,7 +20,7 @@
         <TextBox Height="100" Margin="5" AcceptsReturn="True" AcceptsTab="True" Text="{Binding ElementName=window,Path=txtNote,UpdateSourceTrigger=PropertyChanged}"/>
         <DockPanel LastChildFill="False" Margin="10">
             <Button Content="{StaticResource ExceptionSendErrorAndClose}" DockPanel.Dock="Left" Click="ButtonSendReport_Click"/>
-            <Button Content="{StaticResource ExceptionJustClose}" DockPanel.Dock="Right" Click="ButtonClose_Click"/>
+            <Button Content="{StaticResource Close}" DockPanel.Dock="Right" Click="ButtonClose_Click"/>
         </DockPanel>
     </StackPanel>
 </Controls:MetroWindow>

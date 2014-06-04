@@ -8,7 +8,7 @@
     
     <!-- Header -->
     <System:String x:Key="Console">Konsole</System:String>
-    <System:String x:Key="Actions">Aktionen</System:String>
+    <System:String x:Key="Player">Spieler</System:String>
     <System:String x:Key="Server">Server</System:String>
     <System:String x:Key="Settings">Einstellungen</System:String>
 
@@ -234,13 +234,11 @@
     <System:String x:Key="SAPINFText">Das Plugin 'SwiftAPI' wurde nicht gefunden. Ohne SwiftAPI wird dieses Programm nicht funktionieren. Wollen sie das Plugin Downloaden?</System:String>
     <System:String x:Key="SAPINFTitle">SwiftAPI nicht gefunden</System:String>
     <System:String x:Key="SAPINFOK">Download</System:String>
-    <System:String x:Key="SAPINFCancel">Schließen</System:String>
 
     <!-- MessageBox craftbukkit Download completed -->
     <System:String x:Key="CBDFText">Der Download wurde erfolgreich abgeschlossen. Die Anwendung kann jetzt neu gestartet werden.</System:String>
     <System:String x:Key="CBDFTitle">Erfolgreich</System:String>
     <System:String x:Key="SCBDFOK">Neustarten</System:String>
-    <System:String x:Key="CBDFCancel">Schließen</System:String>
 
 
     <!-- MessageBox want save settings= -->
@@ -262,7 +260,7 @@
     <System:String x:Key="GraficsFrom">Grafiken sind von</System:String>
     
     <System:String x:Key="Language">Sprache</System:String>
-    <System:String x:Key="AlwaysAskIfSaveChanges">Immer fragen ob Einstellungen gespeichert werden sollen</System:String>
+    <System:String x:Key="AlwaysAskIfSaveChanges">Immer fragen, ob Einstellungen gespeichert werden sollen</System:String>
     <System:String x:Key="SaveServerBeforClose">Server beim schließen des Programms automatisch stoppen</System:String>
     <System:String x:Key="FileIsToLarge">Die Datei ({0}) ist zu groß</System:String>
     <System:String x:Key="StoppingServer">Server wird gestoppt...</System:String>
@@ -320,7 +318,6 @@
     <System:String x:Key="ExceptionNote">Um uns zu helfen, die Ursache des Fehlers zu diagnostizieren und die Anwendung zu verbessern, können sie hier eine Anmerkung hinterlassen (Optional):</System:String>
     <System:String x:Key="Exception">Fehler</System:String>
     <System:String x:Key="ExceptionSendErrorAndClose">Fehlerbericht senden und schließen</System:String>
-    <System:String x:Key="ExceptionJustClose">Schließen</System:String>
     
     <!-- Create New Backup -->
     <System:String x:Key="CreateNewBackup">Neues Backup erstellen</System:String>
@@ -337,7 +334,41 @@
     <!-- EditExecuteCommand -->
     <System:String x:Key="EditExecuteCommand">Befehl editieren</System:String>
     
+    <!-- IntelliSense Manager -->
+    <System:String x:Key="OpenIntelliSenseManager">IntelliSense Manager öffnen</System:String>
+    <System:String x:Key="CommandFile">Command Datei</System:String>
+    <System:String x:Key="Allfiles">Alle Dateien</System:String>
+    <System:String x:Key="SelectCommandfile">Bitte Command Datei auswählen</System:String>
+    <System:String x:Key="ErrorOnImportCommand">Es ist ein Fehler beim importieren des Commands aufgetreten.</System:String>
+    <System:String x:Key="new">Neu</System:String>
+    <System:String x:Key="Import">Importieren</System:String>
+    
     <!-- Status -->
     <System:String x:Key="RestoreBackupStatus">Backup wird wiederhergestellt (Datei {0} von {1})</System:String>
     <System:String x:Key="CreateBackupStatus">Backup wird erstellt (Datei {0} von {1})</System:String>
+    
+    <!-- frmIntelliCommand -->
+    <System:String x:Key="Pluginname">Pluginname</System:String>
+    <System:String x:Key="english">Englisch</System:String>
+    <System:String x:Key="german">Deutsch</System:String>
+    <System:String x:Key="NoList">Keine Liste</System:String>
+    <System:String x:Key="list">Liste</System:String>
+
+    <System:String x:Key="CustomList">Benutzerdefinierte Liste</System:String>
+    <System:String x:Key="PlayerList">Spielerliste</System:String>
+    <System:String x:Key="ItemList">Itemliste</System:String>
+    <System:String x:Key="PluginList">Pluginliste</System:String>
+    <System:String x:Key="BanList">Gebannte-Spieler-Liste</System:String>
+    <System:String x:Key="BanIpList">Gebannte-IPs-Liste</System:String>
+    <System:String x:Key="CommandList">Befehlsliste</System:String>
+    <System:String x:Key="text">Text</System:String>
+    <System:String x:Key="save">Speichern</System:String>
+    <System:String x:Key="QuestionSaveChanged">Wollen sie die Änderungen speichern?</System:String>
+    <System:String x:Key="ErrorEnterPluginname">Bitte geben sie einen Pluginnamen ein</System:String>
+    <System:String x:Key="ErrorNoCommands">Bitte fügen sie mindestens einen Command hinzu.</System:String>
+    <System:String x:Key="ErrorNoDescription">Bitte geben sie eine Beschreibung an.</System:String>
+    <System:String x:Key="ErrorListEmpty">Sie haben als Liste "Benutzerdefinierte Liste" ausgewählt, aber kein Einträge hinzugefügt. Bitte wählen sie "Keine Liste" aus, wenn sie keine Liste wollen, oder fügen sie Einträge der Liste hinzu.</System:String>
+    <System:String x:Key="ErrorNoCommand">Bitte geben sie einen Befehl an.</System:String>
+    <System:String x:Key="Close">Schließen</System:String>
+    <System:String x:Key="SaveCommand">Command speichern</System:String>
 </ResourceDictionary>

@@ -45,7 +45,6 @@ Public Class Settings
         End Set
     End Property
 
-
     Private _ram As Ram
     Public Property Ram() As Ram
         Get

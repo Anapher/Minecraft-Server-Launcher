@@ -19,7 +19,7 @@
                                                OnPropertyChanged("ButtonDownloadIsEnabled")
                                            End Sub
         AddHandler Downloader.DownloadCraftbukkitCompleted, Sub(sender, e)
-                                                                Dim frm = New frmMessageBox(Application.Current.FindResource("CBDFText").ToString(), Application.Current.FindResource("CBDFTitle").ToString(), Application.Current.FindResource("SCBDFOK").ToString(), Application.Current.FindResource("CBDFCancel").ToString()) With {.Owner = myWindow}
+                                                                Dim frm = New frmMessageBox(Application.Current.FindResource("CBDFText").ToString(), Application.Current.FindResource("CBDFTitle").ToString(), Application.Current.FindResource("SCBDFOK").ToString(), Application.Current.FindResource("Close").ToString()) With {.Owner = myWindow}
                                                                 If frm.ShowDialog() Then
                                                                     System.Diagnostics.Process.Start(Application.ResourceAssembly.Location)
                                                                     Application.Current.Shutdown()

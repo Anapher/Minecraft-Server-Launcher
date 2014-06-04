@@ -8,7 +8,7 @@
 
     <!-- Header -->
     <System:String x:Key="Console">Console</System:String>
-    <System:String x:Key="Actions">Actions</System:String>
+    <System:String x:Key="Player">Player</System:String>
     <System:String x:Key="Server">Server</System:String>
     <System:String x:Key="Settings">Settings</System:String>
 
@@ -233,13 +233,11 @@
     <System:String x:Key="SAPINFText">The plugin 'SwiftAPI' was not found. This program will not work without SwiftAPI. Do you want to download it?</System:String>
     <System:String x:Key="SAPINFTitle">SwiftAPI not found</System:String>
     <System:String x:Key="SAPINFOK">Download</System:String>
-    <System:String x:Key="SAPINFCancel">Close</System:String>
-
+ 
     <!-- MessageBox craftbukkit Download completed -->
     <System:String x:Key="CBDFText">The download has completed successfully. The application can restart now.</System:String>
     <System:String x:Key="CBDFTitle">Successfully</System:String>
     <System:String x:Key="SCBDFOK">Restart</System:String>
-    <System:String x:Key="CBDFCancel">Close</System:String>
 
 
     <!-- MessageBox want save settings= -->
@@ -319,7 +317,6 @@
     <System:String x:Key="ExceptionNote">To help us diagnose the cause of this error and improve the software, you can write down a note (optional):</System:String>
     <System:String x:Key="Exception">Error</System:String>
     <System:String x:Key="ExceptionSendErrorAndClose">Send report and close</System:String>
-    <System:String x:Key="ExceptionJustClose">Close</System:String>
 
 
     <!-- Create New Backup -->
@@ -330,14 +327,48 @@
     <System:String x:Key="BackupException">An error has occurred in the following file: {1}{0} Should the backup continue and the file be skipped?</System:String>
     <System:String x:Key="CreateBackupTimer">Create backuptimer</System:String>
     <System:String x:Key="EditBackupTimer">Edit backuptimer</System:String>
-    <System:String x:Key="Edit">Editieren</System:String>
+    <System:String x:Key="Edit">Edit</System:String>
     <System:String x:Key="SaveNewBackupTimer">Save backuptimer</System:String>
     <System:String x:Key="BackupTimer">Backuptimer</System:String>
     
     <!-- EditExecuteCommand -->
     <System:String x:Key="EditExecuteCommand">Befehl editieren</System:String>
-    
+
+    <!-- IntelliSense Manager -->
+    <System:String x:Key="OpenIntelliSenseManager">Open IntelliSense Manager</System:String>
+    <System:String x:Key="CommandFile">Command file</System:String>
+    <System:String x:Key="Allfiles">All files</System:String>
+    <System:String x:Key="SelectCommandfile">Please select the command file</System:String>
+    <System:String x:Key="ErrorOnImportCommand">An error has occurred while importing the command.</System:String>
+    <System:String x:Key="new">New</System:String>
+    <System:String x:Key="Import">Import</System:String>
+
     <!-- Status -->
     <System:String x:Key="RestoreBackupStatus">Restore backup (File {0} of {1})</System:String>
     <System:String x:Key="CreateBackupStatus">Create backup (File {0} of {1})</System:String>
+
+    <!-- frmIntelliCommand -->
+    <System:String x:Key="Pluginname">Pluginname</System:String>
+    <System:String x:Key="english">English</System:String>
+    <System:String x:Key="german">German</System:String>
+    <System:String x:Key="NoList">No list</System:String>
+    <System:String x:Key="list">List</System:String>
+
+    <System:String x:Key="CustomList">Custom list</System:String>
+    <System:String x:Key="PlayerList">Player list</System:String>
+    <System:String x:Key="ItemList">Item list</System:String>
+    <System:String x:Key="PluginList">Plugin list</System:String>
+    <System:String x:Key="BanList">Banned player list</System:String>
+    <System:String x:Key="BanIpList">Banned ips list</System:String>
+    <System:String x:Key="CommandList">command list</System:String>
+    <System:String x:Key="text">Text</System:String>
+    <System:String x:Key="save">save</System:String>
+    <System:String x:Key="QuestionSaveChanged">Do you want to save the changes?</System:String>
+    <System:String x:Key="ErrorEnterPluginname">Please enter a plugin name.</System:String>
+    <System:String x:Key="ErrorNoCommands">Please add at least one command.</System:String>
+    <System:String x:Key="ErrorNoDescription">Please enter a description.</System:String>
+    <System:String x:Key="ErrorNoCommand">Please enter a command.</System:String>
+    <System:String x:Key="ErrorListEmpty">You selected as list "CustomList", but the custom list is empty. Please check "No list" or add texts to the list.</System:String>
+    <System:String x:Key="Close">Close</System:String>
+    <System:String x:Key="SaveCommand">Save command</System:String>
 </ResourceDictionary>

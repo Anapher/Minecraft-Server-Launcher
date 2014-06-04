@@ -146,12 +146,12 @@ Public Class MinecraftServer
         End Set
     End Property
 
-    Private _Commands As Commands
-    Public Property Commands() As Commands
+    Private _Commands As IntelliSenseManager
+    Public Property Commands() As IntelliSenseManager
         Get
             Return _Commands
         End Get
-        Set(ByVal value As Commands)
+        Set(ByVal value As IntelliSenseManager)
             SetProperty(value, _Commands)
         End Set
     End Property
@@ -196,8 +196,8 @@ Public Class MinecraftServer
     Public Sub New()
         lstPlayers = New ObservableCollection(Of Player)
         ServerSettings = New ServerSettings(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "server.properties"))
-        _Dynmap = New Dynmap(AddressOf Me.ExecuteCommand)
-        _Commands = New Commands
+        Dynmap = New Dynmap(AddressOf Me.ExecuteCommand)
+        Commands = New IntelliSenseManager(New IO.DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "Commands")))
         Banlist = New BanlistInfo
         Whitelist = New WhitelistInfo
         Dim dir As New DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "Backups"))
@@ -217,7 +217,7 @@ Public Class MinecraftServer
             Dim result As Boolean?
             Application.Current.Dispatcher.Invoke(Sub()
                                                       Application.Current.MainWindow.Visibility = Visibility.Hidden
-                                                      Dim frm As New frmMessageBox(Application.Current.FindResource("SAPINFText").ToString(), Application.Current.FindResource("SAPINFTitle").ToString(), Application.Current.FindResource("SAPINFOK").ToString(), Application.Current.FindResource("SAPINFCancel").ToString())
+                                                      Dim frm As New frmMessageBox(Application.Current.FindResource("SAPINFText").ToString(), Application.Current.FindResource("SAPINFTitle").ToString(), Application.Current.FindResource("SAPINFOK").ToString(), Application.Current.FindResource("Close").ToString())
                                                       result = frm.ShowDialog()
                                                       Application.Current.MainWindow.Visibility = Visibility.Visible
                                                   End Sub)

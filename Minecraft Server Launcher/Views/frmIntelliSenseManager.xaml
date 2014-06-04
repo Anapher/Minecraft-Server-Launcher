@@ -1,0 +1,36 @@
+﻿<Controls:MetroWindow x:Class="frmIntelliSenseManager"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher" ResizeMode="NoResize" ShowInTaskbar="False" GlowBrush="LightBlue"
+    Title="IntelliSense Manager" Height="324" Width="574" x:Name="window" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.Resources>
+            <my:SelectedIndexToBoolean x:Key="SelectedITOBool"/>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <ListView ctrl:ListViewLayoutManager.Enabled="true" Grid.Column="0" x:Name="lstCommands" ItemsSource="{Binding ElementName=window,Path=IntelliSenseManager.Commands}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Plugin" DisplayMemberBinding="{Binding PluginName}" ctrl:ProportionalColumn.Width="1"/>
+                    <GridViewColumn Header="Commands" DisplayMemberBinding="{Binding Commands.Count}" ctrl:FixedColumn.Width="250"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Column="1">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource MetroButton}">
+                    <Setter Property="Margin" Value="5,2.5,5,5"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{DynamicResource new}" Margin="5,10,5,5" Command="{Binding ElementName=window,Path=CreateNewCommand}"/>
+            <Button Content="{DynamicResource Import}" Command="{Binding ElementName=window,Path=IntelliSenseManager.ImportCommand}"/>
+            <Button Content="{DynamicResource Edit}" IsEnabled="{Binding ElementName=lstCommands,Path=SelectedIndex,Converter={StaticResource SelectedITOBool}}" Command="{Binding ElementName=window,Path=EditCommand}" CommandParameter="{Binding ElementName=lstCommands,Path=SelectedItem}"/>
+            <Button Content="{DynamicResource remove}" IsEnabled="{Binding ElementName=lstCommands,Path=SelectedIndex,Converter={StaticResource SelectedITOBool}}" Command="{Binding ElementName=window,Path=IntelliSenseManager.RemoveCommand}" CommandParameter="{Binding ElementName=lstCommands,Path=SelectedItem}"/>
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>

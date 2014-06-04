@@ -1,11 +1,13 @@
-﻿<Serializable> _
+﻿Imports System.Collections.ObjectModel
+
+<Serializable> _
 Public Class IntelliTextBoxCommand
-    Private _Token As List(Of Token)
-    Public Property Token() As List(Of Token)
+    Private _Token As ObservableCollection(Of Token)
+    Public Property Token() As ObservableCollection(Of Token)
         Get
             Return _Token
         End Get
-        Set(ByVal value As List(Of Token))
+        Set(ByVal value As ObservableCollection(Of Token))
             _Token = value
         End Set
     End Property
@@ -31,12 +33,12 @@ Public Class IntelliTextBoxCommand
     End Property
 
     Public Sub New(command As String)
-        Token = New List(Of Token)
+        Token = New ObservableCollection(Of Token)
         Me.Command = command
     End Sub
 
     Public Sub New()
-        Token = New List(Of Token)
+        Token = New ObservableCollection(Of Token)
     End Sub
 
     Private _IsPluginCommandList As Boolean
@@ -75,12 +77,12 @@ Public Class Token
         End Set
     End Property
 
-    Private _lst As List(Of String)
-    Public Property LST() As List(Of String)
+    Private _lst As ObservableCollection(Of String)
+    Public Property LST() As ObservableCollection(Of String)
         Get
             Return _lst
         End Get
-        Set(ByVal value As List(Of String))
+        Set(ByVal value As ObservableCollection(Of String))
             _lst = value
         End Set
     End Property
@@ -105,27 +107,17 @@ Public Class Token
         End Set
     End Property
 
-    Public Sub New(Text As List(Of String), IsNothing As Boolean)
+    Public Sub New(Text As ObservableCollection(Of String), IsNothing As Boolean)
         Me._lst = Text
         Me.IsNothing = IsNothing
     End Sub
 
-    Public Sub New(Text As List(Of String))
+    Public Sub New(Text As ObservableCollection(Of String))
         Me.New(Text, False)
     End Sub
 
-    Private _Description As KeyValuePair(Of String, String)
-    Public Property Description() As KeyValuePair(Of String, String)
-        Get
-            Return _Description
-        End Get
-        Set(ByVal value As KeyValuePair(Of String, String))
-            _Description = value
-        End Set
-    End Property
-
     Public Sub New()
-        Me.LST = New List(Of String)
+        Me.LST = New ObservableCollection(Of String)
     End Sub
 End Class
 

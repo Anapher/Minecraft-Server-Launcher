@@ -1,4 +1,7 @@
-﻿<Serializable> _
+﻿Imports System.IO
+Imports System.Collections.ObjectModel
+
+<Serializable> _
 Public Class CommandList
     Private _PluginName As String
     Public Property PluginName() As String
@@ -10,18 +13,18 @@ Public Class CommandList
         End Set
     End Property
 
-    Private _Commands As List(Of IntelliTextBoxCommand)
-    Public Property Commands() As List(Of IntelliTextBoxCommand)
+    Private _Commands As ObservableCollection(Of IntelliTextBoxCommand)
+    Public Property Commands() As ObservableCollection(Of IntelliTextBoxCommand)
         Get
             Return _Commands
         End Get
-        Set(ByVal value As List(Of IntelliTextBoxCommand))
+        Set(ByVal value As ObservableCollection(Of IntelliTextBoxCommand))
             _Commands = value
         End Set
     End Property
 
     Public Sub New()
-        Commands = New List(Of IntelliTextBoxCommand)
+        Commands = New ObservableCollection(Of IntelliTextBoxCommand)
     End Sub
 
     Public Shared Function Load(Path As String) As CommandList
@@ -38,4 +41,16 @@ Public Class CommandList
             xmls.Serialize(sw, Me)
         End Using
     End Sub
+
+    Private _Filename As FileInfo
+    <Xml.Serialization.XmlIgnore> _
+    Public Property Filename() As FileInfo
+        Get
+            Return _Filename
+        End Get
+        Set(ByVal value As FileInfo)
+            _Filename = value
+        End Set
+    End Property
+
 End Class

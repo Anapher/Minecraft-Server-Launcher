@@ -124,6 +124,7 @@
     <Compile Include="Extensions\NumberToFixedNumberConverter.vb" />
     <Compile Include="Extensions\SelectedIndexToBoolean.vb" />
     <Compile Include="Extensions\SelectedIndexToVisibility.vb" />
+    <Compile Include="Extensions\UseThisToIndex.vb" />
     <Compile Include="Extensions\SwitchBooleanConverter.vb" />
     <Compile Include="Extensions\TextBlockBehaviour.vb" />
     <Compile Include="Extensions\TextBoxBehaviour.vb" />
@@ -132,7 +133,7 @@
     <Compile Include="Minecraft Server\Banlist\BannedPlayer.vb" />
     <Compile Include="Minecraft Server\BukkitVersion.vb" />
     <Compile Include="Minecraft Server\Commands\CommandList.vb" />
-    <Compile Include="Minecraft Server\Commands\Commands.vb" />
+    <Compile Include="Minecraft Server\Commands\IntelliSenseManager.vb" />
     <Compile Include="Minecraft Server\CraftbukkitDownloader.vb" />
     <Compile Include="Minecraft Server\Plugins\BukkitPlugin.vb" />
     <Compile Include="Minecraft Server\Plugins\categorie.vb" />
@@ -198,6 +199,12 @@
     </Compile>
     <Compile Include="Views\frmEditExecuteCommand.xaml.vb">
       <DependentUpon>frmEditExecuteCommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmIntelliCommand.xaml.vb">
+      <DependentUpon>frmIntelliCommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmIntelliSenseManager.xaml.vb">
+      <DependentUpon>frmIntelliSenseManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\frmSubmitException.xaml.vb">
       <DependentUpon>frmSubmitException.xaml</DependentUpon>
@@ -274,6 +281,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\frmEditExecuteCommand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmIntelliCommand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmIntelliSenseManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

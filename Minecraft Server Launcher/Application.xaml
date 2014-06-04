@@ -11,7 +11,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
-                <ResourceDictionary Source="resources/Languages/msl.de-de.xaml"/>
+                <ResourceDictionary Source="resources/Languages/msl.en-us.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type TabItem}" x:Key="UnderTab">
                 <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>

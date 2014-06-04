@@ -805,6 +805,9 @@
                 frm.ShowDialog()
             Case "RemoveSelectedTimer"
                 MinecraftServer.LauncherSettings.RemoveTimer(SelectedTimer)
+            Case "OpenIntelliSenseManager"
+                Dim frm As New frmIntelliSenseManager(MinecraftServer.Commands) With {.Owner = myWindow}
+                frm.ShowDialog()
         End Select
     End Sub
 #End Region
