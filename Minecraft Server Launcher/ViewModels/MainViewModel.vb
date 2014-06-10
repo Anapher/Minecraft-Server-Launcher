@@ -11,27 +11,20 @@
     End Property
 
     Public Sub New()
-        Try
-            MinecraftServer = New MinecraftServer
-            Dim t As New System.Threading.Thread(Sub()
-                                                     If Not MinecraftServer.StartServer() Then
-#If Not Debug Then
-                                                         Application.Current.Dispatcher.Invoke(Sub() Application.Current.Shutdown())
-#End If
-                                                     End If
-                                                 End Sub)
-            t.IsBackground = True
-            t.Start()
-            AddHandler MinecraftServer.BackupManager.StatusChanged, Sub(sender As Object, e As StateChangedEventArgs)
-                                                                        Me.BackupStatus = e.NewLine
-                                                                    End Sub
-            AddHandler MinecraftServer.DynmapEnabled, Sub(sender As Object, e As EventArgs)
-                                                          If DynmapRefresh IsNot Nothing Then DynmapRefresh.Invoke(Me, EventArgs.Empty)
-                                                      End Sub
-        Catch ex As Exception
-            MessageBox.Show(ex.ToString())
-        End Try
+        MinecraftServer = New MinecraftServer
+        Dim t As New System.Threading.Thread(Sub()
+                                                 MinecraftServer.StartServer()
+                                             End Sub)
+        t.IsBackground = True
+        t.Start()
+        AddHandler MinecraftServer.BackupManager.StatusChanged, Sub(sender As Object, e As StateChangedEventArgs)
+                                                                    Me.BackupStatus = e.NewLine
+                                                                End Sub
+        AddHandler MinecraftServer.DynmapEnabled, Sub(sender As Object, e As EventArgs)
+                                                      If DynmapRefresh IsNot Nothing Then DynmapRefresh.Invoke(Me, EventArgs.Empty)
+                                                  End Sub
     End Sub
+
     Private _DynmapRefresh As EventHandler
     Public Property DynmapRefresh() As EventHandler
         Get
@@ -96,13 +89,18 @@
         OnPropertyChanged("TpIsAvailable")
     End Sub
 
-    Private Sub _MinecraftServer_StartFileNotFound(sender As Object, e As EventArgs) Handles _MinecraftServer.StartFileNotFound
+#If Not Debug Then
+        Private Sub _MinecraftServer_StartFileNotFound(sender As Object, e As EventArgs) Handles _MinecraftServer.StartFileNotFound
         Application.Current.Dispatcher.BeginInvoke(Sub()
-                                                       Dim frm As New frmDownloadCraftbukkit 'hdfchange
-                                                       frm.Show()
+                                                       Dim frmMSG As New frmMessageBox(Application.Current.FindResource("CraftbukkitFileIsMissing").ToString(), Application.Current.FindResource("Exception").ToString(), Application.Current.FindResource("DownloadCraftBukkit").ToString(), Application.Current.FindResource("CloseProgram").ToString()) With {.Owner = myWindow}
+                                                       If frmMSG.ShowDialog() Then
+                                                           Dim frm As New frmDownloadCraftbukkit
+                                                           frm.Show()
+                                                       End If
                                                        Application.Current.MainWindow.Close()
                                                    End Sub)
     End Sub
+#End If
 
     Private Sub _MinecraftServer_StateChanged(sender As Object, e As StateChangedEventArgs) Handles _MinecraftServer.StateChanged
         ConsoleText &= e.NewLine & Environment.NewLine
@@ -118,10 +116,9 @@
             Return _MainTabControlIndex
         End Get
         Set(ByVal value As Integer)
-            If _TabControlSettingsIndex = 4 AndAlso MinecraftServer.ServerSettings.HasChanged Then
+            If _TabControlSettingsIndex = 5 AndAlso MinecraftServer.ServerSettings.HasChanged Then
                 CheckIfSettingsSave()
             End If
-            MinecraftServer.ServerSettings.HasChanged = False
             SetProperty(value, _MainTabControlIndex)
         End Set
     End Property
@@ -165,7 +162,7 @@
     End Property
 #End Region
 
-#Region "Actions"
+#Region "Player"
     Public ReadOnly Property GridPlayerIsVisible As Visibility
         Get
             If lstPlayerIndex > -1 Then Return Visibility.Visible Else Return Visibility.Hidden
@@ -479,6 +476,19 @@
             Return _AddPlayerToWhitelist
         End Get
     End Property
+
+    Private _RemovePlayerFromWhitelist As RelayCommand
+    Public ReadOnly Property RemovePlayerFromWhitelist As RelayCommand
+        Get
+            If _RemovePlayerFromWhitelist Is Nothing Then _RemovePlayerFromWhitelist = New RelayCommand(Sub(parameter As Object)
+                                                                                                            If parameter IsNot Nothing Then
+                                                                                                                Dim wplayer = DirectCast(parameter, WhitelistedPlayer)
+                                                                                                                MinecraftServer.ThriftAPI.Functions.RemoveFromWhitelist(wplayer.name)
+                                                                                                            End If
+                                                                                                        End Sub)
+            Return _RemovePlayerFromWhitelist
+        End Get
+    End Property
 #End Region
 
 #Region "Settings"
@@ -488,10 +498,9 @@
             Return _TabControlSettingsIndex
         End Get
         Set(ByVal value As Integer)
-            If _TabControlSettingsIndex = 4 AndAlso value <> 4 AndAlso MinecraftServer.ServerSettings.HasChanged Then
+            If _TabControlSettingsIndex = 5 AndAlso value <> 5 AndAlso MinecraftServer.ServerSettings.HasChanged Then
                 CheckIfSettingsSave()
             End If
-            MinecraftServer.ServerSettings.HasChanged = False
             SetProperty(value, _TabControlSettingsIndex)
         End Set
     End Property
@@ -617,6 +626,7 @@
 
 #Region "Methods"
     Private Sub CheckIfSettingsSave()
+        MinecraftServer.ServerSettings.HasChanged = False
         If MinecraftServer.LauncherSettings.AskSaveSettings Then
             Dim frmMSG As New frmMessageBox(Application.Current.FindResource("SSText").ToString(), Application.Current.FindResource("SSTitle").ToString(), Application.Current.FindResource("SSOK").ToString(), Application.Current.FindResource("SSCancel").ToString()) With {.Owner = myWindow}
             If Not frmMSG.ShowDialog() Then
@@ -646,34 +656,38 @@
     Private Sub RestoreBackup()
         Dim backup = MinecraftServer.BackupManager.BackupList(BackupSelectedIndex)
         If backup.SomethingIsChecked Then
-            Dim frm As New frmMessageBox(Application.Current.FindResource("ServerHaveToStopText").ToString(), Application.Current.FindResource("ServerHaveToStopTitle").ToString(), Application.Current.FindResource("StopServer").ToString(), Application.Current.FindResource("Cancel").ToString()) With {.Owner = myWindow}
-            If frm.ShowDialog() Then
-                BackupIsNotBusy = False
-                BackupStatus = "Server wird gestoppt..."
-                MinecraftServer.ExecuteCommand("stop")
-                BackupIsWorking = True
-                Dim t As New System.Threading.Thread(Sub()
-                                                         Dim counter As Integer = 0
-                                                         Dim maxvalue As Integer = 2000
-                                                         While MinecraftServer.IsRunning AndAlso counter < maxvalue
-                                                             System.Threading.Thread.Sleep(50)
-                                                             counter += 1
-                                                         End While
-                                                         If MinecraftServer.IsRunning Then MinecraftServer.StopServer()
-                                                         Dim lst = BackupManager.GetAllCheckedFiles(backup)
-                                                         Application.Current.Dispatcher.BeginInvoke(Sub()
-                                                                                                        BackupIsWorking = False
-                                                                                                        If MinecraftServer.LauncherSettings.BackupFilesFirst Then
-                                                                                                            backup.CreateType = CreateType.Automatically
-                                                                                                            MinecraftServer.BackupManager.CreateBackup(backup, New IO.DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory), False, Sub()
-                                                                                                                                                                                                                                       MinecraftServer.BackupManager.RestoreBackup(backup, lst, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
-                                                                                                                                                                                                                                   End Sub)
-                                                                                                        Else
-                                                                                                            MinecraftServer.BackupManager.RestoreBackup(backup, lst, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
-                                                                                                        End If
-                                                                                                    End Sub)
-                                                     End Sub)
-                t.Start()
+            If IO.File.Exists(backup.BackupPath.FullName) Then
+                Dim frm As New frmMessageBox(Application.Current.FindResource("ServerHaveToStopText").ToString(), Application.Current.FindResource("ServerHaveToStopTitle").ToString(), Application.Current.FindResource("StopServer").ToString(), Application.Current.FindResource("Cancel").ToString()) With {.Owner = myWindow}
+                If frm.ShowDialog() Then
+                    BackupIsNotBusy = False
+                    BackupStatus = "Server wird gestoppt..."
+                    MinecraftServer.ExecuteCommand("stop")
+                    BackupIsWorking = True
+                    Dim t As New System.Threading.Thread(Sub()
+                                                             Dim counter As Integer = 0
+                                                             Dim maxvalue As Integer = 2000
+                                                             While MinecraftServer.IsRunning AndAlso counter < maxvalue
+                                                                 System.Threading.Thread.Sleep(50)
+                                                                 counter += 1
+                                                             End While
+                                                             If MinecraftServer.IsRunning Then MinecraftServer.StopServer()
+                                                             Dim lst = BackupManager.GetAllCheckedFiles(backup)
+                                                             Application.Current.Dispatcher.BeginInvoke(Sub()
+                                                                                                            BackupIsWorking = False
+                                                                                                            If MinecraftServer.LauncherSettings.BackupFilesFirst Then
+                                                                                                                backup.CreateType = CreateType.Automatically
+                                                                                                                MinecraftServer.BackupManager.CreateBackup(backup, New IO.DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory), False, Sub()
+                                                                                                                                                                                                                                           MinecraftServer.BackupManager.RestoreBackup(backup, lst, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
+                                                                                                                                                                                                                                       End Sub)
+                                                                                                            Else
+                                                                                                                MinecraftServer.BackupManager.RestoreBackup(backup, lst, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
+                                                                                                            End If
+                                                                                                        End Sub)
+                                                         End Sub)
+                    t.Start()
+                End If
+            Else
+                MinecraftServer.BackupManager.LoadBackups()
             End If
         End If
     End Sub
@@ -778,8 +792,8 @@
                     MinecraftServer.ThriftAPI.Functions.RemoveInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChangeIndex)
                 End If
             Case "SaveSettings"
-                CheckIfSettingsSave()
-                MinecraftServer.ServerSettings.HasChanged = False
+                MinecraftServer.ServerSettings.Save()
+                MinecraftServer.ServerSettings.Load()
             Case "AddTimer"
                 Dim tmr As New TimerExecuteCommand() With {.Command = Me.TimerCommand, .Interval = Integer.Parse(Me.TimerInterval.ToString()), .Name = Me.TimerName}
                 MinecraftServer.LauncherSettings.AddTimer(tmr)

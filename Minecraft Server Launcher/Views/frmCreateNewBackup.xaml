@@ -3,7 +3,7 @@
     xmlns:my="clr-namespace:Minecraft_Server_Launcher"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="window"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-    GlowBrush="LightBlue" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+    Style="{StaticResource MetroWindow}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
     Title="{DynamicResource CreateNewBackup}" Height="370" Width="633">
     <DockPanel>
         <TreeView ItemsSource="{Binding ElementName=window,Path=Backup.BackupFiles}" Grid.Row="0" Width="400">

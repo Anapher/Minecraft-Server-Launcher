@@ -70,7 +70,7 @@ Public Class CraftbukkitDownloader
 
     Public Sub Download(Version As BukkitVersion)
         If Not client.IsBusy Then
-            Dim FilePath = New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "craftbukkit.jar"))
+            Dim FilePath = New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "craftbukkit.jar"))
             client.DownloadFileAsync(New Uri("http://dl.bukkit.org/" & Version.DownloadLink), FilePath.FullName)
         End If
     End Sub

@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:my="clr-namespace:Minecraft_Server_Launcher"
-    DataContext="{x:Static my:ItemSelectionViewModel.Instance}" GlowBrush="LightBlue"
+    DataContext="{x:Static my:ItemSelectionViewModel.Instance}" Style="{StaticResource MetroWindow}"
     Title="{DynamicResource frmSelectItemTitle}" SizeToContent="WidthAndHeight"  ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">

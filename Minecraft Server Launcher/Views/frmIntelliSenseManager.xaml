@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:my="clr-namespace:Minecraft_Server_Launcher" ResizeMode="NoResize" ShowInTaskbar="False" GlowBrush="LightBlue"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher" ResizeMode="NoResize" ShowInTaskbar="False" Style="{StaticResource MetroWindow}"
     Title="IntelliSense Manager" Height="324" Width="574" x:Name="window" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.Resources>

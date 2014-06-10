@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports ICSharpCode.SharpZipLib.Zip
 Imports ICSharpCode.SharpZipLib.Core
+Imports System.Runtime.InteropServices
 
 Public Class BackupManager
     Inherits PropertyChangedBase
@@ -159,7 +160,7 @@ Public Class BackupManager
                                                  Next
                                                  _RestoreAllFiles = BackupToRestore.BackupFilesCount
                                                  Using fs As FileStream = BackupToRestore.BackupPath.OpenRead()
-                                                     Using zf = New ZipFile(fs)
+                                                     Dim zf= New ZipFile(fs)
                                                          For Each ze As ZipEntry In zf
                                                              Dim entryFileName As String = ze.Name
 
@@ -184,7 +185,6 @@ Public Class BackupManager
                                                          Next
                                                          zf.IsStreamOwner = True
                                                          zf.Close()
-                                                     End Using
                                                  End Using
                                                  Application.Current.Dispatcher.Invoke(Sub()
                                                                                            If FinishedEvent IsNot Nothing Then FinishedEvent.Invoke(Me, EventArgs.Empty)
@@ -303,7 +303,6 @@ Public Class BackupManager
 
                                                      AddBackupInfoFile(Backup, zipStream)
                                                      zipStream.IsStreamOwner = True
-                                                     zipStream.Close()
                                                  End Using
                                                  Application.Current.Dispatcher.Invoke(Sub()
                                                                                            If FinishedEvent IsNot Nothing Then FinishedEvent.Invoke(Me, EventArgs.Empty)
@@ -342,6 +341,15 @@ Public Class BackupManager
     Public Event ProgressChanged(sender As Object, e As EventArgs)
 
     Private Function CompressFile(file As FileInfo, zipStream As ZipOutputStream, folderOffset As Integer) As Boolean
+        ' If Not FileIsReadable(file) Then
+        'Dim result As Boolean?
+        'Application.Current.Dispatcher.Invoke(Sub()
+        'Dim frm As New frmMessageBox(String.Format(Application.Current.FindResource("BackupException").ToString(), Environment.NewLine, file.Name), Application.Current.FindResource("Exception").ToString())
+        'result = frm.ShowDialog()
+        '                                     End Sub)
+        'If Not result Then Return False
+        'End If
+        file.Refresh()
         Dim entryName As String
         If folderOffset > 0 Then
             entryName = file.FullName.Substring(folderOffset)
@@ -353,6 +361,8 @@ Public Class BackupManager
         newEntry.DateTime = file.LastWriteTime
         newEntry.Size = file.Length
 
+
+
         zipStream.PutNextEntry(newEntry)
 
         Dim buffer As Byte() = New Byte(4095) {}
@@ -360,17 +370,25 @@ Public Class BackupManager
             Using StreamReader As FileStream = file.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
                 StreamUtils.Copy(StreamReader, zipStream, buffer)
             End Using
-        Catch ex As IO.IOException
+            zipStream.CloseEntry()
+        Catch ex As Exception
             Dim result As Boolean?
             Application.Current.Dispatcher.Invoke(Sub()
-                                                      Dim frm As New frmMessageBox(String.Format(Application.Current.FindResource("BackupException").ToString(), Environment.NewLine, file.Name), Application.Current.FindResource("Exception").ToString())
+                                                      Dim frm As New frmMessageBox(String.Format(Application.Current.FindResource("BackupException").ToString(), Environment.NewLine, file.Name), Application.Current.FindResource("Exception").ToString()) With {.Owner = Application.Current.MainWindow}
                                                       result = frm.ShowDialog()
                                                   End Sub)
             If Not result Then Return False
-        Finally
-            zipStream.CloseEntry()
         End Try
         Return True
+    End Function
+
+    Private Function FileIsReadable(fi As FileInfo) As Boolean
+        Try
+            fi.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            Return True
+        Catch ex As IO.IOException
+            Return False
+        End Try
     End Function
 
     Public Sub RemoveBackup(backup As Backup)

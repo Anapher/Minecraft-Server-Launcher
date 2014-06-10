@@ -5,7 +5,7 @@
     xmlns:my="clr-namespace:Minecraft_Server_Launcher"
     DataContext="{x:Static my:DownloadCraftbukkitViewModel.Instance}"
     xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
-    Title="{DynamicResource frmDownloadCraftbukkitTitle}" SizeToContent="WidthAndHeight" GlowBrush="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    Title="{DynamicResource frmDownloadCraftbukkitTitle}" SizeToContent="WidthAndHeight" Style="{StaticResource MetroWindow}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <ListView Height="300" ItemsSource="{Binding Downloader.lstBukkitVersions}" IsEnabled="{Binding GUIIsEnabled}" SelectedIndex="{Binding lstIndex}" ctrl:ListViewLayoutManager.Enabled="true">
             <ListView.ContextMenu>

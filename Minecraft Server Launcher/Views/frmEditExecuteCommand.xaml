@@ -5,7 +5,7 @@
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:my="clr-namespace:Minecraft_Server_Launcher"
     x:Name="window"
-    GlowBrush="LightBlue" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight">
+    Style="{StaticResource MetroWindow}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight">
     <StackPanel Orientation="Vertical" Margin="10">
         <StackPanel.Resources>
             <Style TargetType="{x:Type Grid}">

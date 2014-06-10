@@ -6,7 +6,7 @@
     DataContext="{x:Static my:DownloadPluginsViewModel.Instance}"
     xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    Title="{DynamicResource DownloadPlugins}" GlowBrush="LightBlue" Height="462" Width="1000" ResizeMode="NoResize" ShowInTaskbar="True" WindowStartupLocation="CenterOwner">
+    Title="{DynamicResource DownloadPlugins}" Style="{StaticResource MetroWindow}" Height="462" Width="1000" ResizeMode="NoResize" ShowInTaskbar="True" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <my:ListOfStringToString x:Key="ListToString"/>
         <my:UnixTimestampToString x:Key="TimestampToString"/>

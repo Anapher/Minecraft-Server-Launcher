@@ -188,32 +188,30 @@ Public Class MinecraftServer
 #End Region
 
     Public Sub RefreshServerlogs()
-        Dim rootPath As New DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"))
+        Dim rootPath As New DirectoryInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "logs"))
         If Not rootPath.Exists Then Return
         Me.Serverlogs = MinecraftHelper.GetServerlogs(rootPath)
     End Sub
 
     Public Sub New()
         lstPlayers = New ObservableCollection(Of Player)
-        ServerSettings = New ServerSettings(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "server.properties"))
+        ServerSettings = New ServerSettings(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "server.properties"))
         Dynmap = New Dynmap(AddressOf Me.ExecuteCommand)
-        Commands = New IntelliSenseManager(New IO.DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "Commands")))
+        Commands = New IntelliSenseManager(Paths.GetPaths.MSLCommandsFolder)
         Banlist = New BanlistInfo
         Whitelist = New WhitelistInfo
-        Dim dir As New DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "Backups"))
+        Dim dir = Paths.GetPaths.MSLBackupsFolder
         If Not dir.Exists Then dir.Create()
-        BackupManager = New BackupManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "Backups"))
+        BackupManager = New BackupManager(dir)
     End Sub
 
     Public Function StartServer() As Boolean
         LoadSettings()
         BackupManager.LoadBackups()
-        Dim fiCraftBukkit As New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "craftbukkit.jar"))
-        Dim fiSwiftAPI As New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "SwiftApi.jar"))
-        Dim fiSwiftAPIConfig As New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "SwiftApi", "config.yml"))
-
+        Dim fiCraftBukkit As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "craftbukkit.jar"))
+        Dim fiSwiftAPIConfig As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins", "SwiftApi", "config.yml"))
         If Not fiCraftBukkit.Exists Then RaiseEvent StartFileNotFound(Me, EventArgs.Empty) : Return False
-        If Not fiSwiftAPIConfig.Exists AndAlso Not fiSwiftAPI.Exists Then
+        If Not Helper.SwiftAPIExists(New DirectoryInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins"))) Then
             Dim result As Boolean?
             Application.Current.Dispatcher.Invoke(Sub()
                                                       Application.Current.MainWindow.Visibility = Visibility.Hidden
@@ -223,25 +221,17 @@ Public Class MinecraftServer
                                                   End Sub)
             If result Then
                 Using client As New Net.WebClient() With {.Proxy = Nothing}
-                    Dim pluginFolder As New DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins"))
+                    Dim pluginFolder As New DirectoryInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins"))
                     If Not pluginFolder.Exists Then pluginFolder.Create()
-                    client.DownloadFile("http://dev.bukkit.org/media/files/736/928/SwiftApi.jar", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "SwiftApi.jar"))
+                    client.DownloadFile("http://dev.bukkit.org/media/files/736/928/SwiftApi.jar", Path.Combine(pluginFolder.FullName, "SwiftApi.jar"))
                 End Using
             Else
+                Application.Current.Dispatcher.Invoke(Sub() Application.Current.Shutdown())
                 Return False
             End If
         End If
-        Dim username = "", password = "", salt = ""
-        Dim port As Integer = 0
-        If fiSwiftAPIConfig.Exists Then
-            Helper.GetUsernamePasswordSalt(fiSwiftAPIConfig, username, password, salt, port)
-        Else
-            username = "admin"
-            password = "password"
-            salt = "saltines"
-            port = 21111
-        End If
-
+        Dim username = "", password = "", salt = "", port = 0
+        Helper.GetUsernamePasswordSalt(fiSwiftAPIConfig, username, password, salt, port)
         ThriftAPI = New ThriftAPI(username, password, salt, "localhost", port)
         p = New Process()
         With p.StartInfo
@@ -255,7 +245,6 @@ Public Class MinecraftServer
         End With
         p.EnableRaisingEvents = True
         p.Start()
-
         p.BeginErrorReadLine()
         p.BeginOutputReadLine()
         CommandWriter = p.StandardInput
@@ -272,7 +261,7 @@ Public Class MinecraftServer
     End Function
 
     Private Sub LoadSettings()
-        Dim fiSettings = New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "Settings.xml"))
+        Dim fiSettings = Paths.GetPaths.MSLSettings
         If fiSettings.Exists Then
             LauncherSettings = Settings.Load(fiSettings.FullName, AddressOf ExecuteCommand, BackupManager)
         Else
@@ -390,7 +379,13 @@ Public Class MinecraftServer
                 ThriftAPIIsAvailable = True
             Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: \[dynmap\] Enabled$")
                 RaiseEvent DynmapEnabled(Me, EventArgs.Empty)
+            Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: Done \(.*\)! For help, type ""help"" or ""\?""$")
+                If Not ServerSettings.HasChanged Then
+                    ServerSettings.Load()
+                End If
         End Select
         RaiseEvent StateChanged(Me, New StateChangedEventArgs(Line))
     End Sub
 End Class
+'[14:20:51 INFO]: Done (4,400s)! For help, type "help" or "?"
+'   \(.*?\)\

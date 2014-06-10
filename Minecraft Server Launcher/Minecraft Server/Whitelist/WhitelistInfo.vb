@@ -23,7 +23,7 @@ Public Class WhitelistInfo
     End Property
 
     Public Sub New()
-        _FilePath = New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "whitelist.json"))
+        _FilePath = New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "whitelist.json"))
         Whitelist = New ObservableCollection(Of WhitelistedPlayer)
     End Sub
 

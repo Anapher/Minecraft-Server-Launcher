@@ -81,7 +81,7 @@
     <!-- Server -->
     <System:String x:Key="Serverlog">Serverlog</System:String>
     <System:String x:Key="map">Karte</System:String>
-    <System:String x:Key="Banlist">Bann Liste</System:String>
+    <System:String x:Key="Bannedlist">Verbotsliste</System:String>
 
     <!-- Informationen -->
     <System:String x:Key="bukkitversion">Bukkit Version:</System:String>
@@ -104,7 +104,8 @@
     <System:String x:Key="render">Rendern</System:String>
     <System:String x:Key="refresh">Aktualisieren</System:String>
     <System:String x:Key="openInBrowser">In Browser öffnen</System:String>
-
+    <System:String x:Key="Dynmapnotfound">Es wird das Plugin 'Dynmap' benötigt</System:String>
+    
     <!-- Bann Liste -->
     <System:String x:Key="noBannedPlayerFound">Es wurden keine Spieler gebannt</System:String>
     <System:String x:Key="playernameip">Spielername/IP</System:String>
@@ -117,6 +118,7 @@
 
     <!-- Whitelist -->
     <System:String x:Key="noWhitelistedPlayerfound">Es wurden keine Spieler gefunden</System:String>
+    <System:String x:Key="RemoveFromWhitelist">Spieler von Whitelist entfernen</System:String>
     
     <!-- Einstellungen -->
     <System:String x:Key="allow-flight">Fliegen erlauben:</System:String>
@@ -239,11 +241,15 @@
     <System:String x:Key="CBDFText">Der Download wurde erfolgreich abgeschlossen. Die Anwendung kann jetzt neu gestartet werden.</System:String>
     <System:String x:Key="CBDFTitle">Erfolgreich</System:String>
     <System:String x:Key="SCBDFOK">Neustarten</System:String>
-
-
+    
+    <!-- Craftbukkit missing MSG -->
+    <System:String x:Key="CraftbukkitFileIsMissing">Die "craftbukkit.jar"-Datei wurde nicht gefunden.</System:String>
+    <System:String x:Key="DownloadCraftBukkit">Craftbukkit downloaden</System:String>
+    <System:String x:Key="CloseProgram">Programm schließen</System:String>
+    
     <!-- MessageBox want save settings= -->
     <System:String x:Key="SSText">Wollen sie die Einstellungen speichern?</System:String>
-    <System:String x:Key="SSTitle">Einstellungen Speichern?</System:String>
+    <System:String x:Key="SSTitle">Einstellungen CraftbukkitFileIsMissing?</System:String>
     <System:String x:Key="SSOK">Speichern</System:String>
     <System:String x:Key="SSCancel">Nicht speichern</System:String>
 

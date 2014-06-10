@@ -69,8 +69,8 @@ Public Class BanlistInfo
     End Property
 
     Public Sub New()
-        _FilePathIPs = New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "banned-ips.json"))
-        _FilePathPlayer = New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "banned-players.json"))
+        _FilePathIPs = New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "banned-ips.json"))
+        _FilePathPlayer = New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "banned-players.json"))
         BannedIPs = New ObservableCollection(Of BannedPlayer)
         BannedPlayers = New ObservableCollection(Of BannedPlayer)
     End Sub

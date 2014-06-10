@@ -18,6 +18,6 @@
     End Property
 
     Public Sub New()
-        lstMinecraftItem = MinecraftItems.Load(IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ItemDB.xml"))
+        lstMinecraftItem = MinecraftItems.Load(Paths.GetPaths.MSLItemDatabase.FullName)
     End Sub
 End Class

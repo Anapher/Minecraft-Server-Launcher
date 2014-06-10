@@ -4,7 +4,7 @@
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:my="clr-namespace:Minecraft_Server_Launcher"
     x:Name="window"
-    GlowBrush="LightBlue" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
+    Style="{StaticResource MetroWindow}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
     Title="{DynamicResource BackupTimer}" Width="650" Height="450">
     <Window.Resources>
         <my:FalseOnEmptyStringConverter x:Key="FOES"/>

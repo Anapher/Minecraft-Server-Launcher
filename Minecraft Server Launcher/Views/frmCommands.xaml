@@ -4,7 +4,7 @@
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:my="clr-namespace:Minecraft_Server_Launcher"
     xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout" ResizeMode="NoResize"
-    Title="{DynamicResource Commands}" SizeToContent="WidthAndHeight" GlowBrush="LightBlue" MaxWidth="1000" MaxHeight="500" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    Title="{DynamicResource Commands}" SizeToContent="WidthAndHeight" Style="{StaticResource MetroWindow}" MaxWidth="1000" MaxHeight="500" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <my:ListOfStringToString x:Key="ListConverter"/>
     </Window.Resources>

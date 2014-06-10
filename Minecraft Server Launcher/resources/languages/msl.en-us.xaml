@@ -81,7 +81,7 @@
     <!-- Server -->
     <System:String x:Key="Serverlog">Serverlog</System:String>
     <System:String x:Key="map">Map</System:String>
-    <System:String x:Key="Banlist">Ban list</System:String>
+    <System:String x:Key="Bannedlist">Banned list</System:String>
 
     <!-- Informationen -->
     <System:String x:Key="bukkitversion">Bukkit Version:</System:String>
@@ -104,7 +104,8 @@
     <System:String x:Key="render">Render</System:String>
     <System:String x:Key="refresh">Refresh</System:String>
     <System:String x:Key="openInBrowser">Open in browser</System:String>
-
+    <System:String x:Key="Dynmapnotfound">The plugin 'Dynmap' is needed.</System:String>
+    
     <!-- Bann Liste -->
     <System:String x:Key="noBannedPlayerFound">No players were banned</System:String>
     <System:String x:Key="playername">Playername/IP</System:String>
@@ -116,6 +117,7 @@
 
     <!-- Whitelist -->
     <System:String x:Key="noWhitelistedPlayerfound">No players found</System:String>
+    <System:String x:Key="RemoveFromWhitelist">Remove player from whitelist</System:String>
     
     <!-- Einstellungen -->
     <System:String x:Key="allow-flight">Allow flight:</System:String>
@@ -211,7 +213,7 @@
     <System:String x:Key="white-list_tt">With a whitelist enabled, users not on the whitelist will be unable to connect. Intended for private servers,&lt;LineBreak/&gt;such as those for real-life friends or strangers carefully selected via an application process, for example.</System:String>
 
     <System:String x:Key="gamemode_tt">Defines the mode of gameplay.</System:String>
-    <System:String x:Key="SaveSettings">To save the settings press Ctrl + S to or change the tab</System:String>
+    <System:String x:Key="SaveSettings">To save the settings press Ctrl + S or change the tab</System:String>
     
     <!-- frmDownloadCraftbukkit.xaml -->
     <System:String x:Key="ChooseSelectedVersion">Choose selected version</System:String>
@@ -239,6 +241,10 @@
     <System:String x:Key="CBDFTitle">Successfully</System:String>
     <System:String x:Key="SCBDFOK">Restart</System:String>
 
+    <!-- Craftbukkit missing MSG -->
+    <System:String x:Key="CraftbukkitFileIsMissing">The file "craftbukkit.jar" wasn't found..</System:String>
+    <System:String x:Key="DownloadCraftBukkit">Download Craftbukkit</System:String>
+    <System:String x:Key="CloseProgram">Close program</System:String>
 
     <!-- MessageBox want save settings= -->
     <System:String x:Key="SSText">Do you want to save the settings?</System:String>

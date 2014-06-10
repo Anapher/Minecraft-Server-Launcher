@@ -47,37 +47,59 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>resources\icon\icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Elysium">
       <HintPath>..\packages\Elysium.Theme.2.0.4\lib\net45\Elysium.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Exceptionless">
       <HintPath>..\packages\Exceptionless.1.5.2040\lib\net45\Exceptionless.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Exceptionless.Models">
       <HintPath>..\packages\Exceptionless.1.5.2040\lib\net45\Exceptionless.Models.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Exceptionless.Wpf">
       <HintPath>..\packages\Exceptionless.Wpf.1.5.2040\lib\net45\Exceptionless.Wpf.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Itenso.Windows.Controls.ListViewLayout">
-      <HintPath>bin\Debug\MSL\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
+      <HintPath>bin\Debug\MSL\libraries\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -135,6 +157,7 @@
     <Compile Include="Minecraft Server\Commands\CommandList.vb" />
     <Compile Include="Minecraft Server\Commands\IntelliSenseManager.vb" />
     <Compile Include="Minecraft Server\CraftbukkitDownloader.vb" />
+    <Compile Include="Minecraft Server\Paths.vb" />
     <Compile Include="Minecraft Server\Plugins\BukkitPlugin.vb" />
     <Compile Include="Minecraft Server\Plugins\categorie.vb" />
     <Compile Include="Minecraft Server\Plugins\InstalledStateToIcon.vb" />
@@ -149,8 +172,8 @@
     <Compile Include="Controls\PlayerInventoryControl\PlayerInventoryControl.xaml.vb">
       <DependentUpon>PlayerInventoryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings\TimerCreateBackup.vb" />
-    <Compile Include="Settings\TimerExecuteCommand.vb" />
+    <Compile Include="Settings\Timer\TimerCreateBackup.vb" />
+    <Compile Include="Settings\Timer\TimerExecuteCommand.vb" />
     <Compile Include="Minecraft Server\Dynmap.vb" />
     <Compile Include="Minecraft Server\Items\ItemData.vb" />
     <Compile Include="Minecraft Server\Helper.vb" />
@@ -160,7 +183,7 @@
     <Compile Include="Minecraft Server\PluginHelper.vb" />
     <Compile Include="Minecraft Server\Serverlog.vb" />
     <Compile Include="Minecraft Server\ServerSettings.vb" />
-    <Compile Include="Settings\TimerBase.vb" />
+    <Compile Include="Settings\Timer\TimerBase.vb" />
     <Compile Include="Settings\Language.vb" />
     <Compile Include="Settings\Ram.vb" />
     <Compile Include="Settings\Settings.vb" />
@@ -347,6 +370,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="My Project\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -355,7 +381,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\ClearInventory.png" />
@@ -1012,15 +1040,21 @@
     <ProjectReference Include="..\HTMLConverter\HTMLConverter.csproj">
       <Project>{1b06ae7b-3e4f-4e2c-96a3-550a478539fa}</Project>
       <Name>HTMLConverter</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\SwiftAPI\SwiftAPI.csproj">
       <Project>{36de87b0-4ab6-433a-ae40-8c7fa8443086}</Project>
       <Name>SwiftAPI</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Thrift\Thrift.csproj">
       <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
       <Name>Thrift</Name>
+      <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icon\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

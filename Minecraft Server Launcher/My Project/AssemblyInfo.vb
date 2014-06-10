@@ -12,10 +12,10 @@ Imports System.Windows
 ' Die Werte der Assemblyattribute überprüfen
 
 <Assembly: AssemblyTitle("Minecraft_Server_Launcher")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("A comfortable program which replaces the start-bat file from a Bukkit Server")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Minecraft_Server_Launcher")> 
-<Assembly: AssemblyCopyright("Copyright ©  2014")> 
+<Assembly: AssemblyCopyright("Copyright © Alkaline 2014")> 
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(False)> 
 <Assembly: Exceptionless.Configuration.Exceptionless("1a5284f3a8e044c0acfc57658191fce3")> 
@@ -56,5 +56,7 @@ Imports System.Windows
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.0.*")> 
+<Assembly: AssemblyFileVersion("0.1.0.0")> 
+
+<Assembly: NeutralResourcesLanguageAttribute("")> 

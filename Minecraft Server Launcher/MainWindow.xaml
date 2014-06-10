@@ -7,7 +7,7 @@
     xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
     xmlns:params="http://schemas.codeplex.com/elysium/params" x:Class="MainWindow"
     DataContext="{x:Static my:MainViewModel.Instance}"
-    GlowBrush="LightBlue"
+    Style="{StaticResource MetroWindow}"
     Title="Minecraft Server Launcher" Height="500" Width="864" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" x:Name="MainWindow">
     <Controls:MetroWindow.Resources>
         <my:BoolToStringConverter TrueValue="{StaticResource Yes}" FalseValue="{StaticResource No}" x:Key="BooleanToStringConverter" />
@@ -460,14 +460,14 @@
                             </DockPanel>
                             <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Visibility="{Binding MinecraftServer.Dynmap.ShowDownloadWindow, Converter={StaticResource BToV}}" Background="White"  Height="100">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="Es wird das Plugin 'Dynmap' benötigt" FontSize="20" FontWeight="Thin"/>
+                                    <TextBlock Text="{DynamicResource Dynmapnotfound}" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center"/>
                                     <Controls:MetroProgressBar Margin="0,10,0,10" Value="{Binding MinecraftServer.Dynmap.DownloadValue}"/>
                                     <Button Content="Download" Width="200" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="Download" IsEnabled="{Binding MinecraftServer.Dynmap.DownloadIsEnabled}"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="{DynamicResource Banlist}" Style="{StaticResource UnderTab}">
+                    <TabItem Header="{DynamicResource Bannedlist}" Style="{StaticResource UnderTab}">
                         <Grid>
                             <DockPanel>
                                 <ListBox Width="250" ItemsSource="{Binding MinecraftServer.Banlist.AllBans}" x:Name="lstBannedPlayers">
@@ -537,6 +537,9 @@
                                         <Button Content="{DynamicResource add}" Grid.Column="1" IsEnabled="{Binding ElementName=txtAddWhitelist,Path=Text,Converter={StaticResource FalseOnEmptyString}}" Command="{Binding AddPlayerToWhitelist}" CommandParameter="{Binding ElementName=txtAddWhitelist}"/>
                                     </Grid>
                                     <ListBox ItemsSource="{Binding MinecraftServer.Whitelist.Whitelist}" x:Name="lstWhitelist" Width="250" Margin="0,10,0,0">
+                                        <ListBox.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding RemovePlayerFromWhitelist}" CommandParameter="{Binding ElementName=lstWhitelist,Path=SelectedItem}"/>
+                                        </ListBox.InputBindings>
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding name}"/>
@@ -557,10 +560,11 @@
                                         <TextBlock Text=":" Margin="0,0,10,0"/>
                                         <TextBlock Text="{Binding SelectedItem.name, ElementName=lstWhitelist}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                         <TextBlock Text="UUID:" Margin="0,0,10,0"/>
                                         <TextBlock Text="{Binding SelectedItem.uuid, ElementName=lstWhitelist}"/>
                                     </StackPanel>
+                                    <Button Content="{DynamicResource RemoveFromWhitelist}" HorizontalAlignment="Left" Margin="0,15,0,0" Command="{Binding RemovePlayerFromWhitelist}" CommandParameter="{Binding ElementName=lstWhitelist,Path=SelectedItem}"/>
                                 </StackPanel>
                             </DockPanel>
                             <TextBlock Text="{DynamicResource noWhitelistedPlayerfound}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Light" Visibility="{Binding MinecraftServer.Whitelist.WhitelistedPlayerNotFound, Converter={StaticResource BoolToVisibility}}"/>

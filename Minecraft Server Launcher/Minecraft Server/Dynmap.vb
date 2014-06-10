@@ -67,7 +67,7 @@ Public Class Dynmap
     Public Sub Load(worldname As String, ip As String)
         _WorldName = worldname
         BrowserURL = String.Format("http://{0}:{1}", ip, GetPort())
-        _fiDynmap = New IO.FileInfo(IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "dynmap.jar"))
+        _fiDynmap = New IO.FileInfo(IO.Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins", "dynmap.jar"))
         DynmapExists = _fiDynmap.Exists
         If Not DynmapExists Then DownloadIsEnabled = True : ShowDownloadWindow = True
         _IP = ip
@@ -78,7 +78,7 @@ Public Class Dynmap
     End Sub
 
     Private Function GetPort() As String
-        Dim fi As New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins", "dynmap", "configuration.txt"))
+        Dim fi As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "Plugins", "dynmap", "configuration.txt"))
         If fi.Exists Then
             Dim txt As String = File.ReadAllText(fi.FullName).Replace(vbCr, "").Replace(vbLf, "")
             Dim reg As New Regex("webserver-port: (?<port>(.*?[0-9]{0,5}))")

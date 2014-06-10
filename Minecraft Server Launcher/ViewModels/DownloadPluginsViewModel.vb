@@ -245,7 +245,7 @@
                 TabControlSelectedIndex = 0
             Case "DownloadPlugin"
                 IsDownloading = True
-                CurrentPlugin.DownloadPlugin(IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", CurrentPluginVersion.filename), CurrentPluginVersion)
+                CurrentPlugin.DownloadPlugin(IO.Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins", CurrentPluginVersion.filename), CurrentPluginVersion)
         End Select
     End Sub
 #End Region
