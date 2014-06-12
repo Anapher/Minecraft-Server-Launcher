@@ -167,6 +167,7 @@
     <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Popularity.vb" />
     <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Version.vb" />
     <Compile Include="Minecraft Server\Plugins\PluginManager.vb" />
+    <Compile Include="Minecraft Server\API\SwiftAPIManager.vb" />
     <Compile Include="Minecraft Server\Whitelist\WhitelistedPlayer.vb" />
     <Compile Include="Minecraft Server\Whitelist\WhitelistInfo.vb" />
     <Compile Include="Controls\PlayerInventoryControl\PlayerInventoryControl.xaml.vb">
@@ -193,6 +194,9 @@
     <Compile Include="ViewModels\DownloadPluginsViewModel.vb" />
     <Compile Include="ViewModels\ItemSelectionViewModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
+    <Compile Include="Views\Dialogs\frmGetJavaPath.xaml.vb">
+      <DependentUpon>frmGetJavaPath.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\frmInfoBox.xaml.vb">
       <DependentUpon>frmInfoBox.xaml</DependentUpon>
     </Compile>
@@ -264,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="resources\languages\msl.en-us.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\frmGetJavaPath.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -345,8 +353,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Minecraft Server\MinecraftServer.vb" />
-    <Compile Include="Minecraft Server\ThriftAPI.vb" />
-    <Compile Include="Minecraft Server\ThriftAPIFunctions.vb" />
+    <Compile Include="Minecraft Server\API\ThriftAPI.vb" />
+    <Compile Include="Minecraft Server\API\ThriftAPIFunctions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>

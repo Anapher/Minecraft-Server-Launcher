@@ -918,15 +918,30 @@
                 <TabControl TabStripPlacement="Left">
                     <TabItem Style="{StaticResource VerticalTabItem}" Header="{DynamicResource General}">
                         <StackPanel Orientation="Vertical" Margin="10">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Ram:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                <ComboBox DisplayMemberPath="Text" Width="100" ItemsSource="{Binding MinecraftServer.LauncherSettings.lstRam}" SelectedItem="{Binding MinecraftServer.LauncherSettings.Ram, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Image VerticalAlignment="Center" Margin="10,0,0,0" Source="resources/info.png" ToolTipService.ShowDuration="10000" ToolTip="{DynamicResource RamToolTip}" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Stretch="Uniform" Width="20" Height="20"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <TextBlock Text="{DynamicResource Language}" VerticalAlignment="Center"/>
-                                <TextBlock Text=":" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" ItemsSource="{Binding MinecraftServer.LauncherSettings.lstLanguages}" SelectedItem="{Binding MinecraftServer.LauncherSettings.ActivLanguage, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+                                    <TextBlock Text="{DynamicResource Ram}"/>
+                                    <TextBlock Text=":"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                    <ComboBox DisplayMemberPath="Text" Width="100" ItemsSource="{Binding MinecraftServer.LauncherSettings.lstRam}" SelectedItem="{Binding MinecraftServer.LauncherSettings.Ram, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Image VerticalAlignment="Center" Margin="10,0,0,0" Source="resources/info.png" ToolTipService.ShowDuration="10000" ToolTip="{DynamicResource RamToolTip}" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Stretch="Uniform" Width="20" Height="20"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource Language}" VerticalAlignment="Center"/>
+                                    <TextBlock Text=":" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <ComboBox Width="150" ItemsSource="{Binding MinecraftServer.LauncherSettings.lstLanguages}" SelectedItem="{Binding MinecraftServer.LauncherSettings.ActivLanguage, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -936,7 +951,20 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                            </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{DynamicResource SwiftAPIAuthenticationInformation}"/>
+                                    <TextBlock Text=":"/>
+                                </StackPanel>
+
+                                <Button Content="{DynamicResource Generate}" HorizontalAlignment="Left" Grid.Column="1" Command="{Binding MinecraftServer.SwiftAPI.GenerateInformationsCommand}" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
+                            </Grid>
+                            
                             <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                                 <GroupBox Header="Server">
                                     <StackPanel>

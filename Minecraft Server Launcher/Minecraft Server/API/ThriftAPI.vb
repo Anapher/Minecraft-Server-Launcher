@@ -41,6 +41,12 @@ Public Class ThriftAPI
         End If
     End Sub
 
+    Public Sub UpdateAuthStrings(username As String, password As String, salt As String)
+        _username = username
+        _password = password
+        _salt = salt
+    End Sub
+
     Public Function getAuthString(ByVal MethodName As String) As String
         Dim PreHash As String = _username & MethodName & _password & _salt
         Return GetSHA256String(PreHash)

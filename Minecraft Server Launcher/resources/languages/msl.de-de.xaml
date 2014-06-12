@@ -265,7 +265,15 @@
     <System:String x:Key="UsedLibaries">Verwendete Bibilotheken</System:String>
     <System:String x:Key="GraficsFrom">Grafiken sind von</System:String>
     
+    <System:String x:Key="Generate">Generieren</System:String>
+    <System:String x:Key="SwiftAPIAuthenticationInformation">SwiftAPI Authentifizierungsinformationen</System:String>
+
+    <System:String x:Key="successful">Erfolgreich</System:String>
+    <System:String x:Key="infoSwiftInformationsGenerted">Die Authentifizierungsinformationen wurden erfolgreich generiert:{0}{0}Benutzername: {1}{0}Passwort: {2}{0}Salt: {3}</System:String>
+    <!-- {0} = NewLine-->
+
     <System:String x:Key="Language">Sprache</System:String>
+    <System:String x:Key="Ram">Arbeitsspeicher</System:String>
     <System:String x:Key="AlwaysAskIfSaveChanges">Immer fragen, ob Einstellungen gespeichert werden sollen</System:String>
     <System:String x:Key="SaveServerBeforClose">Server beim schließen des Programms automatisch stoppen</System:String>
     <System:String x:Key="FileIsToLarge">Die Datei ({0}) ist zu groß</System:String>
@@ -377,4 +385,10 @@
     <System:String x:Key="ErrorNoCommand">Bitte geben sie einen Befehl an.</System:String>
     <System:String x:Key="Close">Schließen</System:String>
     <System:String x:Key="SaveCommand">Command speichern</System:String>
+
+    <!-- GetJavaPath -->
+    <System:String x:Key="JavaPathNotFound">Java-Pfad nicht gefunden</System:String>
+    <System:String x:Key="JavaPathNotFoundText">Leider konnten wir den Pfad zu Java nicht finden. Bitte wählen sie die java.exe manuell aus oder installieren Sie Java, wenn sie es nicht bereits getan haben.</System:String>
+    <System:String x:Key="OFDJavaPathTitle">Bitte wählen sie die "java.exe" aus</System:String>
+    <System:String x:Key="ExectuableFiles">Ausführbare Dateien</System:String>
 </ResourceDictionary>

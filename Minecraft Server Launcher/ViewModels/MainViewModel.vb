@@ -11,7 +11,7 @@
     End Property
 
     Public Sub New()
-        MinecraftServer = New MinecraftServer
+        MinecraftServer = New MinecraftServer(AddressOf GetJavaPath)
         Dim t As New System.Threading.Thread(Sub()
                                                  MinecraftServer.StartServer()
                                              End Sub)
@@ -23,7 +23,26 @@
         AddHandler MinecraftServer.DynmapEnabled, Sub(sender As Object, e As EventArgs)
                                                       If DynmapRefresh IsNot Nothing Then DynmapRefresh.Invoke(Me, EventArgs.Empty)
                                                   End Sub
+        AddHandler MinecraftServer.SwiftAPI.GeneratedInformationsComplete, Sub(sender As Object, e As EventArgs)
+                                                                               Dim frm As New frmInfoBox(String.Format(Application.Current.FindResource("infoSwiftInformationsGenerted").ToString(), Environment.NewLine, MinecraftServer.SwiftAPI.Username, MinecraftServer.SwiftAPI.Password, MinecraftServer.SwiftAPI.Salt), Application.Current.FindResource("successful").ToString(), Application.Current.FindResource("OK").ToString()) With {.Owner = myWindow}
+                                                                               frm.ShowDialog()
+                                                                           End Sub
     End Sub
+
+    Private Function GetJavaPath() As String
+        Dim frm As frmGetJavaPath = Nothing
+        Dim dialogresult As Boolean = False
+        Application.Current.Dispatcher.Invoke(Sub()
+                                                  frm = New frmGetJavaPath() With {.Owner = myWindow}
+                                                  If frm.ShowDialog() Then dialogresult = True
+                                              End Sub)
+        If dialogresult Then
+            Return frm.JavaPath
+        Else
+            Application.Current.Dispatcher.Invoke(Sub() Application.Current.Shutdown())
+            Return Nothing
+        End If
+    End Function
 
     Private _DynmapRefresh As EventHandler
     Public Property DynmapRefresh() As EventHandler

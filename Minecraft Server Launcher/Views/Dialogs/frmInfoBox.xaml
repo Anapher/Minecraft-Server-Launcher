@@ -4,7 +4,7 @@
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     Style="{StaticResource MetroWindow}" x:Name="window" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False">
     <StackPanel Orientation="Vertical" Margin="10">
-        <TextBlock Text="{Binding ElementName=window,Path=Text}"/>
-        <Button Content="{Binding ElementName=window,Path=OKText}"/>
+        <TextBlock Text="{Binding ElementName=window,Path=Text}" Margin="0,0,0,10"/>
+        <Button Content="{Binding ElementName=window,Path=OKText}" Command="{Binding ElementName=window,Path=OKCommand}" IsDefault="True"/>
     </StackPanel>
 </Controls:MetroWindow>

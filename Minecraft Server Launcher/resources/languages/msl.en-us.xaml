@@ -263,8 +263,16 @@
     <System:String x:Key="ProgrammedBy">Programmed by Vincent</System:String>
     <System:String x:Key="UsedLibaries">Libaries used</System:String>
     <System:String x:Key="GraficsFrom">Graphics are from</System:String>
+
+    <System:String x:Key="Generate">Generate</System:String>
+    <System:String x:Key="SwiftAPIAuthenticationInformation">SwiftAPI Authentication Information</System:String>
+
+    <System:String x:Key="successful">Successful</System:String>
+    <System:String x:Key="infoSwiftInformationsGenerted">The authentication informations were successfully generated:{0}{0}Username: {1}{0}Password: {2}{0}Salt: {3}</System:String>
+    <!-- {0} = NewLine-->
     
     <System:String x:Key="Language">Language</System:String>
+    <System:String x:Key="Ram">Ram</System:String>
     <System:String x:Key="AlwaysAskIfSaveChanges">Always ask if you want save the settings</System:String>
     <System:String x:Key="SaveServerBeforClose">Stop the server automatically on closing the program</System:String>
     <System:String x:Key="StoppingServer">Stopping Server...</System:String>
@@ -377,4 +385,10 @@
     <System:String x:Key="ErrorListEmpty">You selected as list "CustomList", but the custom list is empty. Please check "No list" or add texts to the list.</System:String>
     <System:String x:Key="Close">Close</System:String>
     <System:String x:Key="SaveCommand">Save command</System:String>
+    
+    <!-- GetJavaPath -->
+    <System:String x:Key="JavaPathNotFound">Java path not found</System:String>
+    <System:String x:Key="JavaPathNotFoundText">Unfortunately we couldn't find the path to Java. Please select the "java.exe" or install java if it isn't already installed.</System:String>
+    <System:String x:Key="OFDJavaPathTitle">Please select the "java.exe"</System:String>
+    <System:String x:Key="ExectuableFiles">Exectuable Files</System:String>
 </ResourceDictionary>

@@ -19,6 +19,10 @@ Public Class MinecraftServer
     Public Event PlayerChanged(sender As Object, e As EventArgs)
 #End Region
 
+#Region "Delegats"
+    Public Delegate Function JavaPath() As String
+#End Region
+
 #Region "Properties"
     Private _Dynmap As Dynmap
     Public Property Dynmap() As Dynmap
@@ -185,6 +189,16 @@ Public Class MinecraftServer
             SetProperty(value, _BackupManager)
         End Set
     End Property
+
+    Private _SwiftAPI As SwiftAPIManager
+    Public Property SwiftAPI() As SwiftAPIManager
+        Get
+            Return _SwiftAPI
+        End Get
+        Set(ByVal value As SwiftAPIManager)
+            SetProperty(value, _SwiftAPI)
+        End Set
+    End Property
 #End Region
 
     Public Sub RefreshServerlogs()
@@ -193,7 +207,8 @@ Public Class MinecraftServer
         Me.Serverlogs = MinecraftHelper.GetServerlogs(rootPath)
     End Sub
 
-    Public Sub New()
+    Private _GetJavaPath As JavaPath
+    Public Sub New(GetJavaPathFunction As JavaPath)
         lstPlayers = New ObservableCollection(Of Player)
         ServerSettings = New ServerSettings(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "server.properties"))
         Dynmap = New Dynmap(AddressOf Me.ExecuteCommand)
@@ -203,6 +218,8 @@ Public Class MinecraftServer
         Dim dir = Paths.GetPaths.MSLBackupsFolder
         If Not dir.Exists Then dir.Create()
         BackupManager = New BackupManager(dir)
+        SwiftAPI = New SwiftAPIManager(Paths.GetPaths.MinecraftServerFolder)
+        _GetJavaPath = GetJavaPathFunction
     End Sub
 
     Public Function StartServer() As Boolean
@@ -211,7 +228,7 @@ Public Class MinecraftServer
         Dim fiCraftBukkit As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "craftbukkit.jar"))
         Dim fiSwiftAPIConfig As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins", "SwiftApi", "config.yml"))
         If Not fiCraftBukkit.Exists Then RaiseEvent StartFileNotFound(Me, EventArgs.Empty) : Return False
-        If Not Helper.SwiftAPIExists(New DirectoryInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins"))) Then
+        If Not SwiftAPIManager.Exists(New DirectoryInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins"))) Then
             Dim result As Boolean?
             Application.Current.Dispatcher.Invoke(Sub()
                                                       Application.Current.MainWindow.Visibility = Visibility.Hidden
@@ -230,12 +247,21 @@ Public Class MinecraftServer
                 Return False
             End If
         End If
-        Dim username = "", password = "", salt = "", port = 0
-        Helper.GetUsernamePasswordSalt(fiSwiftAPIConfig, username, password, salt, port)
-        ThriftAPI = New ThriftAPI(username, password, salt, "localhost", port)
+        SwiftAPI.Load()
+        ThriftAPI = New ThriftAPI(SwiftAPI.Username, SwiftAPI.Password, SwiftAPI.Salt, "localhost", SwiftAPI.Port)
         p = New Process()
         With p.StartInfo
-            .FileName = Path.Combine(Helper.GetjavaPath, "bin", "java.exe")
+            Dim javapath As String = Helper.GetjavaPath
+            If String.IsNullOrEmpty(javapath) Then
+                If Not String.IsNullOrEmpty(LauncherSettings.JavaPath) AndAlso File.Exists(LauncherSettings.JavaPath) Then
+                    javapath = LauncherSettings.JavaPath
+                Else
+                    javapath = _GetJavaPath.Invoke()
+                    If String.IsNullOrEmpty(javapath) Then Return False
+                    LauncherSettings.JavaPath = javapath
+                End If
+            End If
+            .FileName = javapath
             .Arguments = String.Format("-Xmx{0}M -Xms{0}M -jar craftbukkit.jar -nojline", LauncherSettings.Ram.Ram)
             .RedirectStandardError = True
             .RedirectStandardInput = True
@@ -343,7 +369,7 @@ Public Class MinecraftServer
 
     Public Sub StopServer()
         If ThriftAPI IsNot Nothing Then ThriftAPI.Stop() : ThriftAPIIsAvailable = False
-        If p IsNot Nothing AndAlso Not p.HasExited Then p.Kill()
+        If p IsNot Nothing AndAlso IsRunning AndAlso p.HasExited Then p.Kill()
         IsRunning = False
         LauncherSettings.Save()
     End Sub
@@ -383,9 +409,11 @@ Public Class MinecraftServer
                 If Not ServerSettings.HasChanged Then
                     ServerSettings.Load()
                 End If
+            Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: CONSOLE: Reload complete\.$")
+                SwiftAPI.Load()
+                ThriftAPI.UpdateAuthStrings(SwiftAPI.Username, SwiftAPI.Password, SwiftAPI.Salt)
+                ThriftAPI.Stop()
         End Select
         RaiseEvent StateChanged(Me, New StateChangedEventArgs(Line))
     End Sub
 End Class
-'[14:20:51 INFO]: Done (4,400s)! For help, type "help" or "?"
-'   \(.*?\)\

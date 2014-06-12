@@ -15,6 +15,16 @@ Public Class Settings
         End Set
     End Property
 
+    Private _JavaPath As String
+    Public Property JavaPath() As String
+        Get
+            Return _JavaPath
+        End Get
+        Set(ByVal value As String)
+            SetProperty(value, _JavaPath)
+        End Set
+    End Property
+
     Private _stopServerOnClose As Boolean
     Public Property StopServerOnClose() As Boolean
         Get
@@ -209,6 +219,7 @@ Public Class Settings
         End If
         EnableIntelliSenseInfoBox = True
         IntelliSenseIsEnabled = True
+        JavaPath = String.Empty
     End Sub
 
     Private Sub LoadDefaultLanguage()

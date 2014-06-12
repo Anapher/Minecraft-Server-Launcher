@@ -38,6 +38,16 @@
 
         End Set
     End Property
+
+    Private _OKCommand As RelayCommand
+    Public ReadOnly Property OKCommand() As RelayCommand
+        Get
+            If _OKCommand Is Nothing Then _OKCommand = New RelayCommand(Sub(parameter As Object)
+                                                                            Me.Close()
+                                                                        End Sub)
+            Return _OKCommand
+        End Get
+    End Property
 #Region "INotifyPropertyChanged"
     Private Sub myPropertyChanged(PropertyName As String)
         RaiseEvent PropertyChanged(Me, New ComponentModel.PropertyChangedEventArgs(PropertyName))
