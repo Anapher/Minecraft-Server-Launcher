@@ -22,7 +22,7 @@ Public Class Helper
                     Dim subkeys = key.GetSubKeyNames
                     If subkeys IsNot Nothing AndAlso subkeys.Count > 0 Then
                         Dim newkey = hklm.OpenSubKey("SOFTWARE\JavaSoft\Java Runtime Environment\" & subkeys(0), False)
-                        Dim fi As New FileInfo(Path.Combine(newkey.GetValue("JavaHome").ToString(), "binb", "javab.exe"))
+                        Dim fi As New FileInfo(Path.Combine(newkey.GetValue("JavaHome").ToString(), "bin", "java.exe"))
                         If fi.Exists Then Return fi.FullName
                     End If
                 End If
@@ -36,7 +36,7 @@ Public Class Helper
                 Dim subkeys = regkey.GetSubKeyNames
                 If Not subkeys.Count = 0 Then
                     Dim newkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\JavaSoft\Java Runtime Environment\" & subkeys(0), False)
-                    Dim fi As New FileInfo(Path.Combine(newkey.GetValue("JavaHome").ToString(), "bin", "javab.exe"))
+                    Dim fi As New FileInfo(Path.Combine(newkey.GetValue("JavaHome").ToString(), "bin", "java.exe"))
                     If fi.Exists Then Return fi.FullName
                 End If
             End If

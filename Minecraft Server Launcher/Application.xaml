@@ -144,7 +144,7 @@
                                     <Setter Property="IsEnabled" Value="False"/>
                                     <Setter TargetName="arrow" Property="Visibility" Value="Visible"/>
                                     <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                    <Setter TargetName="BG" Property="Background" Value="#CC0E729C"/>
+                                    <Setter TargetName="BG" Property="Background" Value="#41b1e1"/>
                                     <Trigger.EnterActions >
                                         <BeginStoryboard >
                                             <Storyboard >
@@ -155,7 +155,7 @@
                                 </Trigger>
                                 <Trigger SourceName="BG" Property="IsMouseOver" Value="True">
                                     <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                    <Setter TargetName="BG" Property="Background" Value="#CC95D4EE"/>
+                                    <Setter TargetName="BG" Property="Background" Value="#CCA2E4FF"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

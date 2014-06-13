@@ -369,7 +369,7 @@ Public Class MinecraftServer
 
     Public Sub StopServer()
         If ThriftAPI IsNot Nothing Then ThriftAPI.Stop() : ThriftAPIIsAvailable = False
-        If p IsNot Nothing AndAlso IsRunning AndAlso p.HasExited Then p.Kill()
+        If p IsNot Nothing AndAlso IsRunning AndAlso Not p.HasExited Then p.Kill()
         IsRunning = False
         LauncherSettings.Save()
     End Sub

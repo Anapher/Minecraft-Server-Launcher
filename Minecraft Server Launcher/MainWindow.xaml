@@ -362,9 +362,9 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource playeramount}" Margin="0,0,10,0"/>
-                                    <TextBlock Text="{Binding MinecraftServer.Server.OnlinePlayers.Count}"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.OnlinePlayers.Count,FallbackValue=0}"/>
                                     <TextBlock Text="/"/>
-                                    <TextBlock Text="{Binding MinecraftServer.Server.MaxPlayers}"/>
+                                    <TextBlock Text="{Binding MinecraftServer.Server.MaxPlayers,FallbackValue=0}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource IP}" VerticalAlignment="Center" Margin="0,0,10,0"/>
@@ -1151,68 +1151,73 @@
                         </Grid>
                     </TabItem>
                     <TabItem Header="{DynamicResource About}" Style="{StaticResource VerticalTabItem}">
-                        <StackPanel Orientation="Vertical" Margin="10">
-                            <StackPanel.Resources>
+                        <DockPanel Margin="10">
+                            <DockPanel.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Margin" Value="0,5,0,0"/>
                                 </Style>
-                            </StackPanel.Resources>
-                            <TextBlock Text="Minecraft Server Launcher" FontSize="20" FontWeight="Light"/>
-                            <ScrollViewer ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{DynamicResource ProgrammedBy}" Margin="0,10,0,0"/>
-                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                        <TextBlock Text="{DynamicResource UsedLibaries}"/>
-                                        <TextBlock Text=":"/>
-                                    </StackPanel>
+                            </DockPanel.Resources>
+                            <TextBlock Text="Minecraft Server Launcher" FontSize="20" FontWeight="Light" DockPanel.Dock="Top"/>
+                            <ScrollViewer ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" DockPanel.Dock="Bottom">
+                                <Grid>
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock>
+                                        <TextBlock Text="{DynamicResource ProgrammedBy}" Margin="0,10,0,0"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <TextBlock Text="{DynamicResource UsedLibaries}"/>
+                                            <TextBlock Text=":"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://mahapps.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">MahApps.Metro</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://elysium.asvishnyakov.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Elysium</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://james.newtonking.com/json" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Json.Net</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://james.newtonking.com/json" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Exceptionless</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://blogs.msdn.com/b/wpfsdk/archive/2006/05/25/606317.aspx" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">HTMLConverter</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://www.codeproject.com/Articles/25058/ListView-Layout-Manager" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">ListView Layout Manager</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://dev.bukkit.org/bukkit-plugins/swiftapi/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">SwiftAPI</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://icsharpcode.github.io/SharpZipLib/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">SharpZipLib</Hyperlink>
-                                        </TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                        <TextBlock Text="{DynamicResource GraficsFrom}"/>
-                                        <TextBlock Text=":"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <TextBlock Text="{DynamicResource GraficsFrom}"/>
+                                            <TextBlock Text=":"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://designmodo.com" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Designmodo</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://linhpham.me/miu/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Linhpham</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://www.danilodemarco.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">danilo de marco</Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
                                 <Hyperlink NavigateUri="http://www.visualpharm.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">visualpharm</Hyperlink>
-                                        </TextBlock>
+                                            </TextBlock>
+                                            <TextBlock>
+                                <Hyperlink NavigateUri="http://dakirby309.deviantart.com" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Dakirby309</Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
+                                </Grid>
                             </ScrollViewer>
                             
-                        </StackPanel>
+                        </DockPanel>
                     </TabItem>
                 </TabControl>
             </TabItem>
