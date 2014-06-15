@@ -1,23 +1,25 @@
 ﻿Public Class BoolToStringConverter
+    Inherits DependencyObject
     Implements IValueConverter
 
-    Private _FalseValue As String
-    Public Property FalseValue() As String
+    Public Shared ReadOnly TrueValueProperty As DependencyProperty = DependencyProperty.Register("TrueValue", GetType(String), GetType(BoolToStringConverter))
+    Public Shared ReadOnly FalseValueProperty As DependencyProperty = DependencyProperty.Register("FalseValue", GetType(String), GetType(BoolToStringConverter))
+
+    Public Property TrueValue() As String
         Get
-            Return _FalseValue
+            Return Me.GetValue(TrueValueProperty).ToString()
         End Get
         Set(value As String)
-            _FalseValue = value
+            Me.SetValue(TrueValueProperty, value)
         End Set
     End Property
 
-    Private _TrueValue As String
-    Public Property TrueValue() As String
+    Public Property FalseValue() As String
         Get
-            Return _TrueValue
+            Return Me.GetValue(FalseValueProperty).ToString()
         End Get
         Set(value As String)
-            _TrueValue = value
+            Me.SetValue(FalseValueProperty, value)
         End Set
     End Property
 

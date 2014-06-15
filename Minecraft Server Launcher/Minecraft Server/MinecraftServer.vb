@@ -17,6 +17,7 @@ Public Class MinecraftServer
     Public Event BannedListChanged(sender As Object, e As EventArgs)
     Public Event DynmapEnabled(sender As Object, e As EventArgs)
     Public Event PlayerChanged(sender As Object, e As EventArgs)
+    Public Event LauncherUpdatesFound(sender As Object, e As EventArgs)
 #End Region
 
 #Region "Delegats"
@@ -36,8 +37,8 @@ Public Class MinecraftServer
 
     Public ReadOnly Property FullIP As String
         Get
-            If Server IsNot Nothing Then
-                Return IP & ":" & Server.Port.ToString()
+            If ServerSettings IsNot Nothing Then
+                Return IP & ":" & ServerSettings.ServerPort.ToString()
             Else
                 Return IP
             End If
@@ -97,6 +98,7 @@ Public Class MinecraftServer
         Set(ByVal value As Server)
             SetProperty(value, _server)
             OnPropertyChanged("PlayersFound")
+            'If (_server Is Nothing AndAlso value IsNot Nothing) OrElse _server.Port <> value.Port Then OnPropertyChanged("FullIP")
         End Set
     End Property
 
@@ -199,6 +201,17 @@ Public Class MinecraftServer
             SetProperty(value, _SwiftAPI)
         End Set
     End Property
+
+    Private _Updater As Updater
+    Public Property Updater() As Updater
+        Get
+            Return _Updater
+        End Get
+        Set(ByVal value As Updater)
+            SetProperty(value, _Updater)
+        End Set
+    End Property
+
 #End Region
 
     Public Sub RefreshServerlogs()
@@ -224,6 +237,10 @@ Public Class MinecraftServer
 
     Public Function StartServer() As Boolean
         LoadSettings()
+#If Not Debug Then
+                Updater = New Updater(LauncherSettings.ActivLanguage.Code)
+                If LauncherSettings.CheckForUpdatesOnStart Then CheckForUpdates()
+#End If
         BackupManager.LoadBackups()
         Dim fiCraftBukkit As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "craftbukkit.jar"))
         Dim fiSwiftAPIConfig As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins", "SwiftApi", "config.yml"))
@@ -232,7 +249,7 @@ Public Class MinecraftServer
             Dim result As Boolean?
             Application.Current.Dispatcher.Invoke(Sub()
                                                       Application.Current.MainWindow.Visibility = Visibility.Hidden
-                                                      Dim frm As New frmMessageBox(Application.Current.FindResource("SAPINFText").ToString(), Application.Current.FindResource("SAPINFTitle").ToString(), Application.Current.FindResource("SAPINFOK").ToString(), Application.Current.FindResource("Close").ToString())
+                                                      Dim frm As New frmMessageBox(Application.Current.FindResource("SAPINFText").ToString(), Application.Current.FindResource("SAPINFTitle").ToString(), Application.Current.FindResource("SAPINFOK").ToString(), Application.Current.FindResource("Close").ToString()) With {.ShowInTaskbar = True, .WindowStartupLocation = WindowStartupLocation.CenterScreen}
                                                       result = frm.ShowDialog()
                                                       Application.Current.MainWindow.Visibility = Visibility.Visible
                                                   End Sub)
@@ -293,6 +310,7 @@ Public Class MinecraftServer
         Else
             LauncherSettings = New Settings(fiSettings.FullName, AddressOf ExecuteCommand, BackupManager)
         End If
+        OnPropertyChanged("FullIP")
     End Sub
 
     Private Sub RefreshPlugins()
@@ -308,58 +326,61 @@ Public Class MinecraftServer
         While IsRunning
             Thread.Sleep(LauncherSettings.RefreshInterval)
             If ThriftAPI.Functions IsNot Nothing Then
-                Dim oldServer = Server
-                Server = ThriftAPI.Functions.GetServer()
-                If Server Is Nothing Then Continue While
-                RaiseEvent ServerChanged(Me, EventArgs.Empty)
-                Dim compare1to2 = From a In Server.OnlinePlayers From b In lstPlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
-                Dim compare2to1 = From a In lstPlayers From b In Server.OnlinePlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
+                Try
+                    Dim oldServer = Server
+                    Server = ThriftAPI.Functions.GetServer()
+                    If Server Is Nothing Then Continue While
+                    RaiseEvent ServerChanged(Me, EventArgs.Empty)
+                    Dim compare1to2 = From a In Server.OnlinePlayers From b In lstPlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
+                    Dim compare2to1 = From a In lstPlayers From b In Server.OnlinePlayers.Where(Function(b) b.Name = a.Name).DefaultIfEmpty() Select {a, b}
 
-                For Each s In compare1to2
-                    If s(1) Is Nothing Then
-                        Application.Current.Dispatcher.BeginInvoke(Sub()
-                                                                       lstPlayers.Add(s(0))
-                                                                       RaiseEvent PlayerChanged(Me, EventArgs.Empty)
-                                                                   End Sub)
-                    Else
-                        Dim a = s(0)
-                        With s(1)
-                            .Exhaustion = a.Exhaustion
-                            .Health = a.Health
-                            .FirstPlayed = a.FirstPlayed
-                            .FoodLevel = a.FoodLevel
-                            .Gamemode = a.Gamemode
-                            .HealthDouble = a.HealthDouble
-                            .Inventory = a.Inventory
-                            .Ip = a.Ip
-                            .IsBanned = a.IsBanned
-                            .IsInVehicle = a.IsInVehicle
-                            .IsOp = a.IsOp
-                            .IsSleeping = a.IsSleeping
-                            .IsSneaking = a.IsSneaking
-                            .IsSprinting = a.IsSprinting
-                            .IsWhitelisted = a.IsWhitelisted
-                            .LastPlayed = a.LastPlayed
-                            .Level = a.Level
-                            .LevelProgress = a.LevelProgress
-                            .Location = a.Location
-                            .Name = a.Name
-                            .Port = a.Port
-                            .XpToNextLevel = a.XpToNextLevel
-                        End With
-                    End If
-                Next
+                    For Each s In compare1to2
+                        If s(1) Is Nothing Then
+                            Application.Current.Dispatcher.BeginInvoke(Sub()
+                                                                           lstPlayers.Add(s(0))
+                                                                           RaiseEvent PlayerChanged(Me, EventArgs.Empty)
+                                                                       End Sub)
+                        Else
+                            Dim a = s(0)
+                            With s(1)
+                                .Exhaustion = a.Exhaustion
+                                .Health = a.Health
+                                .FirstPlayed = a.FirstPlayed
+                                .FoodLevel = a.FoodLevel
+                                .Gamemode = a.Gamemode
+                                .HealthDouble = a.HealthDouble
+                                .Inventory = a.Inventory
+                                .Ip = a.Ip
+                                .IsBanned = a.IsBanned
+                                .IsInVehicle = a.IsInVehicle
+                                .IsOp = a.IsOp
+                                .IsSleeping = a.IsSleeping
+                                .IsSneaking = a.IsSneaking
+                                .IsSprinting = a.IsSprinting
+                                .IsWhitelisted = a.IsWhitelisted
+                                .LastPlayed = a.LastPlayed
+                                .Level = a.Level
+                                .LevelProgress = a.LevelProgress
+                                .Location = a.Location
+                                .Name = a.Name
+                                .Port = a.Port
+                                .XpToNextLevel = a.XpToNextLevel
+                            End With
+                        End If
+                    Next
 
-                For i = 0 To compare2to1.Count - 1
-                    Dim s = compare2to1(i)
-                    If s IsNot Nothing AndAlso s(1) Is Nothing Then
-                        Application.Current.Dispatcher.BeginInvoke(Sub()
-                                                                       lstPlayers.Remove(s(0))
-                                                                       RaiseEvent PlayerChanged(Me, EventArgs.Empty)
-                                                                   End Sub)
-                    End If
-                Next
-                OnPropertyChanged("lstPlayers")
+                    For i = 0 To compare2to1.Count - 1
+                        Dim s = compare2to1(i)
+                        If s IsNot Nothing AndAlso s(1) Is Nothing Then
+                            Application.Current.Dispatcher.BeginInvoke(Sub()
+                                                                           lstPlayers.Remove(s(0))
+                                                                           RaiseEvent PlayerChanged(Me, EventArgs.Empty)
+                                                                       End Sub)
+                        End If
+                    Next
+                    OnPropertyChanged("lstPlayers")
+                Catch ex As Exception
+                End Try
             End If
             Banlist.Load()
             Whitelist.Load()
@@ -389,6 +410,13 @@ Public Class MinecraftServer
         End Using
         p.Dispose()
         p = Nothing
+    End Sub
+
+    Private Sub CheckForUpdates()
+        _updater.CheckForUpdates()
+        AddHandler _Updater.UpdatesFound, Sub(sender, e)
+                                              RaiseEvent LauncherUpdatesFound(Me, EventArgs.Empty)
+                                          End Sub
     End Sub
 
     Private Sub p_OutputDataReceived(sender As Object, e As DataReceivedEventArgs) Handles p.OutputDataReceived

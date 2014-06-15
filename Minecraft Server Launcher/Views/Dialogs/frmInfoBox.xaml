@@ -2,9 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-    Style="{StaticResource MetroWindow}" x:Name="window" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False">
+    Style="{StaticResource MetroWindow}" x:Name="window" SizeToContent="Height" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False" Width="300">
     <StackPanel Orientation="Vertical" Margin="10">
-        <TextBlock Text="{Binding ElementName=window,Path=Text}" Margin="0,0,0,10"/>
+        <TextBlock Text="{Binding ElementName=window,Path=Text}" Margin="0,0,0,10" TextWrapping="Wrap"/>
         <Button Content="{Binding ElementName=window,Path=OKText}" Command="{Binding ElementName=window,Path=OKCommand}" IsDefault="True"/>
     </StackPanel>
 </Controls:MetroWindow>

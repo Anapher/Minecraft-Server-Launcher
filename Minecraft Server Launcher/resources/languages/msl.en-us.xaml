@@ -391,4 +391,11 @@
     <System:String x:Key="JavaPathNotFoundText">Unfortunately we couldn't find the path to Java. Please select the "java.exe" or install java if it isn't already installed.</System:String>
     <System:String x:Key="OFDJavaPathTitle">Please select the "java.exe"</System:String>
     <System:String x:Key="ExectuableFiles">Exectuable Files</System:String>
+
+    <!-- Update -->
+    <System:String x:Key="UpdateFound">Updates available</System:String>
+    <System:String x:Key="CurrentVersion">Current version</System:String>
+    <System:String x:Key="NewVersion">New version</System:String>
+    <System:String x:Key="Update">Update</System:String>
+    <System:String x:Key="UpdatePackageTitle">Changes in version {0} (Published on: {1})</System:String>
 </ResourceDictionary>

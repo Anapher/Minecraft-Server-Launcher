@@ -43,4 +43,15 @@ Public Class Helper
         End Using
         Return Nothing
     End Function
+
+    Public Shared Function RoundSize(Bytes As Long) As String
+        Select Case Bytes
+            Case Is < 1024
+                Return Bytes.ToString() & " B"
+            Case Is < 1048576
+                Return Math.Round(Bytes / 1024, 1).ToString() & " KB"
+            Case Else
+                Return Math.Round(Bytes / 1024 / 1024, 1).ToString() & " MB"
+        End Select
+    End Function
 End Class

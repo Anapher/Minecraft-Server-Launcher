@@ -32,13 +32,25 @@ Public Class frmSubmitException
 
     Public Event PropertyChanged(sender As Object, e As PropertyChangedEventArgs) Implements INotifyPropertyChanged.PropertyChanged
 
-    Private Sub ButtonSendReport_Click(sender As Object, e As RoutedEventArgs)
-        If Not String.IsNullOrWhiteSpace(txtNote) Then Exception.ToExceptionless().SetUserDescription(txtNote).Submit() Else Exception.ToExceptionless().Submit()
-        ExceptionlessClient.Current.ProcessQueue()
-        Application.Current.Shutdown()
-    End Sub
+    Private _SendReport As RelayCommand
+    Public ReadOnly Property SendReport As RelayCommand
+        Get
+            If _SendReport Is Nothing Then _SendReport = New RelayCommand(Sub(parameter As Object)
+                                                                              If Not String.IsNullOrWhiteSpace(txtNote) Then Exception.ToExceptionless().SetUserDescription(txtNote).Submit() Else Exception.ToExceptionless().Submit()
+                                                                              ExceptionlessClient.Current.ProcessQueue()
+                                                                              Application.Current.Shutdown()
+                                                                          End Sub)
+            Return _SendReport
+        End Get
+    End Property
 
-    Private Sub ButtonClose_Click(sender As Object, e As RoutedEventArgs)
-        Application.Current.Shutdown()
-    End Sub
+    Private _JustClose As RelayCommand
+    Public ReadOnly Property JustClose As RelayCommand
+        Get
+            If _JustClose Is Nothing Then _JustClose = New RelayCommand(Sub(parameter As Object)
+                                                                            Application.Current.Shutdown()
+                                                                        End Sub)
+            Return _JustClose
+        End Get
+    End Property
 End Class

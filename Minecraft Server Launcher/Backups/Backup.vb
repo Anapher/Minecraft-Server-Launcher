@@ -111,14 +111,7 @@ Public Class Backup
 
     Public ReadOnly Property BackupSizeToString As String
         Get
-            Select Case BackupSize
-                Case Is < 1024
-                    Return BackupSize.ToString() & " B"
-                Case Is < 1048576
-                    Return Math.Round(BackupSize / 1024, 1).ToString() & " KB"
-                Case Else
-                    Return Math.Round(BackupSize / 1024 / 1024, 1).ToString() & " MB"
-            End Select
+            Return Helper.RoundSize(BackupSize)
         End Get
     End Property
 

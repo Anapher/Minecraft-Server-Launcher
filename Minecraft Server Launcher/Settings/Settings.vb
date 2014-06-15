@@ -5,6 +5,16 @@ Public Class Settings
     Inherits PropertyChangedBase
 
 #Region "Properties"
+    Private _CheckForUpdatesOnStart As Boolean
+    Public Property CheckForUpdatesOnStart() As Boolean
+        Get
+            Return _CheckForUpdatesOnStart
+        End Get
+        Set(ByVal value As Boolean)
+            SetProperty(value, _CheckForUpdatesOnStart)
+        End Set
+    End Property
+
     Private _RefreshInterval As Integer
     Public Property RefreshInterval() As Integer
         Get
@@ -181,6 +191,7 @@ Public Class Settings
                     ._SendCommanddelegate = executecommand
                     ._BackupManager = BackupManager
                     .LoadTimer()
+                    .CheckForUpdatesOnStart = True '...
                 End With
             Catch ex As Exception
                 Dim fi As New IO.FileInfo(Path)
@@ -220,6 +231,7 @@ Public Class Settings
         EnableIntelliSenseInfoBox = True
         IntelliSenseIsEnabled = True
         JavaPath = String.Empty
+        Me.CheckForUpdatesOnStart = True
     End Sub
 
     Private Sub LoadDefaultLanguage()

@@ -18,7 +18,7 @@ Imports System.Windows
 <Assembly: AssemblyCopyright("Copyright © Alkaline 2014")> 
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(False)> 
-<Assembly: Exceptionless.Configuration.Exceptionless("1a5284f3a8e044c0acfc57658191fce3")> 
+<Assembly: Exceptionless.Configuration.Exceptionless("b0ba4cd7dce8457691ae6e0d60143bae")> 
 
 'Um mit dem Erstellen lokalisierbarer Anwendungen zu beginnen, legen Sie 
 '<UICulture>ImCodeVerwendeteKultur</UICulture> in der VBPROJ-Datei
@@ -56,7 +56,7 @@ Imports System.Windows
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.*")> 
-<Assembly: AssemblyFileVersion("0.1.0.0")> 
+<Assembly: AssemblyVersion("0.1.2.*")> 
+<Assembly: AssemblyFileVersion("0.1.2.0")> 
 
 <Assembly: NeutralResourcesLanguageAttribute("")> 

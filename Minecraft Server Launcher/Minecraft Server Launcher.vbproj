@@ -109,6 +109,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="updateSystemDotNet.Controller">
+      <HintPath>C:\Program Files\updateSystem.NET\updateSystemDotNet.Controller.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -188,6 +191,7 @@
     <Compile Include="Settings\Language.vb" />
     <Compile Include="Settings\Ram.vb" />
     <Compile Include="Settings\Settings.vb" />
+    <Compile Include="Settings\Updater.vb" />
     <Compile Include="ViewModelBase\PropertyChangedBase.vb" />
     <Compile Include="ViewModelBase\RelayCommand.vb" />
     <Compile Include="ViewModels\DownloadCraftbukkitViewModel.vb" />
@@ -238,6 +242,9 @@
     </Compile>
     <Compile Include="Views\frmTest.xaml.vb">
       <DependentUpon>frmTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmUpdate.xaml.vb">
+      <DependentUpon>frmUpdate.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ExhaustionVisualizer\ExhaustionVisualizer.xaml">
       <SubType>Designer</SubType>
@@ -328,6 +335,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\frmTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmUpdate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

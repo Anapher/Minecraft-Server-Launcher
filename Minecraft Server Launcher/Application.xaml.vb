@@ -40,6 +40,7 @@ Class Application
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
         AddHandler MyDomain.UnhandledException, AddressOf AppDomain_UnhandledException
         AddHandler Dispatcher.UnhandledException, AddressOf Dispatcher_UnhandledExceptions
+        ExceptionlessClient.Current.Register(False)
     End Sub
 #End If
     Private Function CurrentDomain_AssemblyResolve(sender As Object, args As ResolveEventArgs) As Assembly Handles myDomain.ReflectionOnlyAssemblyResolve

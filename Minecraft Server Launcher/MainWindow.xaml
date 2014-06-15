@@ -10,7 +10,7 @@
     Style="{StaticResource MetroWindow}"
     Title="Minecraft Server Launcher" Height="500" Width="864" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" x:Name="MainWindow">
     <Controls:MetroWindow.Resources>
-        <my:BoolToStringConverter TrueValue="{StaticResource Yes}" FalseValue="{StaticResource No}" x:Key="BooleanToStringConverter" />
+        <my:BoolToStringConverter TrueValue="{DynamicResource Yes}" FalseValue="{DynamicResource No}" x:Key="BooleanToStringConverter" />
         <my:UnixTimestampToString x:Key="UnixTimestampToStringConverter"/>
         <my:LocationToStringConverter x:Key="LocationToStringConverter"/>
         <my:ItemStackToImage x:Key="ItemStackToImageConverter" />
@@ -381,7 +381,7 @@
                                         <GroupBox Header="{DynamicResource Server}" Width="256">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Button Content="{DynamicResource reload}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="reload" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
-                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="saveall" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
+                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="saveall" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="{DynamicResource time}" Width="212">
@@ -869,7 +869,6 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                             <Grid>
-                                <Button HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Command="{Binding Command}" CommandParameter="DownloadPlugins" Content="{DynamicResource DownloadPlugins}"/>
                                 <StackPanel Orientation="Vertical" Margin="10" Visibility="{Binding GridPluginsIsVisibility}">
                                     <StackPanel.Resources>
                                         <Style TargetType="{x:Type StackPanel}">
@@ -909,6 +908,7 @@
                                         <TextBlock Text="{Binding SelectedItem.Enabled, Converter={StaticResource BooleanToStringConverter}, ElementName=lstPlugins}"/>
                                     </StackPanel>
                                 </StackPanel>
+                                <Button HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Command="{Binding Command}" CommandParameter="DownloadPlugins" Content="{DynamicResource DownloadPlugins}"/>
                             </Grid>
                         </DockPanel>
                     </TabItem>

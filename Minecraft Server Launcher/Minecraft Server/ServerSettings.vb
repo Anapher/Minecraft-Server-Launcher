@@ -355,7 +355,7 @@ Public Class ServerSettings
 
     Private UpdateMode As Boolean = False
 
-    Public Overrides Function SetProperty(Of T)(value As T, ByRef field As T, <Runtime.CompilerServices.CallerMemberName> Optional propertyName As String = Nothing) As Boolean
+    Protected Overrides Function SetProperty(Of T)(value As T, ByRef field As T, <Runtime.CompilerServices.CallerMemberName> Optional propertyName As String = Nothing) As Boolean
         If (field Is Nothing OrElse Not field.Equals(value)) AndAlso Not UpdateMode Then HasChanged = True
         Return MyBase.SetProperty(value, field, propertyName)
     End Function

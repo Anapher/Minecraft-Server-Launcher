@@ -11,16 +11,16 @@
         </DockPanel>
         <Separator />
         <TextBlock Margin="10" Text="{StaticResource ExceptionText}" TextWrapping="Wrap"/>
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Fehler" FontWeight="Bold"/>
-            <TextBlock Text=":" Margin="0,0,5,0" FontWeight="Bold"/>
-            <TextBlock Text="{Binding ElementName=window,Path=Exception.Message}" FontWeight="Bold" TextWrapping="Wrap"/>
-        </StackPanel>
+        <DockPanel Margin="10">
+            <TextBlock Text="Fehler" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock Text=":" Margin="0,0,5,0" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding ElementName=window,Path=Exception.Message,Mode=OneWay}" IsReadOnly="True"/>
+        </DockPanel>
         <TextBlock Margin="10" Text="{StaticResource ExceptionNote}" TextWrapping="Wrap"/>
         <TextBox Height="100" Margin="5" AcceptsReturn="True" AcceptsTab="True" Text="{Binding ElementName=window,Path=txtNote,UpdateSourceTrigger=PropertyChanged}"/>
         <DockPanel LastChildFill="False" Margin="10">
-            <Button Content="{StaticResource ExceptionSendErrorAndClose}" DockPanel.Dock="Left" Click="ButtonSendReport_Click"/>
-            <Button Content="{StaticResource Close}" DockPanel.Dock="Right" Click="ButtonClose_Click"/>
+            <Button Content="{StaticResource ExceptionSendErrorAndClose}" DockPanel.Dock="Left" Command="{Binding ElementName=window,Path=SendReport}"/>
+            <Button Content="{StaticResource Close}" DockPanel.Dock="Right" Command="{Binding ElementName=window,Path=JustClose}"/>
         </DockPanel>
     </StackPanel>
 </Controls:MetroWindow>

@@ -27,6 +27,12 @@
                                                                                Dim frm As New frmInfoBox(String.Format(Application.Current.FindResource("infoSwiftInformationsGenerted").ToString(), Environment.NewLine, MinecraftServer.SwiftAPI.Username, MinecraftServer.SwiftAPI.Password, MinecraftServer.SwiftAPI.Salt), Application.Current.FindResource("successful").ToString(), Application.Current.FindResource("OK").ToString()) With {.Owner = myWindow}
                                                                                frm.ShowDialog()
                                                                            End Sub
+        AddHandler MinecraftServer.LauncherUpdatesFound, Sub(sender As Object, e As EventArgs)
+                                                             Application.Current.Dispatcher.Invoke(Sub()
+                                                                                                       Dim frm = New frmUpdate(MinecraftServer.Updater) With {.Owner = Application.Current.MainWindow}
+                                                                                                       frm.ShowDialog()
+                                                                                                   End Sub)
+                                                         End Sub
     End Sub
 
     Private Function GetJavaPath() As String
@@ -776,9 +782,9 @@
             Case "saveall"
                 MinecraftServer.ExecuteCommand("save-all")
             Case "timeday"
-                MinecraftServer.ExecuteCommand("time set day")
+                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 0)
             Case "timenight"
-                MinecraftServer.ExecuteCommand("time set night")
+                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 18000)
             Case "chngweather"
                 Select Case CBBWeatherIndex
                     Case 0

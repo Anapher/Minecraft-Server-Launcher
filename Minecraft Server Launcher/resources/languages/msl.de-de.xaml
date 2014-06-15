@@ -391,4 +391,11 @@
     <System:String x:Key="JavaPathNotFoundText">Leider konnten wir den Pfad zu Java nicht finden. Bitte wählen sie die java.exe manuell aus oder installieren Sie Java, wenn sie es nicht bereits getan haben.</System:String>
     <System:String x:Key="OFDJavaPathTitle">Bitte wählen sie die "java.exe" aus</System:String>
     <System:String x:Key="ExectuableFiles">Ausführbare Dateien</System:String>
+    
+    <!-- Update -->
+    <System:String x:Key="UpdateFound">Aktualisierungen verfügbar</System:String>
+    <System:String x:Key="CurrentVersion">Aktuelle Version</System:String>
+    <System:String x:Key="NewVersion">Neue Version</System:String>
+    <System:String x:Key="Update">Aktualisieren</System:String>
+    <System:String x:Key="UpdatePackageTitle">Änderungen in der Version {0} (Veröffentlicht am: {1})</System:String>
 </ResourceDictionary>
