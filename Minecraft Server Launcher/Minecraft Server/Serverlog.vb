@@ -35,7 +35,6 @@
         End Set
     End Property
 
-
     Public Sub New(Datum As Date, log As String, Number As String)
         Me.Datum = Datum
         Me.Log = log

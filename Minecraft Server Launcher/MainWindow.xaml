@@ -25,7 +25,7 @@
         <my:SelectedIndexToVisibility x:Key="SelectedIndexVisibl"/>
     </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.InputBindings>
-        <KeyBinding Key="S" Modifiers="Control" Command="{Binding Command}" CommandParameter="SaveSettings"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding GeneralServerCommand}" CommandParameter="SaveSettings"/>
     </Controls:MetroWindow.InputBindings>
     <Grid>
         <TabControl SelectedIndex="{Binding MainTabControlIndex}" IsEnabled="{Binding IsClosing,Converter={StaticResource SwitchBoolean}}">
@@ -38,9 +38,9 @@
                     <TextBox AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Text="{Binding ConsoleText}" my:TextBoxBehaviour.AlwaysScrollToEnd="True" Grid.Row="0"/>
                     <my:IntelliTextBox Margin="0,5,0,5" Height="25" Text="{Binding txtCommand, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEingabe" VerticalAlignment="Top" IntelliSenseIsEnabled="{Binding MinecraftServer.LauncherSettings.IntelliSenseIsEnabled}"
 					Players="{Binding MinecraftServer.Server.OnlinePlayers}" Bans="{Binding MinecraftServer.Banlist.AllBans}" Items="{Binding lstMinecraftItem, Source={x:Static my:ItemData.Instance}}" Plugins="{Binding MinecraftServer.lstPlugins}" lstCommands="{Binding MinecraftServer.Commands.lstCommands}" Grid.Row="1"
-					ShowInfoBox="{Binding MinecraftServer.LauncherSettings.EnableIntelliSenseInfoBox}" InfoLanguage="{Binding MinecraftServer.LauncherSettings.ActivLanguage}">
+					ShowInfoBox="{Binding MinecraftServer.LauncherSettings.EnableIntelliSenseInfoBox}" InfoLanguage="{Binding MinecraftServer.LauncherSettings.ActivLanguage}" IsEnabled="{Binding MinecraftServer.IsRunning}">
                         <my:IntelliTextBox.InputBindings>
-                            <KeyBinding Command="{Binding Command}" CommandParameter="ExecuteCommand" Key="Return" />
+                            <KeyBinding Command="{Binding GeneralServerCommand}" CommandParameter="ExecuteCommand" Key="Return" />
                         </my:IntelliTextBox.InputBindings>
                         <my:IntelliTextBox.Style>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
@@ -190,9 +190,9 @@
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Text="{DynamicResource Punish}" VerticalAlignment="Center"/>
                                                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <Button Content="{DynamicResource kick}" Margin="0,0,10,0" Command="{Binding Command}" CommandParameter="KickPlayer"/>
-                                                        <Button Content="{DynamicResource ban}" Command="{Binding Command}" CommandParameter="BanPlayer" Margin="0,0,10,0"/>
-                                                        <Button Content="{DynamicResource banip}" Command="{Binding Command}" CommandParameter="BanIP"/>
+                                                        <Button Content="{DynamicResource kick}" Margin="0,0,10,0" Command="{Binding GeneralPlayerCommand}" CommandParameter="KickPlayer"/>
+                                                        <Button Content="{DynamicResource ban}" Command="{Binding GeneralPlayerCommand}" CommandParameter="BanPlayer" Margin="0,0,10,0"/>
+                                                        <Button Content="{DynamicResource banip}" Command="{Binding GeneralPlayerCommand}" CommandParameter="BanIP"/>
                                                     </StackPanel>
                                                 </Grid>
                                                 <Grid>
@@ -203,7 +203,7 @@
                                                     <TextBlock Text="{DynamicResource TeleportTo}" VerticalAlignment="Center"/>
                                                     <StackPanel Orientation="Horizontal" Grid.Column="1">
                                                         <ComboBox Width="200" ItemsSource="{Binding lstPlayersWithoutSelected}" SelectedIndex="{Binding CBBTpPlayer}" DisplayMemberPath="Name"/>
-                                                        <Button Content="{DynamicResource teleport}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="Teleport" IsEnabled="{Binding TpIsAvailable}"/>
+                                                        <Button Content="{DynamicResource teleport}" Margin="5,0,0,0" Command="{Binding GeneralPlayerCommand}" CommandParameter="Teleport" IsEnabled="{Binding TpIsAvailable}"/>
                                                     </StackPanel>
                                                 </Grid>
                                                 <Grid>
@@ -215,10 +215,10 @@
                                                     <StackPanel Orientation="Horizontal" Grid.Column="1">
                                                         <TextBox Width="230" Text="{Binding txtSendMessage, UpdateSourceTrigger=PropertyChanged}" x:Name="txtSendMessage">
                                                             <TextBox.InputBindings>
-                                                                <KeyBinding Command="{Binding Command}" CommandParameter="SendMessage" Key="Enter"/>
+                                                                <KeyBinding Command="{Binding GeneralPlayerCommand}" CommandParameter="SendMessage" Key="Enter"/>
                                                             </TextBox.InputBindings>
                                                         </TextBox>
-                                                        <Button Content="{DynamicResource send}" Margin="5,0,0,0" Command="{Binding Command}" CommandParameter="SendMessage" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtSendMessage}"/>
+                                                        <Button Content="{DynamicResource send}" Margin="5,0,0,0" Command="{Binding GeneralPlayerCommand}" CommandParameter="SendMessage" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtSendMessage}"/>
                                                     </StackPanel>
 
                                                 </Grid>
@@ -253,7 +253,7 @@
                                                         </ComboBox>
                                                         <TextBlock Text="{DynamicResource duration}" VerticalAlignment="Center" Margin="20,0,10,0"/>
                                                         <Controls:NumericUpDown Minimum="1" Value="{Binding NudDuration}"/>
-                                                        <Button Content="{DynamicResource apply}" Margin="10,0,0,0" Command="{Binding Command}" CommandParameter="ApplyEffect"/>
+                                                        <Button Content="{DynamicResource apply}" Margin="10,0,0,0" Command="{Binding GeneralPlayerCommand}" CommandParameter="ApplyEffect"/>
                                                     </StackPanel>
                                                 </Grid>
                                                 <Grid>
@@ -268,7 +268,7 @@
                                                             <ComboBoxItem Content="{DynamicResource experience}"/>
                                                             <ComboBoxItem Content="{DynamicResource experiencelevel}"/>
                                                         </ComboBox>
-                                                        <Button Content="{DynamicResource apply}" Width="75" Margin="20,0,0,0" Command="{Binding Command}" CommandParameter="GiveXP"/>
+                                                        <Button Content="{DynamicResource apply}" Width="75" Margin="20,0,0,0" Command="{Binding GeneralPlayerCommand}" CommandParameter="GiveXP"/>
                                                     </StackPanel>
                                                 </Grid>
                                             </StackPanel>
@@ -292,7 +292,7 @@
                                                                 <DockPanel LastChildFill="False">
                                                                     <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding NewSelectedItem, Converter={StaticResource ItemStackToImageConverter}}" Margin="5,0,0,0"/>
                                                                     <TextBlock Text="{Binding CurrentItemText}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                                                    <Button Content="..." Command="{Binding Command}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0"/>
+                                                                    <Button Content="..." Command="{Binding GeneralPlayerCommand}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0"/>
                                                                 </DockPanel>
                                                                 <DockPanel Margin="0,5,0,0">
                                                                     <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
@@ -304,12 +304,12 @@
                                                                         <ColumnDefinition />
                                                                         <ColumnDefinition />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <Button Content="{DynamicResource change}" Command="{Binding Command}" CommandParameter="ChangeItem" Margin="10,0,5,0"/>
-                                                                    <Button Content="{DynamicResource remove}"  Command="{Binding Command}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0"/>
+                                                                    <Button Content="{DynamicResource change}" Command="{Binding GeneralPlayerCommand}" CommandParameter="ChangeItem" Margin="10,0,5,0"/>
+                                                                    <Button Content="{DynamicResource remove}"  Command="{Binding GeneralPlayerCommand}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0"/>
                                                                 </Grid>
                                                             </StackPanel>
                                                         </GroupBox>
-                                                        <Button Content="{DynamicResource clear}" Command="{Binding Command}" CommandParameter="ClearInventory" Margin="10,0,10,0"/>
+                                                        <Button Content="{DynamicResource clear}" Command="{Binding GeneralPlayerCommand}" CommandParameter="ClearInventory" Margin="10,0,10,0"/>
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <StackPanel Orientation="Vertical">
@@ -320,14 +320,14 @@
                                                                 <TextBlock Text=":" VerticalAlignment="Center"/>
                                                                 <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding SelectedItem.Image}" Margin="5,0,0,0"/>
                                                                 <TextBlock Text="{Binding SelectedItem.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                                                <Button Content="..." Command="{Binding Command}" CommandParameter="SelectItem" Width="30" Margin="5,0,0,0"/>
+                                                                <Button Content="..." Command="{Binding GeneralPlayerCommand}" CommandParameter="SelectItem" Width="30" Margin="5,0,0,0"/>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                                                 <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
                                                                 <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                                 <Controls:NumericUpDown Maximum="64" Minimum="1" Value="{Binding ItemAmount}"/>
                                                             </StackPanel>
-                                                            <Button Content="{DynamicResource give}" Command="{Binding Command}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
+                                                            <Button Content="{DynamicResource give}" Command="{Binding GeneralPlayerCommand}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
                                                         </StackPanel>
                                                     </GroupBox>
                                                 </StackPanel>
@@ -380,14 +380,14 @@
                                     <DockPanel>
                                         <GroupBox Header="{DynamicResource Server}" Width="256">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Button Content="{DynamicResource reload}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="reload" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
-                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding Command}" CommandParameter="saveall" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
+                                                <Button Content="{DynamicResource reload}" Height="30" Margin="10" Width="100" Command="{Binding GeneralServerCommand}" CommandParameter="reload" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
+                                                <Button Content="{DynamicResource saveworld}" Height="30" Margin="10" Width="100" Command="{Binding GeneralServerCommand}" CommandParameter="saveall" IsEnabled="{Binding MinecraftServer.ThriftAPIIsAvailable}"/>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="{DynamicResource time}" Width="212">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Button Content="{DynamicResource day}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timeday" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
-                                                <Button Content="{DynamicResource night}" Height="30" Margin="10" Width="70" Command="{Binding Command}" CommandParameter="timenight" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
+                                                <Button Content="{DynamicResource day}" Height="30" Margin="10" Width="70" Command="{Binding GeneralServerCommand}" CommandParameter="timeday" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
+                                                <Button Content="{DynamicResource night}" Height="30" Margin="10" Width="70" Command="{Binding GeneralServerCommand}" CommandParameter="timenight" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="{DynamicResource weather}">
@@ -397,7 +397,7 @@
                                                     <ComboBoxItem Content="{DynamicResource thunder}"/>
                                                     <ComboBoxItem Content="{DynamicResource Wclear}"/>
                                                 </ComboBox>
-                                                <Button Content="{DynamicResource ChangeWeather}" Margin="10,0,10,10" Command="{Binding Command}" CommandParameter="chngweather" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
+                                                <Button Content="{DynamicResource ChangeWeather}" Margin="10,0,10,10" Command="{Binding GeneralServerCommand}" CommandParameter="chngweather" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
                                             </StackPanel>
                                         </GroupBox>
                                     </DockPanel>
@@ -415,11 +415,11 @@
 
                                         <TextBox Margin="10,0,10,0" Text="{Binding txtAnnounce, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBroadcast" Grid.Column="1">
                                             <TextBox.InputBindings>
-                                                <KeyBinding Key="Enter" Command="{Binding Command}" CommandParameter="Announce"/>
-                                                <KeyBinding Key="Return" Command="{Binding Command}" CommandParameter="Announce"/>
+                                                <KeyBinding Key="Enter" Command="{Binding GeneralServerCommand}" CommandParameter="Announce"/>
+                                                <KeyBinding Key="Return" Command="{Binding GeneralServerCommand}" CommandParameter="Announce"/>
                                             </TextBox.InputBindings>
                                         </TextBox>
-                                        <Button Content="{DynamicResource send}" Command="{Binding Command}" CommandParameter="Announce" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtBroadcast}" Grid.Column="2"/>
+                                        <Button Content="{DynamicResource send}" Command="{Binding GeneralServerCommand}" CommandParameter="Announce" IsEnabled="{Binding Text, Converter={StaticResource FalseOnEmptyString}, ElementName=txtBroadcast}" Grid.Column="2"/>
                                     </Grid>
                                 </StackPanel>
 
@@ -450,15 +450,15 @@
                     </TabItem>
                     <TabItem Header="{DynamicResource map}" Style="{StaticResource UnderTab}">
                         <Grid>
-                            <DockPanel >
-                                <Menu DockPanel.Dock="Top">
+                            <DockPanel IsEnabled="{Binding MinecraftServer.Dynmap.ShowDownloadWindow,Converter={StaticResource SwitchBoolean}}">
+                                <Menu DockPanel.Dock="Top" IsEnabled="{Binding MinecraftServer.IsRunning}">
                                     <MenuItem Header="{DynamicResource render}" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="Render"/>
                                     <MenuItem Header="{DynamicResource refresh}" Click="MenuItem_Click"/>
                                     <MenuItem Header="{DynamicResource openInBrowser}" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="OpenInBrowser"/>
                                 </Menu>
                                 <WebBrowser Tag="{Binding MinecraftServer.Dynmap.BrowserURL}" x:Name="webDynmap" DockPanel.Dock="Bottom" Visibility="{Binding MinecraftServer.Dynmap.DynmapExists, Converter={StaticResource BToV}}"/>
                             </DockPanel>
-                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Visibility="{Binding MinecraftServer.Dynmap.ShowDownloadWindow, Converter={StaticResource BToV}}" Background="White"  Height="100">
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Visibility="{Binding MinecraftServer.Dynmap.ShowDownloadWindow, Converter={StaticResource BToV}}" Background="White"  Height="100" IsEnabled="{Binding MinecraftServer.IsRunning}">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{DynamicResource Dynmapnotfound}" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center"/>
                                     <Controls:MetroProgressBar Margin="0,10,0,10" Value="{Binding MinecraftServer.Dynmap.DownloadValue}"/>
@@ -571,7 +571,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem Header="{DynamicResource Settings}" Style="{StaticResource UnderTab}">
-                        <Grid>
+                        <Grid IsEnabled="{Binding MinecraftServer.IsRunning}">
                             <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel.Resources>
@@ -908,7 +908,7 @@
                                         <TextBlock Text="{Binding SelectedItem.Enabled, Converter={StaticResource BooleanToStringConverter}, ElementName=lstPlugins}"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <Button HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Command="{Binding Command}" CommandParameter="DownloadPlugins" Content="{DynamicResource DownloadPlugins}"/>
+                                <Button HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Command="{Binding GeneralServerCommand}" CommandParameter="DownloadPlugins" Content="{DynamicResource DownloadPlugins}" IsEnabled="{Binding MinecraftServer.IsRunning}"/>
                             </Grid>
                         </DockPanel>
                     </TabItem>
@@ -980,7 +980,7 @@
                                 </GroupBox>
                                 <GroupBox Header="IntelliSense">
                                     <StackPanel>
-                                        <Button Content="{DynamicResource OpenIntelliSenseManager}" Margin="0,5,0,0" HorizontalAlignment="Left" Command="{Binding Command}" CommandParameter="OpenIntelliSenseManager"/>
+                                        <Button Content="{DynamicResource OpenIntelliSenseManager}" Margin="0,5,0,0" HorizontalAlignment="Left" Command="{Binding GeneralSettingsCommand}" CommandParameter="OpenIntelliSenseManager"/>
                                         <CheckBox Content="{DynamicResource IntelliSenseIsEnabled}" IsChecked="{Binding MinecraftServer.LauncherSettings.IntelliSenseIsEnabled}" Margin="0,5,0,0"/>
                                         <CheckBox Content="{DynamicResource IntelliSenseInfoBoxIsEnabled}" IsChecked="{Binding MinecraftServer.LauncherSettings.EnableIntelliSenseInfoBox}" Margin="0,5,0,0"/>
                                     </StackPanel>
@@ -993,11 +993,11 @@
                         <DockPanel>
                             <ListView Width="400" ItemsSource="{Binding MinecraftServer.LauncherSettings.Timers}" ctrl:ListViewLayoutManager.Enabled="true" SelectedItem="{Binding SelectedTimer,Mode=OneWayToSource}">
                                 <ListView.InputBindings>
-                                    <KeyBinding Key="Delete" Command="{Binding Command}" CommandParameter="RemoveSelectedTimer"/>
+                                    <KeyBinding Key="Delete" Command="{Binding GeneralSettingsCommand}" CommandParameter="RemoveSelectedTimer"/>
                                 </ListView.InputBindings>
                                 <ListView.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="{DynamicResource remove}" Command="{Binding Command}" CommandParameter="RemoveSelectedTimer"/>
+                                        <MenuItem Header="{DynamicResource remove}" Command="{Binding GeneralSettingsCommand}" CommandParameter="RemoveSelectedTimer"/>
                                     </ContextMenu>
                                 </ListView.ContextMenu>
                                 <ListView.View>
@@ -1071,12 +1071,12 @@
                                                 <TextBlock Text="{DynamicResource Secounds}" VerticalAlignment="Center" Margin="10,0,0,0"/>
                                             </StackPanel>
                                         </Grid>
-                                        <Button Content="{DynamicResource add}" IsEnabled="{Binding CanAddTimer}" Command="{Binding Command}" CommandParameter="AddTimer"/>
+                                        <Button Content="{DynamicResource add}" IsEnabled="{Binding CanAddTimer}" Command="{Binding GeneralSettingsCommand}" CommandParameter="AddTimer"/>
                                     </StackPanel>
                                 </GroupBox>
                                 <GroupBox Header="{DynamicResource BackupTimer}">
                                     <StackPanel Orientation="Vertical" Margin="10">
-                                        <Button Content="{DynamicResource CreateBackupTimer}" Command="{Binding Command}" CommandParameter="CreateBackupTimer"/>
+                                        <Button Content="{DynamicResource CreateBackupTimer}" Command="{Binding GeneralSettingsCommand}" CommandParameter="CreateBackupTimer"/>
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>
@@ -1092,11 +1092,11 @@
                             <DockPanel LastChildFill="True">
                                 <ListView ItemsSource="{Binding MinecraftServer.BackupManager.BackupList}" ctrl:ListViewLayoutManager.Enabled="true" Width="250" x:Name="lstBackups" SelectedIndex="{Binding BackupSelectedIndex}">
                                     <ListView.InputBindings>
-                                        <KeyBinding Key="Delete" Command="{Binding Command}" CommandParameter="RemoveSelectedBackup"/>
+                                        <KeyBinding Key="Delete" Command="{Binding GeneralSettingsCommand}" CommandParameter="RemoveSelectedBackup"/>
                                     </ListView.InputBindings>
                                     <ListView.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="{DynamicResource remove}" Command="{Binding Command}" CommandParameter="RemoveSelectedBackup"/>
+                                            <MenuItem Header="{DynamicResource remove}" Command="{Binding GeneralSettingsCommand}" CommandParameter="RemoveSelectedBackup"/>
                                         </ContextMenu>
                                     </ListView.ContextMenu>
                                     <ListView.View>
@@ -1131,7 +1131,7 @@
                                     </TreeView>
                                     <DockPanel Grid.Row="1" IsEnabled="{Binding BackupIsNotBusy}">
                                         <StackPanel Orientation="Vertical" IsEnabled="{Binding ElementName=lstBackups,Path=SelectedIndex,Converter={StaticResource SelectedIndexToBool}}">
-                                            <Button Content="{DynamicResource RestoreSelectedFiles}" Margin="5" Command="{Binding Command}" CommandParameter="RestoreBackup">
+                                            <Button Content="{DynamicResource RestoreSelectedFiles}" Margin="5" Command="{Binding GeneralSettingsCommand}" CommandParameter="RestoreBackup">
                                                 <Button.IsEnabled>
                                                     <Binding ElementName="lstBackups" Path="SelectedItem.SomethingIsChecked" TargetNullValue="False"/>
                                                 </Button.IsEnabled>
@@ -1139,7 +1139,7 @@
                                             <CheckBox Content="{DynamicResource BackupFilesFirst}" Margin="5,0,0,0" IsChecked="{Binding MinecraftServer.LauncherSettings.BackupFilesFirst}"/>
                                         </StackPanel>
 
-                                        <Button Content="{DynamicResource CreateNewBackup}" Margin="5" Command="{Binding Command}" CommandParameter="CreateNewBackup"/>
+                                        <Button Content="{DynamicResource CreateNewBackup}" Margin="5" Command="{Binding GeneralSettingsCommand}" CommandParameter="CreateNewBackup"/>
                                     </DockPanel>
                                 </Grid>
                             </DockPanel>
@@ -1190,6 +1190,9 @@
                                             </TextBlock>
                                             <TextBlock>
                                 <Hyperlink NavigateUri="http://icsharpcode.github.io/SharpZipLib/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">SharpZipLib</Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock>
+                                <Hyperlink NavigateUri="http://updatesystem.net/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">UpdateSystem.Net</Hyperlink>
                                             </TextBlock>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">

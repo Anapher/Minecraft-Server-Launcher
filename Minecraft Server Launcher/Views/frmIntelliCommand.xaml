@@ -169,7 +169,7 @@
                                                     <ComboBoxItem Content="{StaticResource PlayerList}"/>
                                                     <ComboBoxItem Content="{StaticResource ItemList}"/>
                                                     <ComboBoxItem Content="{StaticResource PluginList}"/>
-                                                    <ComboBoxItem Content="{StaticResource Banlist}"/>
+                                                    <ComboBoxItem Content="{StaticResource BanList}"/>
                                                     <ComboBoxItem Content="{StaticResource BanIpList}"/>
                                                     <ComboBoxItem Content="{StaticResource CommandList}"/>
                                                 </ComboBox>

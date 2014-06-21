@@ -5,7 +5,8 @@
     <System:String x:Key="No">No</System:String>
     <System:String x:Key="apply">Apply</System:String>
     <System:String x:Key="search">search</System:String>
-
+    <System:String x:Key="DateFormat">HH:mm:ss tt mm/dd/yyyy</System:String>
+    
     <!-- Header -->
     <System:String x:Key="Console">Console</System:String>
     <System:String x:Key="Player">Player</System:String>
@@ -214,15 +215,15 @@
 
     <System:String x:Key="gamemode_tt">Defines the mode of gameplay.</System:String>
     <System:String x:Key="SaveSettings">To save the settings press Ctrl + S or change the tab</System:String>
-    
-    <!-- frmDownloadCraftbukkit.xaml -->
+
+    <!-- frmDownloadMinecraftServer.xaml -->
     <System:String x:Key="ChooseSelectedVersion">Choose selected version</System:String>
     <System:String x:Key="Download">Download</System:String>
-    <System:String x:Key="frmDownloadCraftbukkitTitle">Download</System:String>
-    <System:String x:Key="OpenInfosInBrowser">Open informations in Browser</System:String>
+    <System:String x:Key="DownloadMinecraftServer">Download Minecraft Server</System:String>
     <System:String x:Key="HeaderBuildNumber">Build number</System:String>
     <System:String x:Key="HeaderVersion">Version</System:String>
     <System:String x:Key="HeaderType">Type</System:String>
+    <System:String x:Key="installing">Is installing...</System:String>
     
     <!-- frmSelectItem -->
     <System:String x:Key="Name">Name</System:String>
@@ -236,16 +237,15 @@
     <System:String x:Key="SAPINFTitle">SwiftAPI not found</System:String>
     <System:String x:Key="SAPINFOK">Download</System:String>
  
-    <!-- MessageBox craftbukkit Download completed -->
+    <!-- MessageBox Minecraft Server Download completed -->
     <System:String x:Key="CBDFText">The download has completed successfully. The application can restart now.</System:String>
     <System:String x:Key="CBDFTitle">Successfully</System:String>
     <System:String x:Key="SCBDFOK">Restart</System:String>
 
-    <!-- Craftbukkit missing MSG -->
-    <System:String x:Key="CraftbukkitFileIsMissing">The file "craftbukkit.jar" wasn't found..</System:String>
-    <System:String x:Key="DownloadCraftBukkit">Download Craftbukkit</System:String>
+    <!-- Minecraft Server missing MSG -->
+    <System:String x:Key="MinecraftServerFileIsMissing">The file "MinecraftServer.jar" wasn't found.</System:String>
     <System:String x:Key="CloseProgram">Close program</System:String>
-
+    
     <!-- MessageBox want save settings= -->
     <System:String x:Key="SSText">Do you want to save the settings?</System:String>
     <System:String x:Key="SSTitle">Save settings?</System:String>

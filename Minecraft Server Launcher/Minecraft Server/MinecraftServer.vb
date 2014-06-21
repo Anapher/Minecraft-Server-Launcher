@@ -242,15 +242,17 @@ Public Class MinecraftServer
                 If LauncherSettings.CheckForUpdatesOnStart Then CheckForUpdates()
 #End If
         BackupManager.LoadBackups()
-        Dim fiCraftBukkit As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "craftbukkit.jar"))
+        Dim fiMinecraftServer As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, Paths.GetPaths.MinecraftServerFileName))
         Dim fiSwiftAPIConfig As New FileInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins", "SwiftApi", "config.yml"))
-        If Not fiCraftBukkit.Exists Then RaiseEvent StartFileNotFound(Me, EventArgs.Empty) : Return False
+        If Not fiMinecraftServer.Exists Then RaiseEvent StartFileNotFound(Me, EventArgs.Empty) : Return False
         If Not SwiftAPIManager.Exists(New DirectoryInfo(Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "plugins"))) Then
             Dim result As Boolean?
             Application.Current.Dispatcher.Invoke(Sub()
                                                       Application.Current.MainWindow.Visibility = Visibility.Hidden
+#If Not Debug Then
                                                       Dim frm As New frmMessageBox(Application.Current.FindResource("SAPINFText").ToString(), Application.Current.FindResource("SAPINFTitle").ToString(), Application.Current.FindResource("SAPINFOK").ToString(), Application.Current.FindResource("Close").ToString()) With {.ShowInTaskbar = True, .WindowStartupLocation = WindowStartupLocation.CenterScreen}
                                                       result = frm.ShowDialog()
+#End If
                                                       Application.Current.MainWindow.Visibility = Visibility.Visible
                                                   End Sub)
             If result Then
@@ -279,7 +281,7 @@ Public Class MinecraftServer
                 End If
             End If
             .FileName = javapath
-            .Arguments = String.Format("-Xmx{0}M -Xms{0}M -jar craftbukkit.jar -nojline", LauncherSettings.Ram.Ram)
+            .Arguments = String.Format("-Xmx{0}M -Xms{0}M -jar {1} -nojline", LauncherSettings.Ram.Ram, Paths.GetPaths.MinecraftServerFileName)
             .RedirectStandardError = True
             .RedirectStandardInput = True
             .RedirectStandardOutput = True

@@ -287,7 +287,7 @@
         If String.IsNullOrWhiteSpace(CurrentCommandList.PluginName) Then
             Return True
         End If
-        If Not CurrentCommandList.Commands.Count > 0 Then
+        If CurrentCommandList.Commands IsNot Nothing AndAlso Not CurrentCommandList.Commands.Count > 0 Then
             Return False
         End If
         Return Nothing

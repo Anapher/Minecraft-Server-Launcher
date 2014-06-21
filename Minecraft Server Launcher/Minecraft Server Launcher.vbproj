@@ -84,6 +84,7 @@
     </Reference>
     <Reference Include="Itenso.Windows.Controls.ListViewLayout">
       <HintPath>bin\Debug\MSL\libraries\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -111,6 +112,7 @@
     </Reference>
     <Reference Include="updateSystemDotNet.Controller">
       <HintPath>C:\Program Files\updateSystem.NET\updateSystemDotNet.Controller.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -156,11 +158,15 @@
     <Compile Include="Extensions\UnixTimestampToString.vb" />
     <Compile Include="Minecraft Server\Banlist\BanlistInfo.vb" />
     <Compile Include="Minecraft Server\Banlist\BannedPlayer.vb" />
-    <Compile Include="Minecraft Server\BukkitVersion.vb" />
     <Compile Include="Minecraft Server\Commands\CommandList.vb" />
     <Compile Include="Minecraft Server\Commands\IntelliSenseManager.vb" />
-    <Compile Include="Minecraft Server\CraftbukkitDownloader.vb" />
-    <Compile Include="Minecraft Server\Paths.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\ServerVersions\Bukkit\BukkitVersionSelector.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\MinecraftServerDownloader.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\ServerVersions\Cauldron\CauldronVersion.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\ServerVersions\Cauldron\CauldronVersionSelector.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\ServerVersions\Spigot\SpigotVersion.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\ServerVersions\Spigot\SpigotVersionSelector.vb" />
+    <Compile Include="Settings\Paths.vb" />
     <Compile Include="Minecraft Server\Plugins\BukkitPlugin.vb" />
     <Compile Include="Minecraft Server\Plugins\categorie.vb" />
     <Compile Include="Minecraft Server\Plugins\InstalledStateToIcon.vb" />
@@ -171,6 +177,9 @@
     <Compile Include="Minecraft Server\Plugins\PluginInfoClasses\Version.vb" />
     <Compile Include="Minecraft Server\Plugins\PluginManager.vb" />
     <Compile Include="Minecraft Server\API\SwiftAPIManager.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\Base\ServerVersion.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\ServerVersions\Bukkit\BukkitVersion.vb" />
+    <Compile Include="Minecraft Server\ServerDownloader\Base\VersionSelectorBase.vb" />
     <Compile Include="Minecraft Server\Whitelist\WhitelistedPlayer.vb" />
     <Compile Include="Minecraft Server\Whitelist\WhitelistInfo.vb" />
     <Compile Include="Controls\PlayerInventoryControl\PlayerInventoryControl.xaml.vb">
@@ -184,7 +193,7 @@
     <Compile Include="Minecraft Server\Items\MinecraftItem.vb" />
     <Compile Include="Minecraft Server\Items\MinecraftItems.vb" />
     <Compile Include="Minecraft Server\MinecraftHelper.vb" />
-    <Compile Include="Minecraft Server\PluginHelper.vb" />
+    <Compile Include="Minecraft Server\Plugins\PluginHelper.vb" />
     <Compile Include="Minecraft Server\Serverlog.vb" />
     <Compile Include="Minecraft Server\ServerSettings.vb" />
     <Compile Include="Settings\Timer\TimerBase.vb" />
@@ -194,7 +203,6 @@
     <Compile Include="Settings\Updater.vb" />
     <Compile Include="ViewModelBase\PropertyChangedBase.vb" />
     <Compile Include="ViewModelBase\RelayCommand.vb" />
-    <Compile Include="ViewModels\DownloadCraftbukkitViewModel.vb" />
     <Compile Include="ViewModels\DownloadPluginsViewModel.vb" />
     <Compile Include="ViewModels\ItemSelectionViewModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
@@ -222,8 +230,8 @@
     <Compile Include="Views\frmCreateNewBackup.xaml.vb">
       <DependentUpon>frmCreateNewBackup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmDownloadCraftbukkit.xaml.vb">
-      <DependentUpon>frmDownloadCraftbukkit.xaml</DependentUpon>
+    <Compile Include="Views\frmDownloadMinecraftServer.xaml.vb">
+      <DependentUpon>frmDownloadMinecraftServer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\frmDownloadPlugins.xaml.vb">
       <DependentUpon>frmDownloadPlugins.xaml</DependentUpon>
@@ -310,7 +318,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\frmDownloadCraftbukkit.xaml">
+    <Page Include="Views\frmDownloadMinecraftServer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

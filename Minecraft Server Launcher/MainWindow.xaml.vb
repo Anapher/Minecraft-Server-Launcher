@@ -10,13 +10,17 @@ Class MainWindow
         MainViewModel.Instance.DynmapRefresh = Sub()
                                                    Me.Dispatcher.Invoke(Sub()
                                                                             Dim ip = webDynmap.Tag.ToString()
-                                                                            webDynmap.Navigate(ip)
+                                                                            If Not String.IsNullOrWhiteSpace(ip) Then
+                                                                                webDynmap.Navigate(ip)
+                                                                            End If
                                                                         End Sub)
                                                End Sub
     End Sub
 
     Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
-        webDynmap.Navigate(webDynmap.Tag.ToString())
+        If Not String.IsNullOrWhiteSpace(webDynmap.Tag.ToString()) Then
+            webDynmap.Navigate(webDynmap.Tag.ToString())
+        End If
     End Sub
 
     Private Sub Hyperlink_RequestNavigate(sender As Object, e As RequestNavigateEventArgs)

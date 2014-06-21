@@ -303,6 +303,7 @@ Public Class BackupManager
 
                                                      AddBackupInfoFile(Backup, zipStream)
                                                      zipStream.IsStreamOwner = True
+                                                     zipStream.Close()
                                                  End Using
                                                  Application.Current.Dispatcher.Invoke(Sub()
                                                                                            If FinishedEvent IsNot Nothing Then FinishedEvent.Invoke(Me, EventArgs.Empty)

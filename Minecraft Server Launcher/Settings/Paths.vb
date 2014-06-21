@@ -50,4 +50,10 @@ Public Class Paths
             Return New FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MSL", "items", "ItemDB.xml"))
         End Get
     End Property
+
+    Public ReadOnly Property MinecraftServerFileName As String
+        Get
+            Return "MinecraftServer.jar"
+        End Get
+    End Property
 End Class

@@ -358,90 +358,90 @@ Public Class ServerSettings
     Protected Overrides Function SetProperty(Of T)(value As T, ByRef field As T, <Runtime.CompilerServices.CallerMemberName> Optional propertyName As String = Nothing) As Boolean
         If (field Is Nothing OrElse Not field.Equals(value)) AndAlso Not UpdateMode Then HasChanged = True
         Return MyBase.SetProperty(value, field, propertyName)
-    End Function
-    '           
+    End Function         
 #End Region
 
 #Region "Methods"
     Public Sub Load()
         Dim fi = New FileInfo(Path)
-        If Not fi.Exists Then
-            Return
-        End If
-        Dim txt = File.ReadAllLines(fi.FullName)
-        UpdateMode = True
-        For Each s In txt
-            Dim sSplit() = s.Split("="c)
-            If sSplit.Count <= 1 Then Continue For
-            Select Case sSplit(0)
-                Case "generator-settings"
-                    Me.GeneratorSettings = sSplit(1)
-                Case "op-permission-level"
-                    Me.OpPermission = Integer.Parse(sSplit(1))
-                Case "allow-nether"
-                    Me.AllowNether = StringToBool(sSplit(1))
-                Case "level-name"
-                    Me.LevelName = sSplit(1)
-                Case "enable-query"
-                    Me.EnableQuery = StringToBool(sSplit(1))
-                Case "allow-flight"
-                    Me.AllowFlight = StringToBool(sSplit(1))
-                Case "announce-player-achievements"
-                    Me.AnnouncePlayerAchievements = StringToBool(sSplit(1))
-                Case "server-port"
-                    Me.ServerPort = Integer.Parse(sSplit(1))
-                Case "level-type"
-                    Me.LevelType = DirectCast([Enum].Parse(GetType(LevelType), sSplit(1)), LevelType)
-                Case "enable-rcon"
-                    Me.EnableRcon = StringToBool(sSplit(1))
-                Case "force-gamemode"
-                    Me.ForceGamemode = StringToBool(sSplit(1))
-                Case "level-seed"
-                    Me.LevelSeed = sSplit(1)
-                Case "server-ip"
-                    Me.ServerIP = sSplit(1)
-                Case "max-build-height"
-                    Me.MaxBuildHeight = Integer.Parse(sSplit(1))
-                Case "spawn-npcs"
-                    Me.SpawnNPCs = StringToBool(sSplit(1))
-                Case "white-list"
-                    Me.Whitelist = StringToBool(sSplit(1))
-                Case "spawn-animals"
-                    Me.SpawnAnimals = StringToBool(sSplit(1))
-                Case "snooper-enabled"
-                    Me.SnooperEnabled = StringToBool(sSplit(1))
-                Case "hardcore"
-                    Me.Hardcore = StringToBool(sSplit(1))
-                Case "online-mode"
-                    Me.OnlineMode = StringToBool(sSplit(1))
-                Case "resource-pack"
-                    Me.ResourcePack = sSplit(1)
-                Case "pvp"
-                    Me.PVP = StringToBool(sSplit(1))
-                Case "difficulty"
-                    Me.Difficulty = Integer.Parse(sSplit(1))
-                Case "enable-command-block"
-                    Me.EnableCommandBlock = StringToBool(sSplit(1))
-                Case "server-name"
-                    Me.ServerName = sSplit(1)
-                Case "player-idle-timeout"
-                    Me.PlayerIdleTimeout = Integer.Parse(sSplit(1))
-                Case "gamemode"
-                    Me.GameMode = Integer.Parse(sSplit(1))
-                Case "max-players"
-                    Me.MaxPlayers = Integer.Parse(sSplit(1))
-                Case "spawn-monsters"
-                    Me.SpawnMonsters = StringToBool(sSplit(1))
-                Case "view-distance"
-                    Me.ViewDistance = Integer.Parse(sSplit(1))
-                Case "generate-structures"
-                    Me.GenerateStructures = StringToBool(sSplit(1))
-                Case "spawn-protection"
-                    Me.SpawnProtection = Integer.Parse(sSplit(1))
-                Case "motd"
-                    Me.MODT = sSplit(1)
-            End Select
-        Next
+        If Not fi.Exists Then Return
+        UpdateMode = True 'When a property change it will set HasChanged to true. But when Updatemode is true it won't
+        Using fs As New FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            Using sr As New StreamReader(fs)
+                While Not sr.EndOfStream
+                    Dim sSplit() = sr.ReadLine().Split("="c)
+                    If sSplit.Count <= 1 Then Continue While
+                    Select Case sSplit(0)
+                        Case "generator-settings"
+                            Me.GeneratorSettings = sSplit(1)
+                        Case "op-permission-level"
+                            Me.OpPermission = Integer.Parse(sSplit(1))
+                        Case "allow-nether"
+                            Me.AllowNether = StringToBool(sSplit(1))
+                        Case "level-name"
+                            Me.LevelName = sSplit(1)
+                        Case "enable-query"
+                            Me.EnableQuery = StringToBool(sSplit(1))
+                        Case "allow-flight"
+                            Me.AllowFlight = StringToBool(sSplit(1))
+                        Case "announce-player-achievements"
+                            Me.AnnouncePlayerAchievements = StringToBool(sSplit(1))
+                        Case "server-port"
+                            Me.ServerPort = Integer.Parse(sSplit(1))
+                        Case "level-type"
+                            Me.LevelType = DirectCast([Enum].Parse(GetType(LevelType), sSplit(1)), LevelType)
+                        Case "enable-rcon"
+                            Me.EnableRcon = StringToBool(sSplit(1))
+                        Case "force-gamemode"
+                            Me.ForceGamemode = StringToBool(sSplit(1))
+                        Case "level-seed"
+                            Me.LevelSeed = sSplit(1)
+                        Case "server-ip"
+                            Me.ServerIP = sSplit(1)
+                        Case "max-build-height"
+                            Me.MaxBuildHeight = Integer.Parse(sSplit(1))
+                        Case "spawn-npcs"
+                            Me.SpawnNPCs = StringToBool(sSplit(1))
+                        Case "white-list"
+                            Me.Whitelist = StringToBool(sSplit(1))
+                        Case "spawn-animals"
+                            Me.SpawnAnimals = StringToBool(sSplit(1))
+                        Case "snooper-enabled"
+                            Me.SnooperEnabled = StringToBool(sSplit(1))
+                        Case "hardcore"
+                            Me.Hardcore = StringToBool(sSplit(1))
+                        Case "online-mode"
+                            Me.OnlineMode = StringToBool(sSplit(1))
+                        Case "resource-pack"
+                            Me.ResourcePack = sSplit(1)
+                        Case "pvp"
+                            Me.PVP = StringToBool(sSplit(1))
+                        Case "difficulty"
+                            Me.Difficulty = Integer.Parse(sSplit(1))
+                        Case "enable-command-block"
+                            Me.EnableCommandBlock = StringToBool(sSplit(1))
+                        Case "server-name"
+                            Me.ServerName = sSplit(1)
+                        Case "player-idle-timeout"
+                            Me.PlayerIdleTimeout = Integer.Parse(sSplit(1))
+                        Case "gamemode"
+                            Me.GameMode = Integer.Parse(sSplit(1))
+                        Case "max-players"
+                            Me.MaxPlayers = Integer.Parse(sSplit(1))
+                        Case "spawn-monsters"
+                            Me.SpawnMonsters = StringToBool(sSplit(1))
+                        Case "view-distance"
+                            Me.ViewDistance = Integer.Parse(sSplit(1))
+                        Case "generate-structures"
+                            Me.GenerateStructures = StringToBool(sSplit(1))
+                        Case "spawn-protection"
+                            Me.SpawnProtection = Integer.Parse(sSplit(1))
+                        Case "motd"
+                            Me.MODT = sSplit(1)
+                    End Select
+                End While
+            End Using
+        End Using
         UpdateMode = False
     End Sub
 

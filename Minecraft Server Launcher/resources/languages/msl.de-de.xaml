@@ -5,6 +5,7 @@
     <System:String x:Key="No">Nein</System:String>
     <System:String x:Key="apply">Anwenden</System:String>
     <System:String x:Key="search">Suchen</System:String>
+    <System:String x:Key="DateFormat">HH:mm:ss dd.MM.yyyy</System:String>
     
     <!-- Header -->
     <System:String x:Key="Console">Konsole</System:String>
@@ -215,15 +216,15 @@
 
     <System:String x:Key="gamemode_tt">Definiert den Spielmodus, den Spieler beim ersten Besuch des Servers erhalten.</System:String>
     <System:String x:Key="SaveSettings">Um die Einstellungen zu speichern drücken sie bitte Strg + S oder wechseln sie die Registerkarte</System:String>
-    
-    <!-- frmDownloadCraftbukkit.xaml -->
+
+    <!-- frmDownloadMinecraftServer.xaml -->
     <System:String x:Key="ChooseSelectedVersion">Ausgewählte Version nehmen</System:String>
     <System:String x:Key="Download">Herunterladen</System:String>
-    <System:String x:Key="frmDownloadCraftbukkitTitle">Download</System:String>
-    <System:String x:Key="OpenInfosInBrowser">Informationen im Browser öffnen</System:String>
+    <System:String x:Key="DownloadMinecraftServer">Minecraft Server herunterladen</System:String>
     <System:String x:Key="HeaderBuildNumber">Build-Nummer</System:String>
     <System:String x:Key="HeaderVersion">Version</System:String>
     <System:String x:Key="HeaderType">Type</System:String>
+    <System:String x:Key="installing">Wird installiert...</System:String>
     
     <!-- frmSelectItem -->
     <System:String x:Key="Name">Name</System:String>
@@ -237,19 +238,18 @@
     <System:String x:Key="SAPINFTitle">SwiftAPI nicht gefunden</System:String>
     <System:String x:Key="SAPINFOK">Download</System:String>
 
-    <!-- MessageBox craftbukkit Download completed -->
+    <!-- MessageBox Minecraft Server Download completed -->
     <System:String x:Key="CBDFText">Der Download wurde erfolgreich abgeschlossen. Die Anwendung kann jetzt neu gestartet werden.</System:String>
     <System:String x:Key="CBDFTitle">Erfolgreich</System:String>
     <System:String x:Key="SCBDFOK">Neustarten</System:String>
     
-    <!-- Craftbukkit missing MSG -->
-    <System:String x:Key="CraftbukkitFileIsMissing">Die "craftbukkit.jar"-Datei wurde nicht gefunden.</System:String>
-    <System:String x:Key="DownloadCraftBukkit">Craftbukkit downloaden</System:String>
+    <!-- Minecraft Server missing MSG -->
+    <System:String x:Key="MinecraftServerFileIsMissing">Die "MinecraftServer.jar"-Datei wurde nicht gefunden.</System:String>
     <System:String x:Key="CloseProgram">Programm schließen</System:String>
     
     <!-- MessageBox want save settings= -->
     <System:String x:Key="SSText">Wollen sie die Einstellungen speichern?</System:String>
-    <System:String x:Key="SSTitle">Einstellungen CraftbukkitFileIsMissing?</System:String>
+    <System:String x:Key="SSTitle">Einstellungen speichern?</System:String>
     <System:String x:Key="SSOK">Speichern</System:String>
     <System:String x:Key="SSCancel">Nicht speichern</System:String>
 

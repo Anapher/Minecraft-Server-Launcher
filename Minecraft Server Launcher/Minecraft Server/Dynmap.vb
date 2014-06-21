@@ -121,7 +121,9 @@ Public Class Dynmap
                 Dim lnk = PluginHelper.GetLink("http://dev.bukkit.org/bukkit-mods/dynmap/")
                 client.DownloadFileAsync(New Uri(lnk), _fiDynmap.FullName)
             Case "OpenInBrowser"
-                Process.Start(BrowserURL)
+                If Not String.IsNullOrWhiteSpace(BrowserURL) Then
+                    Process.Start(BrowserURL)
+                End If
         End Select
     End Sub
 #End Region

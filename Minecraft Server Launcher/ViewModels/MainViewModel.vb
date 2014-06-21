@@ -115,11 +115,11 @@
     End Sub
 
 #If Not Debug Then
-        Private Sub _MinecraftServer_StartFileNotFound(sender As Object, e As EventArgs) Handles _MinecraftServer.StartFileNotFound
+    Private Sub _MinecraftServer_StartFileNotFound(sender As Object, e As EventArgs) Handles _MinecraftServer.StartFileNotFound
         Application.Current.Dispatcher.BeginInvoke(Sub()
-                                                       Dim frmMSG As New frmMessageBox(Application.Current.FindResource("CraftbukkitFileIsMissing").ToString(), Application.Current.FindResource("Exception").ToString(), Application.Current.FindResource("DownloadCraftBukkit").ToString(), Application.Current.FindResource("CloseProgram").ToString()) With {.Owner = myWindow}
+                                                       Dim frmMSG As New frmMessageBox(Application.Current.FindResource("MinecraftServerFileIsMissing").ToString(), Application.Current.FindResource("Exception").ToString(), Application.Current.FindResource("DownloadMinecraftServer").ToString(), Application.Current.FindResource("CloseProgram").ToString()) With {.Owner = myWindow, .Width = 450}
                                                        If frmMSG.ShowDialog() Then
-                                                           Dim frm As New frmDownloadCraftbukkit
+                                                           Dim frm As New frmDownloadDownloadMinecraftServer
                                                            frm.Show()
                                                        End If
                                                        Application.Current.MainWindow.Close()
@@ -130,7 +130,6 @@
     Private Sub _MinecraftServer_StateChanged(sender As Object, e As StateChangedEventArgs) Handles _MinecraftServer.StateChanged
         ConsoleText &= e.NewLine & Environment.NewLine
     End Sub
-
 #End Region
 
 #Region "Properties"
@@ -730,22 +729,66 @@
     End Sub
 #End Region
 
-#Region "Command"
-    Private _command As RelayCommand
-    Public ReadOnly Property Command As RelayCommand
+#Region "Commands"
+#Region "ServerCommand"
+    Private _GeneralServerCommand As RelayCommand
+    Public ReadOnly Property GeneralServerCommand() As RelayCommand
         Get
-            If _command Is Nothing Then _command = New RelayCommand(AddressOf ExecuteCommand)
-            Return _command
+            If _GeneralServerCommand Is Nothing Then _GeneralServerCommand = New RelayCommand(AddressOf GeneralServerCommands)
+            Return _GeneralServerCommand
         End Get
     End Property
 
-    Public Sub ExecuteCommand(parameter As Object)
+    Private Sub GeneralServerCommands(parameter As Object)
         Select Case parameter.ToString()
             Case "ExecuteCommand"
                 If Not String.IsNullOrWhiteSpace(txtCommand) Then
                     MinecraftServer.ExecuteCommand(txtCommand)
                     txtCommand = String.Empty
                 End If
+            Case "reload"
+                MinecraftServer.ThriftAPI.Functions.ReloadServer()
+            Case "saveall"
+                MinecraftServer.ExecuteCommand("save-all")
+            Case "timeday"
+                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 0)
+            Case "timenight"
+                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 18000)
+            Case "chngweather"
+                Select Case CBBWeatherIndex
+                    Case 0
+                        MinecraftServer.ExecuteCommand("weather rain")
+                    Case 1
+                        MinecraftServer.ExecuteCommand("weather thunder")
+                    Case 2
+                        MinecraftServer.ExecuteCommand("weather clear")
+                End Select
+            Case "Announce"
+                If Not String.IsNullOrWhiteSpace(txtAnnounce) Then
+                    MinecraftServer.ExecuteCommand("say " & txtAnnounce)
+                    txtAnnounce = String.Empty
+                End If
+            Case "SaveSettings"
+                MinecraftServer.ServerSettings.Save()
+                MinecraftServer.ServerSettings.Load()
+            Case "DownloadPlugins"
+                Dim frm As New frmDownloadPlugins(MinecraftServer.lstPlugins) With {.Owner = myWindow}
+                frm.ShowDialog()
+        End Select
+    End Sub
+#End Region
+
+#Region "PlayerCommand"
+    Private _GeneralPlayerCommand As RelayCommand
+    Public ReadOnly Property GeneralPlayerCommand() As RelayCommand
+        Get
+            If _GeneralPlayerCommand Is Nothing Then _GeneralPlayerCommand = New RelayCommand(AddressOf GeneralPlayerCommands)
+            Return _GeneralPlayerCommand
+        End Get
+    End Property
+
+    Private Sub GeneralPlayerCommands(parameter As Object)
+        Select Case parameter.ToString()
             Case "ClearInventory"
                 MinecraftServer.ExecuteCommand("clear " & MinecraftServer.lstPlayers(lstPlayerIndex).Name)
             Case "SelectItem"
@@ -777,28 +820,6 @@
                 Dim s As String
                 If CBBXpTypeIndex = 1 Then s = "L" Else s = String.Empty
                 MinecraftServer.ExecuteCommand(String.Format("xp {0}{1} {2}", NUDXpAmount, s, MinecraftServer.lstPlayers(lstPlayerIndex).Name))
-            Case "reload"
-                MinecraftServer.ThriftAPI.Functions.ReloadServer()
-            Case "saveall"
-                MinecraftServer.ExecuteCommand("save-all")
-            Case "timeday"
-                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 0)
-            Case "timenight"
-                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 18000)
-            Case "chngweather"
-                Select Case CBBWeatherIndex
-                    Case 0
-                        MinecraftServer.ExecuteCommand("weather rain")
-                    Case 1
-                        MinecraftServer.ExecuteCommand("weather thunder")
-                    Case 2
-                        MinecraftServer.ExecuteCommand("weather clear")
-                End Select
-            Case "Announce"
-                If Not String.IsNullOrWhiteSpace(txtAnnounce) Then
-                    MinecraftServer.ExecuteCommand("say " & txtAnnounce)
-                    txtAnnounce = String.Empty
-                End If
             Case "SelectOtherItem"
                 If Me.ItemToChange Is Nothing Then Return
                 Dim frm = New frmSelectItem With {.Owner = myWindow}
@@ -816,9 +837,21 @@
                 If ItemToChangeIndex > -1 Then
                     MinecraftServer.ThriftAPI.Functions.RemoveInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChangeIndex)
                 End If
-            Case "SaveSettings"
-                MinecraftServer.ServerSettings.Save()
-                MinecraftServer.ServerSettings.Load()
+        End Select
+    End Sub
+#End Region
+
+#Region "SettingCommand"
+    Private _GeneralSettingCommand As RelayCommand
+    Public ReadOnly Property GeneralSettingsCommand() As RelayCommand
+        Get
+            If _GeneralSettingCommand Is Nothing Then _GeneralSettingCommand = New RelayCommand(AddressOf GeneralSettingCommands)
+            Return _GeneralSettingCommand
+        End Get
+    End Property
+
+    Private Sub GeneralSettingCommands(parameter As Object)
+        Select Case parameter.ToString()
             Case "AddTimer"
                 Dim tmr As New TimerExecuteCommand() With {.Command = Me.TimerCommand, .Interval = Integer.Parse(Me.TimerInterval.ToString()), .Name = Me.TimerName}
                 MinecraftServer.LauncherSettings.AddTimer(tmr)
@@ -826,9 +859,6 @@
                 Me.TimerCommand = String.Empty
                 Me.TimerInterval = 1
                 tmr.Load(New SendCommand(AddressOf MinecraftServer.ExecuteCommand))
-            Case "DownloadPlugins"
-                Dim frm As New frmDownloadPlugins(MinecraftServer.lstPlugins) With {.Owner = myWindow}
-                frm.ShowDialog()
             Case "RestoreBackup"
                 If BackupSelectedIndex > -1 Then
                     RestoreBackup()
@@ -849,5 +879,6 @@
                 frm.ShowDialog()
         End Select
     End Sub
+#End Region
 #End Region
 End Class
