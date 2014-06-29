@@ -114,6 +114,7 @@ Public Class SwiftAPIManager
         txt = Regex.Replace(txt, "^password: .*$", String.Format("password: {0}", newpassword), RegexOptions.Multiline)
         txt = Regex.Replace(txt, "^salt: .*$", String.Format("salt: {0}", newsalt), RegexOptions.Multiline)
         File.WriteAllText(ConfigPath.FullName, txt)
+        Load()
         RaiseEvent GeneratedInformationsComplete(Me, EventArgs.Empty)
     End Sub
 

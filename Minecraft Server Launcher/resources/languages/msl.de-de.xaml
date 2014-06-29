@@ -261,8 +261,8 @@
     <System:String x:Key="Backups">Backups</System:String>
     <System:String x:Key="About">Über</System:String>
     
-    <System:String x:Key="ProgrammedBy">Programmiert von Vincent</System:String>
-    <System:String x:Key="UsedLibaries">Verwendete Bibilotheken</System:String>
+    <System:String x:Key="ProgrammedBy">Programmiert von Alkaline</System:String>
+    <System:String x:Key="UsedLibraries">Verwendete Bibilotheken</System:String>
     <System:String x:Key="GraficsFrom">Grafiken sind von</System:String>
     
     <System:String x:Key="Generate">Generieren</System:String>
@@ -398,4 +398,8 @@
     <System:String x:Key="NewVersion">Neue Version</System:String>
     <System:String x:Key="Update">Aktualisieren</System:String>
     <System:String x:Key="UpdatePackageTitle">Änderungen in der Version {0} (Veröffentlicht am: {1})</System:String>
+    
+    <!-- Errors -->
+    <System:String x:Key="AnErrorOccurred">Ein Fehler ist aufgetreten</System:String>
+    <System:String x:Key="MinecraftServerIsNotRunning">Der Minecraftserver wurde nicht gestartet</System:String>
 </ResourceDictionary>

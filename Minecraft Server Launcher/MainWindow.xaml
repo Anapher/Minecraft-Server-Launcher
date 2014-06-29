@@ -1162,8 +1162,23 @@
                                 <Grid>
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{DynamicResource ProgrammedBy}" Margin="0,10,0,0"/>
-                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                            <TextBlock Text="{DynamicResource UsedLibaries}"/>
+                                        <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                                            <TextBlock>
+                                <Hyperlink NavigateUri="http://www.vb-paradise.de/index.php/Thread/89298" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">VB-Paradise.de</Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock>
+                                <Hyperlink NavigateUri="http://minecraft.de/showthread.php?121746-Tool-Minecraft-Server-Launcher" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Minecraft.de</Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock>
+                                <Hyperlink NavigateUri="http://minecraftserverlauncher.besaba.com/" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">Website</Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock>
+                                <Hyperlink NavigateUri="https://github.com/Alkalinee/Minecraft-Server-Launcher" Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <Separator Margin="0,10,0,0"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource UsedLibraries}"/>
                                             <TextBlock Text=":"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Vertical">

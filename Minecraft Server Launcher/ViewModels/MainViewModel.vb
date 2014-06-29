@@ -695,16 +695,16 @@
                                                                  counter += 1
                                                              End While
                                                              If MinecraftServer.IsRunning Then MinecraftServer.StopServer()
-                                                             Dim lst = BackupManager.GetAllCheckedFiles(backup)
+                                                             backup.BackupFiles = BackupManager.GetAllCheckedFiles(backup)
                                                              Application.Current.Dispatcher.BeginInvoke(Sub()
                                                                                                             BackupIsWorking = False
                                                                                                             If MinecraftServer.LauncherSettings.BackupFilesFirst Then
                                                                                                                 backup.CreateType = CreateType.Automatically
                                                                                                                 MinecraftServer.BackupManager.CreateBackup(backup, New IO.DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory), False, Sub()
-                                                                                                                                                                                                                                           MinecraftServer.BackupManager.RestoreBackup(backup, lst, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
+                                                                                                                                                                                                                                           MinecraftServer.BackupManager.RestoreBackup(backup, backup.BackupFiles, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
                                                                                                                                                                                                                                        End Sub)
                                                                                                             Else
-                                                                                                                MinecraftServer.BackupManager.RestoreBackup(backup, lst, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
+                                                                                                                MinecraftServer.BackupManager.RestoreBackup(backup, backup.BackupFiles, AppDomain.CurrentDomain.BaseDirectory, AddressOf RestoreFinished)
                                                                                                             End If
                                                                                                         End Sub)
                                                          End Sub)
@@ -739,22 +739,29 @@
         End Get
     End Property
 
+    Private Sub ServerIsNotRunningException()
+        Dim frm As New frmInfoBox(Application.Current.FindResource("MinecraftServerIsNotRunning").ToString(), Application.Current.FindResource("AnErrorOccurred").ToString(), Application.Current.FindResource("OK").ToString()) With {.Owner = myWindow}
+        frm.ShowDialog()
+    End Sub
+
     Private Sub GeneralServerCommands(parameter As Object)
         Select Case parameter.ToString()
             Case "ExecuteCommand"
                 If Not String.IsNullOrWhiteSpace(txtCommand) Then
+                    If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                     MinecraftServer.ExecuteCommand(txtCommand)
                     txtCommand = String.Empty
                 End If
             Case "reload"
-                MinecraftServer.ThriftAPI.Functions.ReloadServer()
+                If MinecraftServer.IsRunning Then MinecraftServer.ThriftAPI.Functions.ReloadServer() Else ServerIsNotRunningException()
             Case "saveall"
-                MinecraftServer.ExecuteCommand("save-all")
+                If MinecraftServer.IsRunning Then MinecraftServer.ExecuteCommand("save-all") Else ServerIsNotRunningException()
             Case "timeday"
-                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 0)
+                If MinecraftServer.IsRunning Then MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 0) Else ServerIsNotRunningException()
             Case "timenight"
-                MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 18000)
+                If MinecraftServer.IsRunning Then MinecraftServer.ThriftAPI.Functions.SetWorldTime(MinecraftServer.ServerSettings.LevelName, 18000) Else ServerIsNotRunningException()
             Case "chngweather"
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                 Select Case CBBWeatherIndex
                     Case 0
                         MinecraftServer.ExecuteCommand("weather rain")
@@ -765,13 +772,16 @@
                 End Select
             Case "Announce"
                 If Not String.IsNullOrWhiteSpace(txtAnnounce) Then
+                    If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                     MinecraftServer.ExecuteCommand("say " & txtAnnounce)
                     txtAnnounce = String.Empty
                 End If
             Case "SaveSettings"
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                 MinecraftServer.ServerSettings.Save()
                 MinecraftServer.ServerSettings.Load()
             Case "DownloadPlugins"
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                 Dim frm As New frmDownloadPlugins(MinecraftServer.lstPlugins) With {.Owner = myWindow}
                 frm.ShowDialog()
         End Select
@@ -790,28 +800,29 @@
     Private Sub GeneralPlayerCommands(parameter As Object)
         Select Case parameter.ToString()
             Case "ClearInventory"
-                MinecraftServer.ExecuteCommand("clear " & MinecraftServer.lstPlayers(lstPlayerIndex).Name)
+                If MinecraftServer.IsRunning Then MinecraftServer.ExecuteCommand("clear " & MinecraftServer.lstPlayers(lstPlayerIndex).Name) Else ServerIsNotRunningException()
             Case "SelectItem"
                 Dim frm = New frmSelectItem With {.Owner = myWindow}
                 If frm.ShowDialog() Then
                     Me.SelectedItem = ItemSelectionViewModel.Instance.SelectedItem
                 End If
             Case "GiveItem"
-                If SelectedItem IsNot Nothing Then
-                    MinecraftServer.ExecuteCommand(String.Format("give {0} {1} {2}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, SelectedItem.IDToString, ItemAmount))
-                End If
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
+                If SelectedItem IsNot Nothing Then MinecraftServer.ExecuteCommand(String.Format("give {0} {1} {2}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, SelectedItem.IDToString, ItemAmount))
             Case "KickPlayer"
-                MinecraftServer.ExecuteCommand("kick " & MinecraftServer.lstPlayers(lstPlayerIndex).Name)
+                If MinecraftServer.IsRunning Then MinecraftServer.ExecuteCommand("kick " & MinecraftServer.lstPlayers(lstPlayerIndex).Name) Else ServerIsNotRunningException()
             Case "BanPlayer"
-                MinecraftServer.ExecuteCommand("ban " & MinecraftServer.lstPlayers(lstPlayerIndex).Name)
+                If MinecraftServer.IsRunning Then MinecraftServer.ExecuteCommand("ban " & MinecraftServer.lstPlayers(lstPlayerIndex).Name) Else ServerIsNotRunningException()
             Case "BanIP"
-                MinecraftServer.ExecuteCommand("ban-ip " & MinecraftServer.lstPlayers(lstPlayerIndex).Name)
+                If MinecraftServer.IsRunning Then MinecraftServer.ExecuteCommand("ban-ip " & MinecraftServer.lstPlayers(lstPlayerIndex).Name) Else ServerIsNotRunningException()
             Case "SendMessage"
                 If Not String.IsNullOrWhiteSpace(txtSendMessage) Then
+                    If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                     MinecraftServer.ExecuteCommand(String.Format("tell {0} {1}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, txtSendMessage))
                     txtSendMessage = String.Empty
                 End If
             Case "Teleport"
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                 MinecraftServer.ExecuteCommand(String.Format("tp {0} {1}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, lstPlayersWithoutSelected(CBBTpPlayer)))
                 CBBTpPlayer = -1
             Case "ApplyEffect"
@@ -823,11 +834,10 @@
             Case "SelectOtherItem"
                 If Me.ItemToChange Is Nothing Then Return
                 Dim frm = New frmSelectItem With {.Owner = myWindow}
-                If frm.ShowDialog() Then
-                    Me.NewSelectedItem = New org.phybros.thrift.ItemStack() With {.TypeId = ItemSelectionViewModel.Instance.SelectedItem.ID, .Data = ItemSelectionViewModel.Instance.SelectedItem.Meta}
-                End If
+                If frm.ShowDialog() Then Me.NewSelectedItem = New org.phybros.thrift.ItemStack() With {.TypeId = ItemSelectionViewModel.Instance.SelectedItem.ID, .Data = ItemSelectionViewModel.Instance.SelectedItem.Meta}
             Case "ChangeItem"
                 If ItemToChange IsNot Nothing Then
+                    If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                     ItemToChange.Amount = NudItemAmount
                     ItemToChange.Data = NewSelectedItem.Data
                     ItemToChange.TypeId = NewSelectedItem.TypeId
@@ -835,6 +845,7 @@
                 End If
             Case "DeleteItem"
                 If ItemToChangeIndex > -1 Then
+                    If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                     MinecraftServer.ThriftAPI.Functions.RemoveInventoryItem(MinecraftServer.lstPlayers(lstPlayerIndex).Name, ItemToChangeIndex)
                 End If
         End Select
@@ -853,6 +864,7 @@
     Private Sub GeneralSettingCommands(parameter As Object)
         Select Case parameter.ToString()
             Case "AddTimer"
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                 Dim tmr As New TimerExecuteCommand() With {.Command = Me.TimerCommand, .Interval = Integer.Parse(Me.TimerInterval.ToString()), .Name = Me.TimerName}
                 MinecraftServer.LauncherSettings.AddTimer(tmr)
                 Me.TimerName = String.Empty
@@ -867,14 +879,16 @@
                 CreateBackup()
             Case "RemoveSelectedBackup"
                 If BackupIsNotBusy AndAlso BackupSelectedIndex > -1 Then
+                    If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                     MinecraftServer.BackupManager.RemoveBackup(MinecraftServer.BackupManager.BackupList(BackupSelectedIndex))
                 End If
             Case "CreateBackupTimer"
                 Dim frm As New frmCreateBackupTimer(MinecraftServer.LauncherSettings, New IO.DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)) With {.Owner = myWindow}
                 frm.ShowDialog()
             Case "RemoveSelectedTimer"
-                MinecraftServer.LauncherSettings.RemoveTimer(SelectedTimer)
+                If MinecraftServer.IsRunning Then MinecraftServer.LauncherSettings.RemoveTimer(SelectedTimer) Else ServerIsNotRunningException()
             Case "OpenIntelliSenseManager"
+                If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
                 Dim frm As New frmIntelliSenseManager(MinecraftServer.Commands) With {.Owner = myWindow}
                 frm.ShowDialog()
         End Select

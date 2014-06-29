@@ -2,6 +2,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.Win32
 Imports System.Collections.ObjectModel
+Imports System.Runtime.InteropServices
 
 Public Class Helper
     Public Shared Function GetIP(ServerPropertiesPath As String) As String
@@ -53,5 +54,17 @@ Public Class Helper
             Case Else
                 Return Math.Round(Bytes / 1024 / 1024, 1).ToString() & " MB"
         End Select
+    End Function
+
+    <DllImport("wininet.dll")> _
+    Private Shared Function InternetGetConnectedState(ByRef connDescription As Integer, ReservedValue As Integer) As Boolean
+    End Function
+    ''' <summary>
+    ''' Checks if an internet connection is available.
+    ''' </summary>
+    ''' <returns>This function returns a boolean. true = is available</returns>
+    Public Shared Function ConnectionAvailable() As Boolean
+        Dim Desc As Integer
+        Return InternetGetConnectedState(Desc, 0)
     End Function
 End Class

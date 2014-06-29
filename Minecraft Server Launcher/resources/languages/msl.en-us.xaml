@@ -260,8 +260,8 @@
     <System:String x:Key="Backups">Backups</System:String>
     <System:String x:Key="About">About</System:String>
 
-    <System:String x:Key="ProgrammedBy">Programmed by Vincent</System:String>
-    <System:String x:Key="UsedLibaries">Libaries used</System:String>
+    <System:String x:Key="ProgrammedBy">Programmed by Alkaline</System:String>
+    <System:String x:Key="UsedLibraries">Libraries used</System:String>
     <System:String x:Key="GraficsFrom">Graphics are from</System:String>
 
     <System:String x:Key="Generate">Generate</System:String>
@@ -276,7 +276,7 @@
     <System:String x:Key="AlwaysAskIfSaveChanges">Always ask if you want save the settings</System:String>
     <System:String x:Key="SaveServerBeforClose">Stop the server automatically on closing the program</System:String>
     <System:String x:Key="StoppingServer">Stopping Server...</System:String>
-    <System:String x:Key="FileIsToLarge">The file ({0}) is to large</System:String>
+    <System:String x:Key="FileIsToLarge">The file ({0}) is too large</System:String>
 
     <System:String x:Key="add">Add</System:String>
     <System:String x:Key="Secounds">Secounds</System:String>
@@ -292,7 +292,7 @@
     <System:String x:Key="BackupBeforeRestoreTitel">Restore backup</System:String>
     <System:String x:Key="BackupBeforeRestoreText">You should create a new backup before you restore the selected one because when an error occures are you able to restore the data to the current state.</System:String>
     <System:String x:Key="ServerHaveToStopTitle">The server must be stopped</System:String>
-    <System:String x:Key="ServerHaveToStopText">Tom restore the backup successfully, the server must be stopped</System:String>
+    <System:String x:Key="ServerHaveToStopText">To restore the backup successfully, the server must be stopped</System:String>
     <System:String x:Key="StopServer">Stop server</System:String>
     <System:String x:Key="Cancel">Cancel</System:String>
     
