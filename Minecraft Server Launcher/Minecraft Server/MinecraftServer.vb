@@ -51,10 +51,12 @@ Public Class MinecraftServer
             If Not String.IsNullOrWhiteSpace(ServerSettings.ServerIP) Then
                 result = ServerSettings.ServerIP
             Else
-                Dim strHostName As String = ""
-                strHostName = System.Net.Dns.GetHostName()
-                Dim addr = System.Net.Dns.GetHostEntry(strHostName).AddressList
-                result = addr(addr.Length - 3).ToString()
+                Dim ipv4Addresses As Net.IPAddress() = Array.FindAll(Net.Dns.GetHostEntry(String.Empty).AddressList, Function(a) a.AddressFamily = Net.Sockets.AddressFamily.InterNetwork)
+                If ipv4Addresses.Count > 0 Then
+                    result = ipv4Addresses(0).ToString()
+                Else
+                    result = "localhost"
+                End If
             End If
             Return result
         End Get
@@ -425,6 +427,11 @@ Public Class MinecraftServer
         Write(e.Data)
     End Sub
 
+    Private Sub ThriftAPIFunction_AnErrorOccurred(sender As Object, e As Thrift.TApplicationException)
+        Dim frm = New frmInfoBox(Application.Current.FindResource("SwiftAPIError").ToString(), Application.Current.FindResource("Exception").ToString(), Application.Current.FindResource("OK").ToString()) With {.Owner = Application.Current.MainWindow}
+        frm.ShowDialog()
+    End Sub
+
     Private Sub Write(Line As String)
         If Line Is Nothing Then Return
         Select Case True
@@ -433,6 +440,7 @@ Public Class MinecraftServer
             Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: \[SwiftApi\] Started up and listening on port [1-9]{1,5}$")
                 ThriftAPI.Start()
                 ThriftAPIIsAvailable = True
+                AddHandler ThriftAPI.Functions.AnErrorOccurred, AddressOf ThriftAPIFunction_AnErrorOccurred
             Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: \[dynmap\] Enabled$")
                 RaiseEvent DynmapEnabled(Me, EventArgs.Empty)
             Case Regex.IsMatch(Line, "^\[[0-9]{2}:[0-9]{2}:[0-9]{2} INFO\]: Done \(.*\)! For help, type ""help"" or ""\?""$")

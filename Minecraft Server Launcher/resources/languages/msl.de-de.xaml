@@ -402,4 +402,5 @@
     <!-- Errors -->
     <System:String x:Key="AnErrorOccurred">Ein Fehler ist aufgetreten</System:String>
     <System:String x:Key="MinecraftServerIsNotRunning">Der Minecraftserver wurde nicht gestartet</System:String>
+    <System:String x:Key="SwiftAPIError">Es ist ein Fehler bei einer Aktion über das Plugin SwiftAPI aufgetreten. Versuchen sie es erneut.</System:String>
 </ResourceDictionary>

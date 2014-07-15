@@ -398,4 +398,9 @@
     <System:String x:Key="NewVersion">New version</System:String>
     <System:String x:Key="Update">Update</System:String>
     <System:String x:Key="UpdatePackageTitle">Changes in version {0} (Published on: {1})</System:String>
+
+    <!-- Errors -->
+    <System:String x:Key="AnErrorOccurred">An Error Occurred</System:String>
+    <System:String x:Key="MinecraftServerIsNotRunning">The Minecraftserver isn't running</System:String>
+    <System:String x:Key="SwiftAPIError">An error has occurred in SwiftAPI. Please try again.</System:String>
 </ResourceDictionary>

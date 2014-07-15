@@ -16,6 +16,7 @@
         Get
             If _EditCommand Is Nothing Then _EditCommand = New RelayCommand(Sub(parameter As Object)
                                                                                 Dim intelliCommand = DirectCast(parameter, CommandList)
+                                                                                If intelliCommand Is Nothing Then Return
                                                                                 Dim frm As New frmIntelliCommand(IntelliSenseManager, intelliCommand) With {.Owner = Me}
                                                                                 frm.ShowDialog()
                                                                             End Sub)

@@ -4,6 +4,7 @@ Public Class ThriftAPIFunctions
     Private client As SwiftApi.Client
     Private GetAuthenticationString As GetAuthStringDelegate
     Public Delegate Function GetAuthStringDelegate(MethodeName As String) As String
+    Public Event AnErrorOccurred(sender As Object, e As Thrift.TApplicationException)
 
     Public Sub New(client As SwiftApi.Client, authstring As GetAuthStringDelegate)
         Me.client = client
@@ -12,163 +13,361 @@ Public Class ThriftAPIFunctions
 
 #Region "Functions"
     Public Function AddItemToInventory(playername As String, item As ItemStack) As Boolean
-        Return client.addItemToInventory(GetAuthenticationString("addItemToInventory"), playername, item)
+        Try
+            Return client.addItemToInventory(GetAuthenticationString("addItemToInventory"), playername, item)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function AddToWhitelist(playername As String) As Boolean
-        Return client.addToWhitelist(GetAuthenticationString("addToWhitelist"), playername)
+        Try
+            Return client.addToWhitelist(GetAuthenticationString("addToWhitelist"), playername)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function Announce(message As String) As Boolean
-        Return client.announce(GetAuthenticationString("announce"), message)
+        Try
+            Return client.announce(GetAuthenticationString("announce"), message)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function Ban(playername As String) As Boolean
-        Return client.ban(GetAuthenticationString("ban"), playername)
+        Try
+            Return client.ban(GetAuthenticationString("ban"), playername)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function BanIP(ip As String) As Boolean
-        Return client.banIp(GetAuthenticationString("banIp"), ip)
+        Try
+            Return client.banIp(GetAuthenticationString("banIp"), ip)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function DeOP(playername As String, NotifyPlayer As Boolean) As Boolean
-        Return client.deOp(GetAuthenticationString("deOp"), playername, NotifyPlayer)
+        Try
+            Return client.deOp(GetAuthenticationString("deOp"), playername, NotifyPlayer)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function GetBannedIPs() As List(Of String)
-        Return client.getBannedIps(GetAuthenticationString("getBannedIps"))
+        Try
+            Return client.getBannedIps(GetAuthenticationString("getBannedIps"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetBannedPlayers() As List(Of OfflinePlayer)
-        Return client.getBannedPlayers(GetAuthenticationString("getBannedPlayers"))
+        Try
+            Return client.getBannedPlayers(GetAuthenticationString("getBannedPlayers"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetBukkitVersion() As String
-        Return client.getBukkitVersion(GetAuthenticationString("getBukkitVersion"))
+        Try
+            Return client.getBukkitVersion(GetAuthenticationString("getBukkitVersion"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return String.Empty
     End Function
 
     Public Function GetOfflinePlayer(playername As String) As OfflinePlayer
-        Return client.getOfflinePlayer(GetAuthenticationString("getOfflinePlayer"), playername)
+        Try
+            Return client.getOfflinePlayer(GetAuthenticationString("getOfflinePlayer"), playername)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetOfflinePlayers() As List(Of OfflinePlayer)
-        Return client.getOfflinePlayers(GetAuthenticationString("getOfflinePlayers"))
+        Try
+            Return client.getOfflinePlayers(GetAuthenticationString("getOfflinePlayers"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetOPs() As List(Of OfflinePlayer)
-        Return client.getOps(GetAuthenticationString("getOps"))
+        Try
+            Return client.getOps(GetAuthenticationString("getOps"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetPlayer(playername As String) As Player
-        Return client.getPlayer(GetAuthenticationString("getPlayer"), playername)
+        Try
+            Return client.getPlayer(GetAuthenticationString("getPlayer"), playername)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetPlayers(playername As String) As List(Of Player)
-        Return client.getPlayers(GetAuthenticationString("getPlayers"))
+        Try
+            Return client.getPlayers(GetAuthenticationString("getPlayers"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetPlugin(name As String) As Plugin
-        Return client.getPlugin(GetAuthenticationString("getPlugin"), name)
+        Try
+            Return client.getPlugin(GetAuthenticationString("getPlugin"), name)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetPlugins() As List(Of Plugin)
-        Return client.getPlugins(GetAuthenticationString("getPlugins"))
+        Try
+            Return client.getPlugins(GetAuthenticationString("getPlugins"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetServer() As Server
-        Return client.getServer(GetAuthenticationString("getServer"))
+        Try
+            Return client.getServer(GetAuthenticationString("getServer"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetServerVersion() As String
-        Return client.getServerVersion(GetAuthenticationString("getServerVersion"))
+        Try
+            Return client.getServerVersion(GetAuthenticationString("getServerVersion"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetWhitelist() As List(Of OfflinePlayer)
-        Return client.getWhitelist(GetAuthenticationString("getWhitelist"))
+        Try
+            Return client.getWhitelist(GetAuthenticationString("getWhitelist"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetWorld(worldName As String) As World
-        Return client.getWorld(GetAuthenticationString("getWorld"), worldName)
+        Try
+            Return client.getWorld(GetAuthenticationString("getWorld"), worldName)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function GetWorlds(worldName As String) As List(Of World)
-        Return client.getWorlds(GetAuthenticationString("getWorlds"))
+        Try
+            Return client.getWorlds(GetAuthenticationString("getWorlds"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return Nothing
     End Function
 
     Public Function InstallPlugin(downloadurl As String, md5 As String) As Boolean
-        Return client.installPlugin(GetAuthenticationString("installPlugin"), downloadurl, md5)
+        Try
+            Return client.installPlugin(GetAuthenticationString("installPlugin"), downloadurl, md5)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function Kick(playername As String, message As String) As Boolean
-        Return client.kick(GetAuthenticationString("kick"), playername, message)
+        Try
+            Return client.kick(GetAuthenticationString("kick"), playername, message)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function OP(playername As String, notifyPlayer As Boolean) As Boolean
-        Return client.op(GetAuthenticationString("op"), playername, notifyPlayer)
+        Try
+            Return client.op(GetAuthenticationString("op"), playername, notifyPlayer)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function Ping() As Boolean
-        Return client.ping(GetAuthenticationString("ping"))
+        Try
+            Return client.ping(GetAuthenticationString("ping"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Sub ReloadServer()
-        client.reloadServer(GetAuthenticationString("reloadServer"))
+        Try
+            client.reloadServer(GetAuthenticationString("reloadServer"))
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
     End Sub
 
     Public Function RemoveInventoryItem(playername As String, itemindex As Integer) As Boolean
-        Return client.removeInventoryItem(GetAuthenticationString("removeInventoryItem"), playername, itemindex)
+        Try
+            Return client.removeInventoryItem(GetAuthenticationString("removeInventoryItem"), playername, itemindex)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function RemoveFromWhitelist(playername As String) As Boolean
-        Return client.removeFromWhitelist(GetAuthenticationString("removeFromWhitelist"), playername)
+        Try
+            Return client.removeFromWhitelist(GetAuthenticationString("removeFromWhitelist"), playername)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function ReplacePlugin(pluginName As String, DownloadURL As String, md5 As String) As Boolean
-        Return client.replacePlugin(GetAuthenticationString("replacePlugin"), pluginName, DownloadURL, md5)
+        Try
+            Return client.replacePlugin(GetAuthenticationString("replacePlugin"), pluginName, DownloadURL, md5)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Sub runConsoleCommand(command As String)
-        client.runConsoleCommand(GetAuthenticationString("runConsoleCommand"), command)
+        Try
+            client.runConsoleCommand(GetAuthenticationString("runConsoleCommand"), command)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
     End Sub
 
     Public Function SaveWorld(worldname As String) As Boolean
-        Return client.saveWorld(GetAuthenticationString("saveWorld"), worldname)
+        Try
+            Return client.saveWorld(GetAuthenticationString("saveWorld"), worldname)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function setFileContents(filename As String, fileContents As String) As Boolean
-        Return client.setFileContents(GetAuthenticationString("setFileContents"), filename, fileContents)
+        Try
+            Return client.setFileContents(GetAuthenticationString("setFileContents"), filename, fileContents)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function SetGameMode(playername As String, mode As GameMode) As Boolean
-        Return client.setGameMode(GetAuthenticationString("setGameMode"), playername, mode)
+        Try
+            Return client.setGameMode(GetAuthenticationString("setGameMode"), playername, mode)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function SetPVP(worldName As String, IsPVP As Boolean) As Boolean
-        Return client.setPvp(GetAuthenticationString("setPvp"), worldName, IsPVP)
+        Try
+            Return client.setPvp(GetAuthenticationString("setPvp"), worldName, IsPVP)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function SetStorm(worldName As String, hasStorm As Boolean) As Boolean
-        Return client.setStorm(GetAuthenticationString("setStorm"), worldName, hasStorm)
+        Try
+            Return client.setStorm(GetAuthenticationString("setStorm"), worldName, hasStorm)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function SetThundering(worldName As String, isThundering As Boolean) As Boolean
-        Return client.setThundering(GetAuthenticationString("setThundering"), worldName, isThundering)
+        Try
+            Return client.setThundering(GetAuthenticationString("setThundering"), worldName, isThundering)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function SetWorldTime(worldName As String, time As Long) As Boolean
-        Return client.setWorldTime(GetAuthenticationString("setWorldTime"), worldName, time)
+        Try
+            Return client.setWorldTime(GetAuthenticationString("setWorldTime"), worldName, time)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function UnBan(playername As String) As Boolean
-        Return client.unBan(GetAuthenticationString("unBan"), playername)
+        Try
+            Return client.unBan(GetAuthenticationString("unBan"), playername)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function UnBanIP(IP As String) As Boolean
-        Return client.unBanIp(GetAuthenticationString("unBanIp"), IP)
+        Try
+            Return client.unBanIp(GetAuthenticationString("unBanIp"), IP)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 
     Public Function UpdateInventoryItem(playername As String, item As ItemStack, itemIndex As Integer) As Boolean
-        Return client.updateInventoryItem(GetAuthenticationString("updateInventoryItem"), playername, item, itemIndex)
+        Try
+            Return client.updateInventoryItem(GetAuthenticationString("updateInventoryItem"), playername, item, itemIndex)
+        Catch ex As Thrift.TApplicationException
+            RaiseEvent AnErrorOccurred(Me, ex)
+        End Try
+        Return False
     End Function
 #End Region
 End Class
