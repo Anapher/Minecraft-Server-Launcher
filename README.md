@@ -6,8 +6,9 @@ The Minecraft Server Launcher is a great tool to manage a Minecraft Server ([Buk
 ![Picture](http://minecraftserverlauncher.besaba.com/images/Overview.png)
 
 ## Links
-[VB-Paradise.de](http://www.vb-paradise.de/) (German)
-<br/>[Minecraft.de](http://minecraft.de/) (German)
+[VB-Paradise.de](http://www.vb-paradise.de/index.php/Thread/89298) (German)
+<br/>[Minecraft.de](http://minecraft.de/showthread.php?121746) (German)
+<br/>[Minecraft.net](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2158734)
 <br/>[Website](http://minecraftserverlauncher.besaba.com/)
 
 ## License
