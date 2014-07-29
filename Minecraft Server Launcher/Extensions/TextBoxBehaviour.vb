@@ -39,6 +39,8 @@ Public NotInheritable Class TextBoxBehaviour
         Dim txt = TryCast(sender, TextBox)
         If txt IsNot Nothing Then
             Try
+                txt.Focus()
+                txt.CaretIndex = txt.Text.Length
                 txt.ScrollToEnd()
             Catch
             End Try

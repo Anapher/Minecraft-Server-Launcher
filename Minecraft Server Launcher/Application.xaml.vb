@@ -13,26 +13,24 @@ Class Application
     Dim IsHandled As Boolean = False
     Private Sub Dispatcher_UnhandledExceptions(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs)
         e.Handled = True
-        If Not IsHandled Then
-            IsHandled = True
-            Dim frm As New frmSubmitException() With {.Exception = DirectCast(e.Exception, Exception)}
-            frm.ShowDialog()
-        End If
+        OnExceptionOccurred(e.Exception)
     End Sub
 
     Private Sub AppDomain_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs)
-        If Not IsHandled Then
-            IsHandled = True
-            Dim frm As New frmSubmitException() With {.Exception = DirectCast(e.ExceptionObject, Exception)}
-            frm.ShowDialog()
-        End If
+        OnExceptionOccurred(DirectCast(e.ExceptionObject, Exception))
     End Sub
 
     Private Sub Application_DispatcherUnhandledException(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs) Handles Me.DispatcherUnhandledException
         e.Handled = True
+    End Sub
+
+    Private Sub OnExceptionOccurred(ex As Exception)
+        If TypeOf ex Is org.phybros.thrift.EAuthException Then
+            Return
+        End If
         If Not IsHandled Then
             IsHandled = True
-            Dim frm As New frmSubmitException() With {.Exception = e.Exception}
+            Dim frm As New frmSubmitException() With {.Exception = ex}
             frm.ShowDialog()
         End If
     End Sub

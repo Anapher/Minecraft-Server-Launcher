@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>Exceptionless.Wpf</id>
-    <version>1.5.2040</version>
+    <id>Exceptionless</id>
+    <version>1.5.2092</version>
     <authors>Exceptionless</authors>
     <owners>Exceptionless</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
@@ -12,8 +12,9 @@
     <description>Exceptionless is a cloud based error reporting service that sends your exceptions to http://exceptionless.com and provides aggregated views and analytics.</description>
     <releaseNotes>http://exceptionless.com/category/versions/</releaseNotes>
     <tags>Error Report Reporting Exception Logging Log ELMAH</tags>
-    <dependencies>
-      <dependency id="Exceptionless" version="[1.5.2040]" />
-    </dependencies>
+    <references>
+      <reference file="Exceptionless.dll" />
+      <reference file="Exceptionless.Models.dll" />
+    </references>
   </metadata>
 </package>

@@ -65,17 +65,17 @@
       <HintPath>..\packages\Elysium.Theme.2.0.4\lib\net45\Elysium.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Exceptionless">
-      <HintPath>..\packages\Exceptionless.1.5.2040\lib\net45\Exceptionless.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Exceptionless, Version=1.5.2092.0, Culture=neutral, PublicKeyToken=fc181f0a46f65747, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Exceptionless.1.5.2092\lib\net45\Exceptionless.dll</HintPath>
     </Reference>
-    <Reference Include="Exceptionless.Models">
-      <HintPath>..\packages\Exceptionless.1.5.2040\lib\net45\Exceptionless.Models.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Exceptionless.Models, Version=1.5.2092.0, Culture=neutral, PublicKeyToken=fc181f0a46f65747, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Exceptionless.1.5.2092\lib\net45\Exceptionless.Models.dll</HintPath>
     </Reference>
-    <Reference Include="Exceptionless.Wpf">
-      <HintPath>..\packages\Exceptionless.Wpf.1.5.2040\lib\net45\Exceptionless.Wpf.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Exceptionless.Wpf, Version=1.5.2092.0, Culture=neutral, PublicKeyToken=fc181f0a46f65747, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Exceptionless.Wpf.1.5.2092\lib\net45\Exceptionless.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

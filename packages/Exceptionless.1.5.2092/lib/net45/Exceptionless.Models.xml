@@ -393,9 +393,9 @@
             The price of the plan that this organization is currently on.
             </summary>
         </member>
-        <member name="P:Exceptionless.Models.Organization.MaxErrorsPerDay">
+        <member name="P:Exceptionless.Models.Organization.MaxErrorsPerMonth">
             <summary>
-            Maximum number of error occurrences allowed per day.
+            Maximum number of error occurrences allowed per month.
             </summary>
         </member>
         <member name="P:Exceptionless.Models.Organization.RetentionDays">
@@ -473,9 +473,14 @@
             Organization invites.
             </summary>
         </member>
-        <member name="P:Exceptionless.Models.Organization.OverageDays">
+        <member name="P:Exceptionless.Models.Organization.OverageHours">
             <summary>
-            Days over daily error limit.
+            Hours over error limit.
+            </summary>
+        </member>
+        <member name="P:Exceptionless.Models.Organization.Usage">
+            <summary>
+            Account error usage information.
             </summary>
         </member>
         <member name="P:Exceptionless.Models.Project.Id">
