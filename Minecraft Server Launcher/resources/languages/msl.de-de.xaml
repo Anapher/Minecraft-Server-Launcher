@@ -326,7 +326,7 @@
     <System:String x:Key="Installed">Installiert</System:String>
     
     <!-- Exception -->
-    <System:String x:Key="ExepctionTitle">Minecraft Server Launcher Fehler</System:String>
+    <System:String x:Key="ExceptionTitle">Minecraft Server Launcher Fehler</System:String>
     <System:String x:Key="ExceptionTitleWindow">Minecraft Server Launcher hat einen Fehler festgestellt und muss beendet werden. Wir entschuldigen uns für die Unannehmlichkeiten</System:String>
     <System:String x:Key="ExceptionText">Wir haben einen Fehlerbericht erstellt, welchen sie uns senden können. Wir werden diesen Fehler als vertraulich und anonym behandeln.</System:String>
     <System:String x:Key="ExceptionNote">Um uns zu helfen, die Ursache des Fehlers zu diagnostizieren und die Anwendung zu verbessern, können sie hier eine Anmerkung hinterlassen (Optional):</System:String>
