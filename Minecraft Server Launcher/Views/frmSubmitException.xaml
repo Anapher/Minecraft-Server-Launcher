@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     GlowBrush="LightBlue" ShowInTaskbar="True" Icon="/resources/error.png" Width="400" x:Name="window" ResizeMode="NoResize"
-    Title="{StaticResource ExepctionTitle}" SizeToContent="Height" WindowStartupLocation="CenterScreen">
+    Title="{StaticResource ExceptionTitle}" SizeToContent="Height" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical">
         <DockPanel>
             <Image Source="/resources/errorlarge.png" Margin="5" Width="60"/>
@@ -12,7 +12,7 @@
         <Separator />
         <TextBlock Margin="10" Text="{StaticResource ExceptionText}" TextWrapping="Wrap"/>
         <DockPanel Margin="10">
-            <TextBlock Text="Fehler" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock Text="{DynamicResource Exception}" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBlock Text=":" Margin="0,0,5,0" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBox Text="{Binding ElementName=window,Path=Exception.Message,Mode=OneWay}" IsReadOnly="True"/>
         </DockPanel>
