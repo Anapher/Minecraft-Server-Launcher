@@ -16,13 +16,13 @@
         <my:ItemStackToImage x:Key="ItemStackToImageConverter" />
         <my:NumberToFixedNumberConverter x:Key="NumberToFixedNumber"/>
         <my:ItemToTextConverter x:Key="ItemToText"/>
-        <BooleanToVisibilityConverter x:Key="BToV"/>
         <my:ListOfStringToString x:Key="lstOfStringToString"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <my:FalseOnEmptyStringConverter x:Key="FalseOnEmptyString"/>
         <my:SwitchBooleanConverter x:Key="SwitchBoolean"/>
         <my:SelectedIndexToBoolean x:Key="SelectedIndexToBool"/>
         <my:SelectedIndexToVisibility x:Key="SelectedIndexVisibl"/>
+        <my:FalseOnNullValue x:Key="FalseOnNullValue"/>
     </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.InputBindings>
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding GeneralServerCommand}" CommandParameter="SaveSettings"/>
@@ -289,11 +289,20 @@
                                                     <StackPanel Orientation="Vertical">
                                                         <GroupBox Header="{DynamicResource ChangeItem}" DockPanel.Dock="Right">
                                                             <StackPanel Orientation="Vertical">
-                                                                <DockPanel LastChildFill="False">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="auto"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="auto"/>
+                                                                    </Grid.ColumnDefinitions>
                                                                     <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding NewSelectedItem, Converter={StaticResource ItemStackToImageConverter}}" Margin="5,0,0,0"/>
-                                                                    <TextBlock Text="{Binding CurrentItemText}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                                                    <Button Content="..." Command="{Binding GeneralPlayerCommand}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0"/>
-                                                                </DockPanel>
+                                                                    <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Grid.Column="1" TextTrimming="CharacterEllipsis">
+                                                                        <TextBlock.Text>
+                                                                            <Binding Path="CurrentItemText" TargetNullValue="{StaticResource NothingSelected}"/>
+                                                                        </TextBlock.Text>
+                                                                    </TextBlock>
+                                                                    <Button Content="..." Command="{Binding GeneralPlayerCommand}" CommandParameter="SelectOtherItem" Width="30" Margin="5,0,0,0" Grid.Column="2"/>
+                                                                </Grid>
                                                                 <DockPanel Margin="0,5,0,0">
                                                                     <TextBlock Text="{DynamicResource amount}" VerticalAlignment="Center"/>
                                                                     <TextBlock Text=":" Margin="0,0,5,0" VerticalAlignment="Center"/>
@@ -304,8 +313,8 @@
                                                                         <ColumnDefinition />
                                                                         <ColumnDefinition />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <Button Content="{DynamicResource change}" Command="{Binding GeneralPlayerCommand}" CommandParameter="ChangeItem" Margin="10,0,5,0"/>
-                                                                    <Button Content="{DynamicResource remove}"  Command="{Binding GeneralPlayerCommand}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0"/>
+                                                                    <Button Content="{DynamicResource change}" Command="{Binding GeneralPlayerCommand}" CommandParameter="ChangeItem" Margin="10,0,5,0" IsEnabled="{Binding NewSelectedItem,Converter={StaticResource FalseOnNullValue}}"/>
+                                                                    <Button Content="{DynamicResource remove}"  Command="{Binding GeneralPlayerCommand}" CommandParameter="DeleteItem" Grid.Column="1" Margin="5,0,10,0" IsEnabled="{Binding NewSelectedItem,Converter={StaticResource FalseOnNullValue}}"/>
                                                                 </Grid>
                                                             </StackPanel>
                                                         </GroupBox>
@@ -319,7 +328,7 @@
                                                                 <TextBlock Text="{DynamicResource SelectItem}" VerticalAlignment="Center"/>
                                                                 <TextBlock Text=":" VerticalAlignment="Center"/>
                                                                 <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="{Binding SelectedItem.Image}" Margin="5,0,0,0"/>
-                                                                <TextBlock Text="{Binding SelectedItem.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                                <TextBlock Text="{Binding SelectedItem.Name,TargetNullValue=Nothing}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                                                 <Button Content="..." Command="{Binding GeneralPlayerCommand}" CommandParameter="SelectItem" Width="30" Margin="5,0,0,0"/>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
@@ -327,7 +336,7 @@
                                                                 <TextBlock Text=":" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                                 <Controls:NumericUpDown Maximum="64" Minimum="1" Value="{Binding ItemAmount}"/>
                                                             </StackPanel>
-                                                            <Button Content="{DynamicResource give}" Command="{Binding GeneralPlayerCommand}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
+                                                            <Button Content="{DynamicResource give}" Command="{Binding GeneralPlayerCommand}" IsEnabled="{Binding SelectedItem,Converter={StaticResource FalseOnNullValue}}" CommandParameter="GiveItem" Margin="0,5,0,0"/>
                                                         </StackPanel>
                                                     </GroupBox>
                                                 </StackPanel>
@@ -456,9 +465,9 @@
                                     <MenuItem Header="{DynamicResource refresh}" Click="MenuItem_Click"/>
                                     <MenuItem Header="{DynamicResource openInBrowser}" Command="{Binding MinecraftServer.Dynmap.Command}" CommandParameter="OpenInBrowser"/>
                                 </Menu>
-                                <WebBrowser Tag="{Binding MinecraftServer.Dynmap.BrowserURL}" x:Name="webDynmap" DockPanel.Dock="Bottom" Visibility="{Binding MinecraftServer.Dynmap.DynmapExists, Converter={StaticResource BToV}}"/>
+                                <WebBrowser Tag="{Binding MinecraftServer.Dynmap.BrowserURL}" x:Name="webDynmap" DockPanel.Dock="Bottom" Visibility="{Binding MinecraftServer.Dynmap.DynmapExists, Converter={StaticResource BoolToVisibility}}"/>
                             </DockPanel>
-                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Visibility="{Binding MinecraftServer.Dynmap.ShowDownloadWindow, Converter={StaticResource BToV}}" Background="White"  Height="100" IsEnabled="{Binding MinecraftServer.IsRunning}">
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Visibility="{Binding MinecraftServer.Dynmap.ShowDownloadWindow, Converter={StaticResource BoolToVisibility}}" Background="White"  Height="100" IsEnabled="{Binding MinecraftServer.IsRunning}">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{DynamicResource Dynmapnotfound}" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center"/>
                                     <Controls:MetroProgressBar Margin="0,10,0,10" Value="{Binding MinecraftServer.Dynmap.DownloadValue}"/>
@@ -1242,13 +1251,5 @@
                 </TabControl>
             </TabItem>
         </TabControl>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="White" Visibility="{Binding IsClosing,Converter={StaticResource BoolToVisibility}}">
-            <Border BorderThickness="1" BorderBrush="Black">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{DynamicResource StoppingServer}" Margin="10"/>
-                    <Controls:MetroProgressBar IsIndeterminate="True" Margin="0,0,0,5"/>
-                </StackPanel>
-            </Border>
-        </Grid>
     </Grid>
 </Controls:MetroWindow>

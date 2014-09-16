@@ -53,8 +53,7 @@ namespace Thrift.Transport
 				ret = Read(buf, off + got, len - got);
 				if (ret <= 0)
 				{
-                    return 0; //verändert
-                    throw new TTransportException(
+					throw new TTransportException(
 						TTransportException.ExceptionType.EndOfFile,
 						"Cannot read, Remote side has closed");
 				}

@@ -78,40 +78,30 @@ namespace Thrift.Transport
 		{
 			if (inputStream == null)
 			{
-				//throw new TTransportException(TTransportException.ExceptionType.NotOpen, "Cannot read from null inputstream");
-                return 0;
+				throw new TTransportException(TTransportException.ExceptionType.NotOpen, "Cannot read from null inputstream");
 			}
-            try
-            {
-                return inputStream.Read(buf, off, len);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
 
+			return inputStream.Read(buf, off, len);
 		}
 
 		public override void Write(byte[] buf, int off, int len)
 		{
 			if (outputStream == null)
 			{
-                return; //verändert
 				throw new TTransportException(TTransportException.ExceptionType.NotOpen, "Cannot write to null outputstream");
 			}
-            if (outputStream.CanRead)
-            {
-                outputStream.Write(buf, off, len);
-            }
+
+			outputStream.Write(buf, off, len);
 		}
 
 		public override void Flush()
 		{
-			if (!(outputStream == null))
+			if (outputStream == null)
 			{
-                outputStream.Flush();
+				throw new TTransportException(TTransportException.ExceptionType.NotOpen, "Cannot flush null outputstream");
 			}
 
+			outputStream.Flush();
 		}
 
 

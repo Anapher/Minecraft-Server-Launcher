@@ -18,6 +18,9 @@
     End Property
 
     Public Sub New()
+    End Sub
+
+    Public Sub LoadData()
         lstMinecraftItem = MinecraftItems.Load(Paths.GetPaths.MSLItemDatabase.FullName)
     End Sub
 End Class

@@ -68,7 +68,7 @@ namespace Thrift.Transport
 
 		public override int Read(byte[] buf, int off, int len)
 		{
-			if (readBuffer != null && readBuffer.CanRead)
+			if (readBuffer != null)
 			{
 				int got = readBuffer.Read(buf, off, len);
 				if (got > 0)
@@ -93,17 +93,8 @@ namespace Thrift.Transport
 				((i32rd[2] & 0xff) <<  8) |
 				((i32rd[3] & 0xff));
 
-            byte[] buff; //verändert
 
-            try
-            {
-                buff = new byte[size];
-            }
-            catch (StackOverflowException)
-            {
-                readBuffer = null;
-                return;
-            }
+			byte[] buff = new byte[size];
 			transport.ReadAll(buff, 0, size);
 			readBuffer = new MemoryStream(buff);
 		}

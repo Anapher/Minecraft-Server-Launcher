@@ -22,10 +22,11 @@ Class Application
 
     Private Sub Application_DispatcherUnhandledException(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs) Handles Me.DispatcherUnhandledException
         e.Handled = True
+        OnExceptionOccurred(e.Exception)
     End Sub
 
     Private Sub OnExceptionOccurred(ex As Exception)
-        If TypeOf ex Is org.phybros.thrift.EAuthException Then
+        If TypeOf ex Is org.phybros.thrift.EAuthException OrElse TypeOf ex Is org.phybros.thrift.EDataException Then
             Return
         End If
         If Not IsHandled Then

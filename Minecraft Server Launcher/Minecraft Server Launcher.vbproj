@@ -140,22 +140,23 @@
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.vb" />
     <Compile Include="EventArgs\StateChangedEventArgs.vb" />
-    <Compile Include="Extensions\BooleanToStringConverter.vb" />
+    <Compile Include="Extensions\Converter\BooleanToStringConverter.vb" />
     <Compile Include="Extensions\ButtonHelper.vb" />
-    <Compile Include="Extensions\FalseOnEmptyStringConverter.vb" />
-    <Compile Include="Extensions\HtmlToFlowDocumentConverter.vb" />
-    <Compile Include="Extensions\ItemStackToImage.vb" />
-    <Compile Include="Extensions\ItemToTextConverter.vb" />
-    <Compile Include="Extensions\ListOfStringToString.vb" />
-    <Compile Include="Extensions\LocationToStringConverter.vb" />
-    <Compile Include="Extensions\NumberToFixedNumberConverter.vb" />
-    <Compile Include="Extensions\SelectedIndexToBoolean.vb" />
-    <Compile Include="Extensions\SelectedIndexToVisibility.vb" />
-    <Compile Include="Extensions\UseThisToIndex.vb" />
-    <Compile Include="Extensions\SwitchBooleanConverter.vb" />
+    <Compile Include="Extensions\Converter\FalseOnEmptyStringConverter.vb" />
+    <Compile Include="Extensions\Converter\FalseOnNullValue.vb" />
+    <Compile Include="Extensions\Converter\HtmlToFlowDocumentConverter.vb" />
+    <Compile Include="Extensions\Converter\ItemStackToImage.vb" />
+    <Compile Include="Extensions\Converter\ItemToTextConverter.vb" />
+    <Compile Include="Extensions\Converter\ListOfStringToString.vb" />
+    <Compile Include="Extensions\Converter\LocationToStringConverter.vb" />
+    <Compile Include="Extensions\Converter\NumberToFixedNumberConverter.vb" />
+    <Compile Include="Extensions\Converter\SelectedIndexToBoolean.vb" />
+    <Compile Include="Extensions\Converter\SelectedIndexToVisibility.vb" />
+    <Compile Include="Extensions\Converter\UseThisToIndex.vb" />
+    <Compile Include="Extensions\Converter\SwitchBooleanConverter.vb" />
     <Compile Include="Extensions\TextBlockBehaviour.vb" />
     <Compile Include="Extensions\TextBoxBehaviour.vb" />
-    <Compile Include="Extensions\UnixTimestampToString.vb" />
+    <Compile Include="Extensions\Converter\UnixTimestampToString.vb" />
     <Compile Include="Minecraft Server\Banlist\BanlistInfo.vb" />
     <Compile Include="Minecraft Server\Banlist\BannedPlayer.vb" />
     <Compile Include="Minecraft Server\Commands\CommandList.vb" />
@@ -1077,7 +1078,6 @@
     <ProjectReference Include="..\Thrift\Thrift.csproj">
       <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
       <Name>Thrift</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

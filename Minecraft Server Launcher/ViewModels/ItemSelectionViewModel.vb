@@ -7,52 +7,56 @@ Public Class ItemSelectionViewModel
     Private Shared _Instance As ItemSelectionViewModel
     Public Shared ReadOnly Property Instance As ItemSelectionViewModel
         Get
-            If _Instance Is Nothing Then _Instance = New ItemSelectionViewModel
+            If _Instance Is Nothing Then _Instance = New ItemSelectionViewModel()
             Return _Instance
         End Get
     End Property
 
     Public Sub New()
-        RefreshItems()
-    End Sub
-
-    Private _allitems As ObservableCollection(Of MinecraftItem)
-    Private Sub RefreshItems()
-        If String.IsNullOrWhiteSpace(txt) Then
-            If _allitems Is Nothing Then
-                _allitems = New ObservableCollection(Of MinecraftItem)
-                For Each i In ItemData.Instance.lstMinecraftItem
-                    _allitems.Add(i)
-                Next
-            End If
-            Items = _allitems
-        Else
-            Items = New ObservableCollection(Of MinecraftItem)
-            For Each i In ItemData.Instance.lstMinecraftItem
-                If radName Then
-                    If i.Name.ToLower().Contains(txt.ToLower()) Then
-                        Items.Add(i)
-                    End If
-                ElseIf radID Then
-                    If i.ID.ToString().StartsWith(txt) Then
-                        Items.Add(i)
-                    End If
-                End If
-            Next
-        End If
+        Me.Items = ItemData.Instance.lstMinecraftItem
     End Sub
 #End Region
 
 #Region "Properties"
-    Private _items As ObservableCollection(Of MinecraftItem) = New ObservableCollection(Of MinecraftItem)
-    Public Property Items() As ObservableCollection(Of MinecraftItem)
+    Private _items As List(Of MinecraftItem)
+    Public Property Items() As List(Of MinecraftItem)
         Get
             Return _items
         End Get
-        Set(ByVal value As ObservableCollection(Of MinecraftItem))
+        Set(ByVal value As List(Of MinecraftItem))
             SetProperty(value, _items)
+            RefreshList(value)
         End Set
     End Property
+
+    Private _ViewSource As CollectionView
+    Public Property ViewSource() As CollectionView
+        Get
+            Return _ViewSource
+        End Get
+        Set(ByVal value As CollectionView)
+            SetProperty(value, _ViewSource)
+        End Set
+    End Property
+
+    Private Sub RefreshList(defaultlist As List(Of MinecraftItem))
+        If defaultlist IsNot Nothing Then
+            ViewSource = DirectCast(CollectionViewSource.GetDefaultView(defaultlist), CollectionView)
+            ViewSource.Filter = Function(item)
+                                    If String.IsNullOrWhiteSpace(txt) Then
+                                        Return True
+                                    Else
+                                        Select Case True
+                                            Case radID
+                                                Return DirectCast(item, MinecraftItem).IDToString.StartsWith(txt)
+                                            Case radName
+                                                Return DirectCast(item, MinecraftItem).Name.ToUpper().Contains(txt.ToUpper())
+                                            Case Else : Return False
+                                        End Select
+                                    End If
+                                End Function
+        End If
+    End Sub
 
     Private _txt As String
     Public Property txt As String
@@ -61,7 +65,7 @@ Public Class ItemSelectionViewModel
         End Get
         Set(ByVal value As String)
             SetProperty(value, _txt)
-            RefreshItems()
+            If ViewSource IsNot Nothing Then ViewSource.Refresh()
         End Set
     End Property
 
@@ -72,7 +76,7 @@ Public Class ItemSelectionViewModel
         End Get
         Set(ByVal value As Boolean)
             SetProperty(value, _radName)
-            RefreshItems()
+            If ViewSource IsNot Nothing Then ViewSource.Refresh()
         End Set
     End Property
 
@@ -83,7 +87,7 @@ Public Class ItemSelectionViewModel
         End Get
         Set(ByVal value As Boolean)
             SetProperty(value, _radID)
-            RefreshItems()
+            If ViewSource IsNot Nothing Then ViewSource.Refresh()
         End Set
     End Property
 

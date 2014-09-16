@@ -1,0 +1,115 @@
+﻿<Controls:MetroWindow x:Class="frmDownloadDownloadMinecraftServer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:my="clr-namespace:Minecraft_Server_Launcher"
+    xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
+    Title="{StaticResource DownloadMinecraftServer}" Style="{StaticResource MetroWindow}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" x:Name="window" Width="800" Height="550">
+    <Window.Resources>
+        <my:SwitchBooleanConverter x:Key="SwitchBoolean"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </Window.Resources>
+    <Grid IsEnabled="{Binding ElementName=window,Path=Downloader.IsDownloading,Converter={StaticResource SwitchBoolean}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TabControl Margin="10" TabStripPlacement="Left" Background="White" SelectedIndex="{Binding ElementName=window,Path=SelectedTabPage}">
+            <TabItem Header="Bukkit" Style="{StaticResource VerticalTabItem}">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0" ItemsSource="{Binding ElementName=window,Path=BukkitVersions.Versions}" IsEnabled="{Binding GUIIsEnabled}" SelectedIndex="{Binding ElementName=window,Path=BukkitVersions.lstIndex}" ctrl:ListViewLayoutManager.Enabled="true" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="{StaticResource HeaderBuildNumber}" DisplayMemberBinding="{Binding Path=Buildnr}" ctrl:FixedColumn.Width="100"/>
+                                <GridViewColumn Header="{StaticResource HeaderVersion}" HeaderStringFormat="" DisplayMemberBinding="{Binding Path=version}" ctrl:FixedColumn.Width="130"/>
+                                <GridViewColumn Header="{StaticResource HeaderType}" DisplayMemberBinding="{Binding Path=Type}" ctrl:ProportionalColumn.Width="2"/>
+                                <GridViewColumn Header="{StaticResource Informations}" ctrl:ProportionalColumn.Width="1">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{StaticResource openInBrowser}" Command="{Binding OpenInfosInBrowser}" Margin="3"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1">
+                        <RadioButton Content="{StaticResource ChooseSelectedVersion}" Margin="0,10,0,0" IsChecked="{Binding ElementName=window,Path=BukkitVersions.ChooseSelectedVersion}" IsEnabled="{Binding GUIIsEnabled}"/>
+                        <RadioButton Margin="0,5,0,0" IsChecked="{Binding ElementName=window,Path=BukkitVersions.ChooseDevelopmentVersion}" IsEnabled="{Binding GUIIsEnabled}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Development Build ("/>
+                                <TextBlock Text="{Binding ElementName=window,Path=BukkitVersions.DevelopmentBuild.version}"/>
+                                <TextBlock Text=")"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton Margin="0,5,0,0" IsChecked="{Binding ElementName=window,Path=BukkitVersions.ChooseBetaVersion}" IsEnabled="{Binding GUIIsEnabled}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Beta Build ("/>
+                                <TextBlock Text="{Binding ElementName=window,Path=BukkitVersions.BetaBuild.version}"/>
+                                <TextBlock Text=")"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton Margin="0,5,0,0" IsChecked="{Binding ElementName=window,Path=BukkitVersions.ChooseRecommendedVersion}" IsEnabled="{Binding GUIIsEnabled}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Recommended Build ("/>
+                                <TextBlock Text="{Binding ElementName=window,Path=BukkitVersions.RecommendedBuild.version}"/>
+                                <TextBlock Text=")"/>
+                            </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Spigot" Style="{StaticResource VerticalTabItem}">
+                <ListView ItemsSource="{Binding ElementName=window,Path=SpigotVersions.Versions}" IsEnabled="{Binding GUIIsEnabled}" SelectedIndex="{Binding ElementName=window,Path=SpigotVersions.lstIndex}" ctrl:ListViewLayoutManager.Enabled="true" Margin="5">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="{StaticResource HeaderBuildNumber}" DisplayMemberBinding="{Binding Path=Build}" ctrl:FixedColumn.Width="100"/>
+                            <GridViewColumn Header="{StaticResource date}" DisplayMemberBinding="{Binding Path=ReleaseDate,StringFormat={StaticResource DateFormat}}" ctrl:FixedColumn.Width="200"/>
+                            <GridViewColumn Header="{StaticResource description}" DisplayMemberBinding="{Binding Path=stability}" ctrl:ProportionalColumn.Width="3"/>
+                            <GridViewColumn Header="{StaticResource Informations}" ctrl:ProportionalColumn.Width="2">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{StaticResource openInBrowser}" Command="{Binding OpenInfosInBrowser}" Margin="3"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Cauldron" Style="{StaticResource VerticalTabItem}">
+                <ListView ItemsSource="{Binding ElementName=window,Path=CauldronVersions.Versions}" IsEnabled="{Binding GUIIsEnabled}" SelectedIndex="{Binding ElementName=window,Path=CauldronVersions.lstIndex}" ctrl:ListViewLayoutManager.Enabled="true" Margin="5">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="{StaticResource version}" DisplayMemberBinding="{Binding Version}" ctrl:ProportionalColumn.Width="1"/>
+                            <GridViewColumn Header="Minecraft" DisplayMemberBinding="{Binding MinecraftVersion}" ctrl:FixedColumn.Width="200"/>
+                            <GridViewColumn Header="{StaticResource date}" DisplayMemberBinding="{Binding Time,StringFormat={StaticResource DateFormat}}" ctrl:ProportionalColumn.Width="3"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+            <Button Content="{StaticResource Download}" HorizontalAlignment="Center" Width="200" Height="35" Margin="10,10,10,0" IsEnabled="{Binding ElementName=window,Path=ButtonDownloadIsEnabled}" Command="{Binding ElementName=window,Path=DownloadSelectedServerVersion}"/>
+            <DockPanel Margin="5,0,10,5">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=window,Path=Downloader.IsDownloading,Converter={StaticResource BoolToVisibility}}" DockPanel.Dock="Right">
+                    <TextBlock Text="{Binding ElementName=window,Path=Downloader.MegaBytesReceived}"/>
+                    <TextBlock Text=" MB / "/>
+                    <TextBlock Text="{Binding ElementName=window,Path=Downloader.TotalMegaBytesToReceive}"/>
+                    <TextBlock Text=" MB ("/>
+                    <TextBlock Text="{Binding ElementName=window,Path=Downloader.CurrentProgress}"/>
+                    <TextBlock Text=" %)"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=window,Path=Downloader.IsInstalling,Converter={StaticResource BoolToVisibility}}" DockPanel.Dock="Left">
+                    <TextBlock Text="{StaticResource installing}"/>
+                </StackPanel>
+            </DockPanel>
+
+            <Controls:MetroProgressBar Value="{Binding ElementName=window,Path=Downloader.CurrentProgress}" Margin="5,0,5,5" IsIndeterminate="{Binding ElementName=window,Path=Downloader.IsInstalling}"/>
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>

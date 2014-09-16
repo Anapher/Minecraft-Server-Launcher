@@ -17,9 +17,7 @@ Public Class ItemStackToImage
                 Return New BitmapImage(New Uri("pack://application:,,,/resources/items/placeholder.png", UriKind.Absolute))
             End If
         End If
-        If itmstack.TypeId = 0 AndAlso parameter IsNot Nothing AndAlso parameter.ToString() = "ReturnNothing" Then
-            Return Nothing
-        End If
+        If itmstack.TypeId = 0 AndAlso parameter IsNot Nothing AndAlso parameter.ToString() = "ReturnNothing" Then Return Nothing
         Return New BitmapImage(s)
     End Function
 

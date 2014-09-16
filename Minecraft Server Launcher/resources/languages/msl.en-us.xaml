@@ -73,7 +73,7 @@
     <System:String x:Key="ChangeItem">Change item</System:String>
     <System:String x:Key="change">Change</System:String>
     <System:String x:Key="remove">Remove</System:String>
-
+    
     <System:String x:Key="UnknownItem">Unkown item</System:String>
     <System:String x:Key="Durability">Durability</System:String>
     <System:String x:Key="enchantments">Enchantments</System:String>
@@ -276,6 +276,7 @@
     <System:String x:Key="AlwaysAskIfSaveChanges">Always ask if you want save the settings</System:String>
     <System:String x:Key="SaveServerBeforClose">Stop the server automatically on closing the program</System:String>
     <System:String x:Key="StoppingServer">Stopping Server...</System:String>
+    <System:String x:Key="ProgramIsClosing">Program is closing</System:String>
     <System:String x:Key="FileIsToLarge">The file ({0}) is too large</System:String>
 
     <System:String x:Key="add">Add</System:String>
@@ -403,4 +404,9 @@
     <System:String x:Key="AnErrorOccurred">An Error Occurred</System:String>
     <System:String x:Key="MinecraftServerIsNotRunning">The Minecraftserver isn't running</System:String>
     <System:String x:Key="SwiftAPIError">An error has occurred in SwiftAPI. Please try again.</System:String>
+
+    <!-- Eula -->
+    <System:String x:Key="LicenseAgreement">License Agreement</System:String>
+    <System:String x:Key="YouNeedToAcceptTheEULA">To start the server, you need to accept the Minecraft end-user license agreement (EULA) (https://account.mojang.com/documents/minecraft_eula)</System:String>
+    <System:String x:Key="Accept">Accept</System:String>
 </ResourceDictionary>

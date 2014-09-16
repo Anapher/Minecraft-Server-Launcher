@@ -21,7 +21,7 @@
     <System:String x:Key="Commands">Befehle</System:String>
     <System:String x:Key="Inventory">Inventar</System:String>
     <System:String x:Key="NoPlayersOnline">Derzeit sind keine Spieler online</System:String>
-    
+   
     <!-- Informationen -->
     <System:String x:Key="generalInformations">Allgemeine Informationen</System:String>
     <System:String x:Key="lastPlayed">Letztes mal Online</System:String>
@@ -278,6 +278,7 @@
     <System:String x:Key="SaveServerBeforClose">Server beim schließen des Programms automatisch stoppen</System:String>
     <System:String x:Key="FileIsToLarge">Die Datei ({0}) ist zu groß</System:String>
     <System:String x:Key="StoppingServer">Server wird gestoppt...</System:String>
+    <System:String x:Key="ProgramIsClosing">Programm wird geschlossen</System:String>
     
     <System:String x:Key="add">Hinzufügen</System:String>
     <System:String x:Key="Secounds">Sekunden</System:String>
@@ -403,4 +404,9 @@
     <System:String x:Key="AnErrorOccurred">Ein Fehler ist aufgetreten</System:String>
     <System:String x:Key="MinecraftServerIsNotRunning">Der Minecraftserver wurde nicht gestartet</System:String>
     <System:String x:Key="SwiftAPIError">Es ist ein Fehler bei einer Aktion über das Plugin SwiftAPI aufgetreten. Versuchen sie es erneut.</System:String>
+    
+    <!-- Eula -->
+    <System:String x:Key="LicenseAgreement">Lizenzvereinbarung</System:String>
+    <System:String x:Key="YouNeedToAcceptTheEULA">Um den Server starten können müssen sie der Minecraft Endbenutzer-Lizenzvereinbarung (EULA) zustimmen (https://account.mojang.com/documents/minecraft_eula)</System:String>
+    <System:String x:Key="Accept">Akzeptieren</System:String>
 </ResourceDictionary>

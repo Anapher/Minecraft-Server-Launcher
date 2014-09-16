@@ -6,6 +6,7 @@ Public Class Updater
     Public Event UpdatesFound(sender As Object, e As appEventArgs.updateFoundEventArgs)
     Private CurrentLanguage As Languages
     Private WithEvents _updController As updateController
+
     Public ReadOnly Property UpdateController As updateController
         Get
             Return _updController
@@ -45,7 +46,7 @@ Public Class Updater
         Dim sb As New Text.StringBuilder
 
         For Each package As updatePackage In e.Result.newUpdatePackages
-            sb.Append(String.Format("{1}{0}------------------------------{0}{2}{0}", Environment.NewLine, String.Format(Application.Current.FindResource("UpdatePackageTitle").ToString(), package.releaseInfo.Version, package.ReleaseDate), IIf(CurrentLanguage = Languages.Deutsch, e.Result.Changelogs(package).germanChanges, e.Result.Changelogs(package).englishChanges)))
+            sb.Append(String.Format("{1}{0}------------------------------{0}{2}{0}", Environment.NewLine, String.Format(Application.Current.FindResource("UpdatePackageTitle").ToString(), package.releaseInfo.Version, package.ReleaseDate), If(CurrentLanguage = Languages.Deutsch, e.Result.Changelogs(package).germanChanges, e.Result.Changelogs(package).englishChanges)))
             size += package.packageSize
         Next
         Me.Changelog = sb.ToString()

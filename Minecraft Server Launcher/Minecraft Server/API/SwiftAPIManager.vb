@@ -5,7 +5,7 @@ Public Class SwiftAPIManager
     Inherits PropertyChangedBase
 
     Private _MinecraftFolder As DirectoryInfo
-    Private Const SwiftAPIHash = "26652A12A89346573974CFFE08881EAF"
+    Private Const SwiftAPIHash = "D9CC4C05A0D334D3EABC95066BE428EC"
 
     Public Event GeneratedInformationsComplete(sender As Object, e As EventArgs)
 

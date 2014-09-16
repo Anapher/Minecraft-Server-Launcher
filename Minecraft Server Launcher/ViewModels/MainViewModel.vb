@@ -1,4 +1,6 @@
-﻿Public Class MainViewModel
+﻿Imports MahApps.Metro.Controls.Dialogs
+
+Public Class MainViewModel
     Inherits PropertyChangedBase
 
 #Region "Singleton & Constructor"
@@ -79,6 +81,7 @@
                 If IsClosing Then Return True
                 IsClosing = True
                 MinecraftServer.ExecuteCommand("stop")
+                DirectCast(Application.Current.MainWindow, MahApps.Metro.Controls.MetroWindow).ShowProgressAsync(Application.Current.FindResource("ProgramIsClosing").ToString(), Application.Current.FindResource("StoppingServer").ToString(), False)
                 Dim t As New System.Threading.Thread(Sub()
                                                          Dim counter As Integer = 0
                                                          Dim maxvalue As Integer = 2000
@@ -101,6 +104,24 @@
 
     Private Sub _MinecraftServer_BannedListChanged(sender As Object, e As EventArgs) Handles _MinecraftServer.BannedListChanged
         OnPropertyChanged("NoBansTextVisibility")
+    End Sub
+
+    Private Async Sub _MinecraftServer_NeedToAgreeEula(sender As Object, e As EventArgs) Handles _MinecraftServer.NeedToAgreeEula
+        Dim window As MahApps.Metro.Controls.MetroWindow
+        Application.Current.Dispatcher.Invoke(Sub() window = DirectCast(Application.Current.MainWindow, MahApps.Metro.Controls.MetroWindow))
+        Dim controller As MessageDialogResult
+        Await Application.Current.Dispatcher.InvokeAsync(Async Function()
+                                                             controller = Await window.ShowMessageAsync(Application.Current.FindResource("LicenseAgreement").ToString(), Application.Current.FindResource("YouNeedToAcceptTheEULA").ToString(), MessageDialogStyle.AffirmativeAndNegative, New MetroDialogSettings() With {.AffirmativeButtonText = Application.Current.FindResource("Accept").ToString(), .NegativeButtonText = Application.Current.FindResource("Cancel").ToString()})
+                                                             If controller = MessageDialogResult.Affirmative Then
+                                                                 Dim fi As New IO.FileInfo(IO.Path.Combine(Paths.GetPaths.MinecraftServerFolder.FullName, "eula.txt"))
+                                                                 If fi.Exists Then
+                                                                     IO.File.WriteAllText(fi.FullName, IO.File.ReadAllText(fi.FullName).Replace("eula=false", "eula=true"))
+                                                                     MinecraftServer.StopServer()
+                                                                     ConsoleText = String.Empty
+                                                                     MinecraftServer.StartServer()
+                                                                 End If
+                                                             End If
+                                                         End Function)
     End Sub
 
     Private Sub _MinecraftServer_PlayerChanged(sender As Object, e As EventArgs) Handles _MinecraftServer.PlayerChanged
@@ -808,7 +829,7 @@
                 End If
             Case "GiveItem"
                 If Not MinecraftServer.IsRunning Then ServerIsNotRunningException() : Exit Select
-                If SelectedItem IsNot Nothing Then MinecraftServer.ExecuteCommand(String.Format("give {0} {1} {2}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, SelectedItem.IDToString, ItemAmount))
+                If SelectedItem IsNot Nothing Then MinecraftServer.ExecuteCommand(String.Format("give {0} {1} {2} {3}", MinecraftServer.lstPlayers(lstPlayerIndex).Name, SelectedItem.ID, ItemAmount, SelectedItem.Meta))
             Case "KickPlayer"
                 If MinecraftServer.IsRunning Then MinecraftServer.ExecuteCommand("kick " & MinecraftServer.lstPlayers(lstPlayerIndex).Name) Else ServerIsNotRunningException()
             Case "BanPlayer"
